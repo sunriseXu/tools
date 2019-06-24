@@ -30,6 +30,18 @@ def listDir(dirPath,filePath=''):
 		print("list 1 file: "+filePath+"!")
 	return fileList
 
+def listDirRecur(path):
+	'''
+	recursively list all files/dirs in path, return a list
+	'''
+	allfile=[]
+	for dirpath,dirnames,filenames in os.walk(path):
+		for dir in dirnames:
+			allfile.append(os.path.join(dirpath,dir))
+		for name in filenames:
+			allfile.append(os.path.join(dirpath, name))
+	return allfile
+
 def readList(myPath):
 	reslist=[]
 	if not os.path.exists(myPath):
@@ -151,5 +163,6 @@ if __name__ == "__main__":
 	mydict={'1':'hello','2':'xiao','3':'niao'}
 	myklist=['1','5','3']
 	mylist=['niao','xxx','hello']
+	print listDirRecur('./')
 	# print value2keylist(mylist,mydict)
 	# print key2Valuelist(myklist,mydict)
