@@ -4,7 +4,7 @@ import subprocess
 import random
 import logging
 logging.basicConfig()
-sys.path.append('../')
+sys.path.append('../tools')
 from modules.FileUtils import *
 l = logging.getLogger("FileRoom")
 

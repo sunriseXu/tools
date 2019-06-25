@@ -5,7 +5,7 @@ import subprocess
 import logging
 logging.basicConfig()
 l = logging.getLogger("listELFInAPK")
-sys.path.append('../')
+sys.path.append('../tools')
 from modules.FileUtils import *
 from modules.InteractUtils import *
 from modules.ApkUtils import *
