@@ -130,6 +130,20 @@ def listCopy(myList,srcDir,destDir):
 		shutil.copy(srcPath,destPath)
 	return
 
+def pathListCopy(myList,destDir):
+	'''
+	myList contain all file pathes that need to copy to destDir
+	'''
+	if len(myList)==0:
+		return
+	mkdir(destDir)
+	for path in myList:
+		if not os.path.exists(path):
+			continue
+		basename = os.path.basename(path)
+		destPath = os.path.join(destDir, basename)
+		shutil.copy(path,destPath)
+
 def listCut(myList,srcDir,destDir=''):
 	'''
 	cut file in myList to destDir from srcDir, default destDir is $srcDir_cut 

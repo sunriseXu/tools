@@ -6,16 +6,7 @@ import argparse
 from modules.FileUtils import *
 from modules.InteractUtils import *
 
-def pathListCopy(myList,destDir):
-    if len(myList)==0:
-        return
-    mkdir(destDir)
-    for path in myList:
-        if not os.path.exists(path):
-            continue
-        basename = os.path.basename(path)
-        destPath = os.path.join(destDir, basename)
-        shutil.copy(path,destPath)
+
 
 
 if __name__ == '__main__':

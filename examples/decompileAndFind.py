@@ -4,7 +4,7 @@ import sys
 import subprocess
 import logging
 logging.basicConfig()
-sys.path.append('../tools')
+sys.path.append('../')
 from modules.FileUtils import *
 from modules.InteractUtils import *
 from modules.ApkUtils import *
