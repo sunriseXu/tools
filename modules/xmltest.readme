@@ -1,0 +1,31 @@
+package类：
+    记录所有的activity类对象
+    记录forward执行前的activity类对象
+    方法：
+        启动本package进程
+        forward方法，执行当前activity类对象的forward方法
+        dump方法，首先获取判断当前activity是否在activity序列中，如果在，设置当前activity，那么执行已有的activity对象的dump方法，否者当前是新activity，设置当前activity，执行新activity的dump方法
+
+activity类：
+    记录所有的view类对象
+    记录forward执行前的view类对象
+    方法：
+        forward方法，执行当前view类对象的forward方法
+        dump方法，新建view对象，执行这个view对象的dump方法，放回xml字符串，比较现有view类对象中所有xml字符串，判断是否是
+        新的view，如果是，那么插入view类对象序列。更新当前view类对象
+
+view类：
+    记录xml字符串以及xml对象
+    记录xml对象中可以点击的控件列表，并且以字典的形式存储，其中的值为是否被点击
+    方法：
+        forward方法，选择可以点击的控件列表中的一个进行点击操作，修改字典值，如果所有控件都被点击完，那么点击返回键
+        dump方法，获取当前界面的xml字符串并且生成xml对象，生成可点击的控件的列表
+
+现在的问题在与view中的forward方法，如果当前view中的所有控件都被点击，那么由当前view进入的下一个view的控件未必能够点击完，
+而算法不可能由当前view再进行点击操作了
+提出两点解决方案：
+    1.如果当前的控件都被点击过了，那么从已点击的控件中随机选择一个进行点击，只要测试次数足够大，应该能够遍历到所有控件
+    2.另外一种方法是记录控件点击图，其源点是view对象，边是点击的控件，目标节点是进入的view对象，生成完整的图，如果当前view
+    所有控件都被点击过了，那么查看图，所有从这个view对象出发的所有view对象，它们的控件是否还有未点击的，
+    有的话那么根据图的路径进行点击操作
+现在试用第一种方案
