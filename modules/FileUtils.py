@@ -6,6 +6,7 @@ import os
 import json
 import shutil
 import sys
+import subprocess
 import logging
 logging.basicConfig()
 l = logging.getLogger("FileUtils")
@@ -41,6 +42,12 @@ def listDirRecur(path):
 		for name in filenames:
 			allfile.append(os.path.join(dirpath, name))
 	return allfile
+
+def getFileName(myPath):
+	bn = os.path.basename(myPath)
+	fn = os.path.splitext(bn)[0]
+	return fn
+
 
 def readList(myPath):
 	reslist=[]
@@ -100,6 +107,9 @@ def writeFile(filePath,myStr):
 		f.write(myStr)
 	return
 
+def getFileType(filePath):
+    cmd = 'file %s' %filePath
+    return subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT).stdout.read()
 
 def listCopy(myList,srcDir,destDir):
 	'''

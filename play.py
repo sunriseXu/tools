@@ -1,55 +1,57 @@
+#/usr/bin/python
+import os
+import sys
+import subprocess
+import argparse
 from modules.FileUtils import *
+from modules.InteractUtils import *
 
-logDir='C:/Users/limin/Desktop/imageLogs/xxx/logs'
-logsPath=listDir(logDir)
-selectedList=[]
-count=0
-notfound=0
-timeout=0
-delegateCount=0
-runtime=0
-coredump=0
-others=0
-destDir='C:/Users/limin/Desktop/tmpAsan'
-for item in logsPath:
-    buf = readFile(item)
-    if 'Sanitizer' in buf:
-        count+=1
-        # if 'leak' not in buf:
-        selectedList.append(os.path.basename(item))
-        continue
-    if 'not found' in buf:
-        notfound+=1
-        continue
-    if 'TIME' in buf:
-        timeout+=1
-        continue
-    if 'runtime error' in buf:
-        selectedList.append(os.path.basename(item))
-        runtime +=1
-        continue
-    if 'core dump' in buf:
-        selectedList.append(os.path.basename(item))
-        coredump+=1
-        continue
+def pathListCopy(myList,destDir):
+    if len(myList)==0:
+        return
+    mkdir(destDir)
+    for path in myList:
+        if not os.path.exists(path):
+            continue
+        basename = os.path.basename(path)
+        destPath = os.path.join(destDir, basename)
+        shutil.copy(path,destPath)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="test!!")
+    parser.add_argument('-d', '--dirname', help='app name', nargs='?', default="")
+    args = parser.parse_args()
+    dirPath=args.dirname
     
-    others+=1
-    print item
+    testedPath = './tmp'
+    testedList = readList(testedPath)
+    fileList = listDir(dirPath)
+    for item in fileList:
+        if item in testedList:
+            continue
+        
+        fileName = os.path.basename(item)
+        # print fileName
+        tmp = os.path.splitext(fileName)
+        if len(tmp) == 1:
+            continue
+        ext = tmp[1]
+        
+        if 'apk' not in ext:
+            continue
+        print item
+        cmd = 'python examples/listELFInAPK.py -d %s' %item
+        sub = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+        res = sub.stdout.read()
+        print res
+        print 'tap to continue...'
+        testedList.append(item)
+        writeList(testedList,testedPath)
+        print '\n'
+        # raw_input()
 
-    
-
-
-print count
-print notfound
-print timeout
-print runtime
-print coredump
-# print delegateCount
-print others
-
-#         continue
-#     if 'memory leaks' in buf:
-#         continue
-#     selectedList.append(os.path.basename(item))
-# destDir='C:/Users/limin/Desktop/tmpAsan'
-listCopy(selectedList,logDir,destDir)
+    allelfPath='./allelf.txt'
+    allelfList = readList(allelfPath)
+    pathListCopy(allelfList,'~/Desktop/allelf')
+    print('done')
