@@ -4,9 +4,13 @@ import subprocess
 import random
 import logging
 logging.basicConfig()
-# sys.path.append('../tools')
-from tools.modules import FileUtils
-# from modules.AlgorithmUtils import *
+
+pwd = os.path.dirname(os.path.realpath(__file__))
+ppwd = os.path.dirname(pwd)
+sys.path.append(ppwd)
+
+from modules import FileUtils
+
 l = logging.getLogger("FileRoom")
 
 def print_all(module_):
@@ -43,9 +47,17 @@ def filterFileContent(filePath, splitStr):
         resList.append(filtered)
     return resList
 
-
+import argparse
 if __name__ == "__main__":
-    srcDir = 'C:\\Users\\limin\\Desktop\\normal5000_filter\\normal_test_5000'
-    destDir = 'C:\\Users\\limin\\Desktop\\tmp'
-    print_all(FileUtils)
-    randomCopy(srcDir, destDir, 2)
+    parser = argparse.ArgumentParser(description="test!!")
+    parser.add_argument('-s', '--src', help='app name', nargs='?', default="")
+    parser.add_argument('-d', '--dest', help='app name', nargs='?', default="")
+    parser.add_argument('-i', '--num', help='test time', nargs='?',type=int, default=10)
+    args = parser.parse_args()
+    srcDir=args.src
+    copyNum=args.num
+    destDir = args.dest
+
+    # srcDir = 'C:\\Users\\limin\\Desktop\\normal5000_filter\\normal_test_5000'
+    # destDir = 'C:\\Users\\limin\\Desktop\\tmp'
+    randomCopy(srcDir, destDir, copyNum)

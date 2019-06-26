@@ -4,12 +4,16 @@ import sys
 import subprocess
 import logging
 logging.basicConfig()
-l = logging.getLogger("listELFInAPK")
-# sys.path.append('../tools')
+
+
+pwd = os.path.dirname(os.path.realpath(__file__))
+ppwd = os.path.dirname(pwd)
+sys.path.append(ppwd)
+
 from modules.FileUtils import *
 from modules.InteractUtils import *
 from modules.ApkUtils import *
-
+l = logging.getLogger("listELFInAPK")
 
 def findInDir(dirname,mystr):
     cmd='find %s -type f -name "*.smali"|xargs grep -i "%s"' %(dirname,mystr)

@@ -1,1 +1,0 @@
-{"pay-dd": ["libshunpay", "libbsjni"], "pay-zuimanhua": ["libshunpay", "libnative-lib"]}

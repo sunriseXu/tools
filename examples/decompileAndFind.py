@@ -4,7 +4,11 @@ import sys
 import subprocess
 import logging
 logging.basicConfig()
-# sys.path.append('../tools')
+
+pwd = os.path.dirname(os.path.realpath(__file__))
+ppwd = os.path.dirname(pwd)
+sys.path.append(ppwd)
+
 from modules.FileUtils import *
 from modules.InteractUtils import *
 from modules.ApkUtils import *
