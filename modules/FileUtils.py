@@ -23,12 +23,21 @@ def listDir(dirPath,filePath=''):
 			pathname = os.path.join(dirPath, filename)
 			fileList.append(pathname)
 		if len(fileList)==0:
-			sys.exit()
+			return fileList
 		else:
-			print("list "+str(len(fileList))+" files in: "+dirPath+"!")
+			l.debug("list "+str(len(fileList))+" files in: "+dirPath+"!")
 	else:
 		fileList.append(filePath)
-		print("list 1 file: "+filePath+"!")
+		l.debug("list 1 file: "+filePath+"!")
+	return fileList
+
+def listDir2(dirPath):
+	fileList = []
+	if not os.path.exists(dirPath):
+		return fileList
+	for filename in os.listdir(dirPath):
+		fileList.append(filename)
+	l.debug("list %d files in: %s!",len(fileList),dirPath)
 	return fileList
 
 def listDirRecur(path):
@@ -130,19 +139,17 @@ def listCopy(myList,srcDir,destDir):
 		shutil.copy(srcPath,destPath)
 	return
 
-def pathListCopy(myList,destDir):
-	'''
-	myList contain all file pathes that need to copy to destDir
-	'''
-	if len(myList)==0:
+def listCopy2(myList,destDir):
+	if len(myList) == 0:
 		return
 	mkdir(destDir)
-	for path in myList:
-		if not os.path.exists(path):
+	for myPath in myList:
+		if not os.path.exists(myPath):
 			continue
-		basename = os.path.basename(path)
+		basename = os.path.basename(myPath)
 		destPath = os.path.join(destDir, basename)
-		shutil.copy(path,destPath)
+		shutil.copy(myPath,destPath)
+
 
 def listCut(myList,srcDir,destDir=''):
 	'''
@@ -187,6 +194,8 @@ if __name__ == "__main__":
 	mydict={'1':'hello','2':'xiao','3':'niao'}
 	myklist=['1','5','3']
 	mylist=['niao','xxx','hello']
-	print listDirRecur('./')
+	# print listDirRecur('./')
+	reslist=listDir2('./')
+	print reslist
 	# print value2keylist(mylist,mydict)
 	# print key2Valuelist(myklist,mydict)

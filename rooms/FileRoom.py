@@ -5,18 +5,24 @@ import random
 import logging
 logging.basicConfig()
 # sys.path.append('../tools')
-from tools.modules.FileUtils import *
-from tools.modules.AlgorithmUtils import *
+from tools.modules import FileUtils
+# from modules.AlgorithmUtils import *
 l = logging.getLogger("FileRoom")
+
+def print_all(module_):
+    modulelist = dir(module_)
+    length = len(modulelist)
+    for i in range(0,length,1):
+        print getattr(module_,modulelist[i])
 
 def randomCopy(srcDir,destDir,maxNum):
     '''
     randomly select maxNum files in srcDir, and copy them to destDir
     '''
-    fileList = listDir(srcDir)
+    fileList = FileUtils.listDir(srcDir)
     randomList = random.sample(fileList, maxNum)
-    mkdir(destDir)
-    pathListCopy(randomList,destDir)
+    FileUtils.mkdir(destDir)
+    FileUtils.listCopy2(randomList,destDir)
     return
 
 def filterFileContent(filePath, splitStr):
@@ -41,4 +47,5 @@ def filterFileContent(filePath, splitStr):
 if __name__ == "__main__":
     srcDir = 'C:\\Users\\limin\\Desktop\\normal5000_filter\\normal_test_5000'
     destDir = 'C:\\Users\\limin\\Desktop\\tmp'
+    print_all(FileUtils)
     randomCopy(srcDir, destDir, 2)
