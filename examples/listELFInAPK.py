@@ -39,8 +39,10 @@ import argparse
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="test!!")
     parser.add_argument('-d', '--apkpath', help='app name', nargs='?', default="")
+    parser.add_argument('-c', '--diction', help='app name', nargs='?', default="")
     args = parser.parse_args()
     apkPath=args.apkpath
+    elfDictPath=args.diction
 
     apkName = os.path.basename(apkPath)
     apkName = os.path.splitext(apkName)[0]
@@ -48,7 +50,7 @@ if __name__ == "__main__":
     dirname = os.path.dirname(apkPath)
     outPath = os.path.join(dirname,outName)
 
-    elfDictPath = 'res/elfDict.txt'
+    # elfDictPath = 'res/elfDict.txt'
     elfDict = readDict(elfDictPath)
 
     if not os.path.exists(outPath):

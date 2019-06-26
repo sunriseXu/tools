@@ -14,3 +14,7 @@ build
 # My configurations:
 db.ini
 settings.json
+
+# dir
+/tmp*
+/.vscode/
