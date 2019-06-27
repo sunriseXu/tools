@@ -1,53 +1,41 @@
-#/usr/bin/python
-import os
-import sys
-import subprocess
+
 import argparse
-from modules.FileUtils import *
-from modules.InteractUtils import *
-from modules.ThreadUtils import execute_command
-
-
+from rooms import FileRoom
+from modules import FileUtils
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="test!!")
-    parser.add_argument('-d', '--dirname', help='app name', nargs='?', default="")
     parser.add_argument('-c', '--dict', help='app name', nargs='?', default="")
     args = parser.parse_args()
-    dirPath=args.dirname
     elfDict=args.dict
-    
-    testedPath = './tmp.txt'
-    testedList = readList(testedPath)
-    fileList = listDir(dirPath)
-    for item in fileList:
-        if item in testedList:
-            continue
-        
-        fileName = os.path.basename(item)
-        # print fileName
-        # tmp = os.path.splitext(fileName)
-        # if len(tmp) == 1:
-        #     continue
-        # ext = tmp[1]
-        
-        # if 'apk' not in ext:
-        #     continue
-        tmp = getFileType(item)
-        if 'zip archive data' not in tmp.lower():
-            continue    
-        print item
-        cmd = 'python examples/listELFInAPK.py -d %s -c %s' %(item,elfDict)
-        # sub = subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
-        # res = sub.stdout.read()
-        res = execute_command(cmd, 60)
-        print res
-        # print 'tap to continue...'
-        testedList.append(item)
-        writeList(testedList,testedPath)
-        print '\n'
-        # raw_input()
 
-    # allelfPath='./allelf.txt'
-    # allelfList = readList(allelfPath)
-    # pathListCopy(allelfList,'~/Desktop/allelf')
-    # print('done')
+    mydict = FileUtils.readDict(elfDict)
+    resdict = FileRoom.statisticLists(mydict)
+    for i in sorted(resdict.items(),key=lambda item: item[1][0]):
+        print i[0],i[1][0]
+    
+    dir1='res/elfDict.txt'
+    dir2='res/smaliDict.txt'
+    dir3 = 'res/elfDictNor.txt'
+    dict1=FileUtils.readDict(dir1)
+    dict2=FileUtils.readDict(dir2)
+    dictNor = FileUtils.readDict(dir3)
+    norElfList = dictNor.values()
+    norList = []
+    for i in norElfList:
+        for j in i:
+            if j not in norList:
+                norList.append(j)
+    # print norList
+    
+    dict3={}
+    for key,value in dict1.items():
+        if len(value)>0 and (key in dict2.keys()) and len(dict2[key])>0:
+
+            print key
+            print('\telf:'),
+            for i in value:
+                if i not in norList:
+                    print(i),
+            print '\n'
+            print '\tsmali',dict2[key]
+    # print dict3

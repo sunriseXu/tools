@@ -38,9 +38,11 @@ import argparse
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="test!!")
     parser.add_argument('-d', '--apkpath', help='app name', nargs='?', default="")
+    parser.add_argument('-c', '--cdict', nargs='?', default="")
     parser.add_argument('-s', '--string', help='string to find', nargs='?', default="")
     args = parser.parse_args()
     apkPath=args.apkpath
+    dictPath= args.cdict
     myString = args.string
 
     apkName = os.path.basename(apkPath)
@@ -49,6 +51,9 @@ if __name__ == "__main__":
     
     outName = apkName+'-output'
     outPath = os.path.join(dirname,outName)
+
+    mydict = readDict(dictPath)
+
     whiteList=[
         ('android','support'),
         ('tencent','bugly'),
@@ -65,8 +70,12 @@ if __name__ == "__main__":
                 continue
             res = findInFile(item,myString)
             if res:           
-                resList.append(item)
+                resList.append(os.path.basename(item))
     
+    if apkName not in mydict.keys():
+        mydict.update({apkName:resList})
+        writeDict(mydict,dictPath)
+
     l.warning("*****%slist*******",myString)
     l.warning('list length:%d',len(resList))
     showList(resList)

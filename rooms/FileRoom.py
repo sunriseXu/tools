@@ -3,6 +3,7 @@ import sys
 import subprocess
 import random
 import logging
+import argparse
 logging.basicConfig()
 
 pwd = os.path.dirname(os.path.realpath(__file__))
@@ -46,8 +47,20 @@ def filterFileContent(filePath, splitStr):
         filtered=line.strip().split()[0]
         resList.append(filtered)
     return resList
-
-import argparse
+def statisticLists(myDict):
+    '''
+    staticstic frequency in list<list>, {'a':[1,2],'b':[2,3]}=>{1:[1,['a']],2:[2,['a','b']],3:[1,['b']]}
+    '''
+    resDict={}
+    for key,value in myDict.items():
+        uniqList = list(set(value))
+        for item in uniqList:
+            if item not in resDict.keys():
+                resDict.update({item:[1,[key]]})
+            else:
+                resDict[item][0] += 1
+                resDict[item][1].append(key)
+    return resDict
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="test!!")
     parser.add_argument('-s', '--src', help='app name', nargs='?', default="")
@@ -61,3 +74,6 @@ if __name__ == "__main__":
     # srcDir = 'C:\\Users\\limin\\Desktop\\normal5000_filter\\normal_test_5000'
     # destDir = 'C:\\Users\\limin\\Desktop\\tmp'
     randomCopy(srcDir, destDir, copyNum)
+    # testDict = {'a':[1,2],'b':[2,3]}
+    # res = statisticLists(testDict)
+    # print res
