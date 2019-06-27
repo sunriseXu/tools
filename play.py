@@ -7,17 +7,7 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--dict', help='app name', nargs='?', default="")
     args = parser.parse_args()
     elfDict=args.dict
-
-    mydict = FileUtils.readDict(elfDict)
-    resdict = FileRoom.statisticLists(mydict)
-    for i in sorted(resdict.items(),key=lambda item: item[1][0]):
-        print i[0],i[1][0]
-    
-    dir1='res/elfDict.txt'
-    dir2='res/smaliDict.txt'
     dir3 = 'res/elfDictNor.txt'
-    dict1=FileUtils.readDict(dir1)
-    dict2=FileUtils.readDict(dir2)
     dictNor = FileUtils.readDict(dir3)
     norElfList = dictNor.values()
     norList = []
@@ -25,6 +15,20 @@ if __name__ == '__main__':
         for j in i:
             if j not in norList:
                 norList.append(j)
+
+    mydict = FileUtils.readDict(elfDict)
+    resdict = FileRoom.statisticLists(mydict)
+    for i in sorted(resdict.items(),key=lambda item: item[1][0]):
+        if i[0] in norList:
+            continue
+        print i[0],i[1][0]
+    
+    dir1='res/elfDict.txt'
+    dir2='res/smaliDict.txt'
+    
+    dict1=FileUtils.readDict(dir1)
+    dict2=FileUtils.readDict(dir2)
+    
     # print norList
     
     dict3={}
