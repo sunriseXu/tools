@@ -44,8 +44,8 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag):
 	handle = subprocess.Popen(logcmdarg,stdout=logcat_file,stderr=subprocess.PIPE)
 	if interactFlag:
 		l.warning("press some key to stop logcat...")
-		# time.sleep(testTime)
-		raw_input()
+		time.sleep(testTime)
+		# raw_input()
 	else:
 		i=0
 		while i<6:
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 	keepAll=args.keepall
 	logsDir=args.logsdir
 	pureStop=True
-	testInListFlag=False
+	testInListFlag=True
 	apkItems= []
 	logDir=logsDir+"/logs/traces/"
 	tmplogDir=logsDir+"/logs/tmplog/"

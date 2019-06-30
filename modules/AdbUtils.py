@@ -4,6 +4,7 @@ import time
 import logging
 import subprocess
 from InteractUtils import *
+from ThreadUtils import execute_command
 logging.basicConfig()
 l = logging.getLogger("AdbUtils")
 
@@ -132,3 +133,20 @@ def stopMonkey(selectedDevId):
 		monkeyUid=monkeyUid.strip().split()[1]
 		killUidCmd='adb'+selectedDevId+' shell "kill %s"' %(monkeyUid)
 		os.popen(killUidCmd)
+
+def pullFile(selectedDevId,srcPath, destPath,timeout=10):
+	cmd = 'adb -s %s pull %s %s' %(selectedDevId,srcPath,destPath)
+	# some issue here, if timeout not set, the process will hang! to do
+	res = execute_command(cmd,timeout)
+	# l.warning(res)
+
+# def pullRootFile(selectedDevId, srcPath, destPath, timeout=10):
+
+
+
+if __name__ == "__main__":
+	devId,devNum=chooseDevice()
+	# print devId
+	srcPath = '/sdcard/newdex'
+	destPath = 'C:\\Users\\limin\\Desktop\\tmp2'
+	pullFile(devId,srcPath,destPath,5)

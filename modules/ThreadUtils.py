@@ -37,7 +37,9 @@ def execute_command(cmdstring, timeout=None):
         sub=subprocess.Popen(cmdstring,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     except OSError:
         return 'OSError'
-    while sub.poll() is None:
+    while True:
+        if sub.poll() is not None:
+            break
         time.sleep(0.1)
         # print 'poll is none'
         if timeout:
