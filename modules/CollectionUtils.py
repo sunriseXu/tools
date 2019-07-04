@@ -10,6 +10,28 @@ import logging
 logging.basicConfig()
 l = logging.getLogger("CollectionUtils")
 
+
+def listIntersection(a, b):
+	myIntersection = list(set(a).intersection(set(b)))
+	return myIntersection
+
+def listUnion(a, b):
+	myUnion = list(set(a).union(set(b)))
+	return myUnion
+
+def listDifference(a, b):
+	myDiff = list(set(a).difference(set(b)));
+	return myDiff
+def listMerge(*lists):
+	'''
+	merge all list in lists:
+	'''
+	allList = []
+	for mylist in lists:
+		allList += mylist
+	return allList
+
+
 def trimListItem(myList,unHeadStr='', unTailStr=''):
 	'''
 	trim list items, 'log_abc.txt' unHeadStr='log_' unTailStr='.txt' =>'abc'

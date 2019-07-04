@@ -62,10 +62,12 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag):
 			l.warning("pass check!")
 		clickWelcome(selectedDevId)
 		clickWelcome(selectedDevId)
+		stopMonkey(selectedDevId)
 		p = multiprocessing.Process(target=startMonkey, args=(packageName,selectedDevId,))
 		p.start()
+		p.join(testTime)
 		l.warning("waiting,loging...")
-		time.sleep(testTime)
+		# time.sleep(testTime)
 	handle.terminate()
 	stopMonkey(selectedDevId)
 

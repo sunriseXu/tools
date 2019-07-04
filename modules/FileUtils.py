@@ -62,6 +62,7 @@ def readList(myPath):
 	reslist=[]
 	if not os.path.exists(myPath):
 		temp=open(myPath,'w')
+		l.warning("%s not exist! created instead",myPath)
 		temp.close()
 	with open(myPath,"r") as file:
 		mystr=file.read()

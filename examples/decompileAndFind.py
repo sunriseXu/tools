@@ -72,7 +72,7 @@ if __name__ == "__main__":
             if res:           
                 resList.append(os.path.basename(item))
     
-    if apkName not in mydict.keys():
+    if (apkName not in mydict.keys()) and (len(resList)>0) :
         mydict.update({apkName:resList})
         writeDict(mydict,dictPath)
 
