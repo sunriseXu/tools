@@ -10,6 +10,9 @@ Desktop.ini
 *.egg-info
 dist
 build
+*.java
+*.png
+nul
 
 # My configurations:
 db.ini

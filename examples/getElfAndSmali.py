@@ -1,7 +1,19 @@
-
+#!/usr/bin/python
+import os
+import sys
+import subprocess
+import logging
 import argparse
+
+pwd = os.path.dirname(os.path.realpath(__file__))
+ppwd = os.path.dirname(pwd)
+sys.path.append(ppwd)
+
+
 from rooms import FileRoom
 from modules import FileUtils
+from modules import CollectionUtils
+from modules import InteractUtils
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="test!!")
     parser.add_argument('-c', '--dict', help='app name', nargs='?', default="")
@@ -31,15 +43,17 @@ if __name__ == '__main__':
     
     # print norList
     
-    dict3={}
+    filteredList=[]
     for key,value in dict1.items():
-        if len(value)>0 and (key in dict2.keys()) and len(dict2[key])>0:
-
-            print key
-            print('\telf:'),
+        tmplist =[]
+        if len(value)>0 :#and len(dict2[key])>0:#and (key in dict2.keys()) 
             for i in value:
                 if i not in norList:
-                    print(i),
-            print '\n'
-            print '\tsmali',dict2[key]
-    # print dict3
+                    tmplist.append(i)
+            if len(tmplist)>0:
+                filteredList.append(key)
+    # filteredList = CollectionUtils.graftListItem(filteredList,'','.apk')
+    src = '/home/limin/Desktop/malware/rog'
+    rogwithsodir='/home/limin/Desktop/rogwithso2'
+    InteractUtils.showList(filteredList)
+    FileUtils.listCopy(filteredList,src,rogwithsodir)
