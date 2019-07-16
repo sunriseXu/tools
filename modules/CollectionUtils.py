@@ -105,6 +105,17 @@ def appendDict(mydict,key,myValue):
 		mydict.update({key:myValue})
 	return mydict
 
+def queryValueOfDict(myDict, myValue):
+    '''
+    query value in dict, return key
+    '''
+    try:
+        myKey = list(myDict.keys())[list(myDict.values()).index(myValue)]
+    except ValueError:
+        print 'search %s error!' %myValue
+        return ''
+    return myKey
+
 def dictMerge(*dicts):
     '''
     merge all dict in dicts, return merged dict. len(dicts)>=2
@@ -116,6 +127,27 @@ def dictMerge(*dicts):
     for mydict in dicts:
         resDict=dict(resDict,**mydict)
     return resDict
+
+def typeof(variate):
+	type=None
+	if isinstance(variate,int):
+		type = "int"
+	elif isinstance(variate,str):
+		type = "str"
+	elif isinstance(variate,float):
+		type = "float"
+	elif isinstance(variate,list):
+		type = "list"
+	elif isinstance(variate,tuple):
+		type = "tuple"
+	elif isinstance(variate,dict):
+		type = "dict"
+	elif isinstance(variate,set):
+		type = "set"
+	elif isinstance(variate, unicode):
+		type = "unicode"
+	return type
+
 
 if __name__ == "__main__":
     a={'a':'aa','b':'bb'}

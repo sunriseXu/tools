@@ -11,21 +11,13 @@ def log2file(filePath,uid,selectedDevId):
     handle = subprocess.Popen(logcmd,stdout=logcat_file,stderr=subprocess.PIPE)
     time.sleep(2)
     handle.terminate()
-def renameAll(srcDir):
-    mylist = FileUtils.listDir2(srcDir)
-    for i in mylist:
-        srcpath=os.path.join(srcDir,i)
-        ri = i.split('log_')[1]
-        destpath=os.path.join(srcDir,ri)
-        os.rename(srcpath,destpath)
+
 import os
 import shutil
 if __name__ == "__main__":
     mal1='C:\\Users\\limin\\Desktop\\maltrain_test2500\\trainmalicious'
     mal2='C:\\Users\\limin\\Desktop\\maltrain_test2500\\testmalicious_ruled500'
     mal3='C:\\Users\\limin\\Desktop\\allMal\\malAll'
-    mal4=''
-    mal5=''
 
     mallist1=FileUtils.listDir2(mal1)
     mallist2=FileUtils.listDir2(mal2)
