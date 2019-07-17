@@ -40,6 +40,17 @@ def listDir2(dirPath):
 	l.debug("list %d files in: %s!",len(fileList),dirPath)
 	return fileList
 
+def listDir3(dirPath):
+	fileList = []
+	if not os.path.exists(dirPath):
+		return fileList
+	for filename in os.listdir(dirPath):
+		basename = os.path.basename(filename)
+		rawname = os.path.splitext(basename)[0]
+		fileList.append(rawname)
+	l.debug("list %d files in: %s!",len(fileList),dirPath)
+	return fileList
+
 def listDirRecur(path):
 	'''
 	recursively list all files/dirs in path, return a list

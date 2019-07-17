@@ -48,8 +48,37 @@ if __name__ == "__main__":
 
     alltrianV1='C:\\Users\\limin\\Desktop\\allMalFinal\\v1_train'
     alltestV1='C:\\Users\\limin\\Desktop\\allMalFinal\\v1_test'
-    trainlist = FileUtils.listDir2(alltrianV1)
-    testlist = FileUtils.listDir2(alltestV1)
-    print len(trainlist)
-    print len(testlist)
-    print len(CollectionUtils.listIntersection(trainlist,testlist))
+    
+    logsdir1='C:\\Users\\limin\\Desktop\\allnor\\logs_45610\\traces'
+    logsdir2='C:\\Users\\limin\\Desktop\\allnor\\logs_53190\\traces'
+    logsdir3='C:\\Users\\limin\\Desktop\\allnor\\logs_60156\\traces'
+    logsdir4='C:\\Users\\limin\\Desktop\\allnor\\logs_huawei1\\traces'
+    logsdir5='C:\\Users\\limin\\Desktop\\allnor\\logs_huawei2\\traces'
+    logsdir6='C:\\Users\\limin\\Desktop\\allnor\\logs_huawei3\\traces'
+    logsdir7='C:\\Users\\limin\\Desktop\\allnor\\logs_origin\\traces'
+    logsdir8='C:\\Users\\limin\\Desktop\\allnor\\logs_pixel1\\traces'
+    logsdir9='C:\\Users\\limin\\Desktop\\allnor\\logs_pixel2_2\\traces'
+    test5Path='C:\\Users\\limin\\Desktop\\allnor\\totest5mi\\toTest.txt'
+    testallpath='C:\\Users\\limin\\Desktop\\allnor\\totest5mi\\toTestall.txt'
+    
+    testalllist = FileUtils.readList(testallpath)
+
+    test5List = FileUtils.readList(test5Path)
+    logsPathList =[logsdir1,logsdir2,logsdir3,logsdir4,logsdir5,logsdir6,logsdir7,logsdir8,logsdir9]
+    
+    LList = []
+    for logpath in logsPathList:
+        mylist = FileUtils.listDir3(logpath)
+        if mylist:
+            LList.extend(mylist)
+    LList.extend(test5List)
+    print len(LList)
+    LList = list(set(LList))
+    print len(LList)
+    print len(testalllist)
+    restalllist = CollectionUtils.listDifference(testalllist, LList)
+    print len(restalllist)
+
+    restallpath='C:\\Users\\limin\\Desktop\\allnor\\restall.txt'
+    FileUtils.writeList(restalllist,restallpath)
+        
