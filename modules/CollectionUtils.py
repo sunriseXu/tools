@@ -106,15 +106,18 @@ def appendDict(mydict,key,myValue):
 	return mydict
 
 def queryValueOfDict(myDict, myValue):
-    '''
-    query value in dict, return key
-    '''
-    try:
-        myKey = list(myDict.keys())[list(myDict.values()).index(myValue)]
-    except ValueError:
-        print 'search %s error!' %myValue
-        return ''
-    return myKey
+	'''
+	query value in dict, return key, it's very costy when query this function too much
+	'''
+	try:
+	    myKey = list(myDict.keys())[list(myDict.values()).index(myValue)]
+	except ValueError:
+	    print 'search %s error!' %myValue
+	    return ''
+	return myKey
+	reversedDict = dict(zip(myDict.values(), myDict.keys()))
+	
+
 
 def dictMerge(*dicts):
     '''

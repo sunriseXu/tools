@@ -37,11 +37,13 @@ def UIRandomClick(packageName,launchActivity):
 			return
 
 
-def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag):
+def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernelFlag):
 	logcat_file = open(filePath, 'w')
 	logcmd="adb"+selectedDevId+" logcat -e "+uid
-	logcmdarg=logcmd.strip().split()
-	handle = subprocess.Popen(logcmdarg,stdout=logcat_file,stderr=subprocess.PIPE)
+	if kernelFlag:
+		logcmd='adb %s shell "dmesg |grep %s"' %(selectedDevId,uid)
+	# logcmdarg=logcmd.strip().split()
+	handle = subprocess.Popen(logcmd,stdout=logcat_file,stderr=subprocess.PIPE)
 	if interactFlag:
 		l.warning("press some key to stop logcat...")
 		time.sleep(testTime)
@@ -100,6 +102,7 @@ if __name__ == "__main__":
 	parser.add_argument("-a", "--interact", help="interactive testing,this is an optional argument", action="store_true")
 	parser.add_argument("-k", "--keepall", help="dont uninstall after test one", action="store_true")
 	parser.add_argument("-l", "--logsdir", help="destination of logs",nargs='?', default=desktopDir)
+	parser.add_argument("-x", "--kernel", help="dont uninstall after test one", action="store_true")
 	args = parser.parse_args() 
 
 	dirName=args.dirname
@@ -109,6 +112,7 @@ if __name__ == "__main__":
 	interactFlag=args.interact
 	keepAll=args.keepall
 	logsDir=args.logsdir
+	kernenflag=args.kernel
 	pureStop=True
 	testInListFlag=True
 	apkItems= []
@@ -202,7 +206,7 @@ if __name__ == "__main__":
 
 			#start to logcat, https://blog.csdn.net/feixueyinjiayue/article/details/49229029
 			tmplogPath = tmplogDir+"/"+apkHash+".txt"
-			log2file(tmplogPath,uid,packageName,selectedDevId,testTime,interactFlag)
+			log2file(tmplogPath,uid,packageName,selectedDevId,testTime,interactFlag,kernenflag)
 
 			#uninstall/stop
 			if not keepAll:
