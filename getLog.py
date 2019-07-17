@@ -120,7 +120,7 @@ if __name__ == "__main__":
 	tmplogDir=logsDir+"/logs/tmplog/"
 	apkInfoPath=logsDir+"/logs/apkInfoDict.txt"
 	errorFilePath=logsDir+"/logs/error.txt"
-	toTestFilePath=logsDir+"/logs/toTest.txt"
+	toTestFilePath=logsDir+"/toTest.txt"
 	testedFilePath=logsDir+"/logs/lastTest.txt"
 	notInstallPath=logsDir+"/logs/notInstalled.txt"
 
