@@ -3,7 +3,7 @@ import os
 import sys
 import subprocess
 import argparse
-
+import shutil
 pwd = os.path.dirname(os.path.realpath(__file__))
 ppwd = os.path.dirname(pwd)
 sys.path.append(ppwd)
@@ -28,27 +28,32 @@ if __name__ == '__main__':
     testedPath = './tmp.txt'
     testedList = readList(testedPath)
     fileList = listDir(dirPath)
+    tmpdir = './tmp'
+    mkdir(tmpdir)
     for item in fileList:
-        if item in testedList:
+        apkName = os.path.basename(item)
+        destPath = os.path.join(tmpdir, apkName)
+        shutil.copy(item, destPath)
+
+        if apkName in testedList:
             continue
         
-        fileName = os.path.basename(item)
-        tmp = getFileType(item)
+        tmp = getFileType(destPath)
         if 'zip archive data' not in tmp.lower():
             continue    
-        print item
+        print destPath
         
-        cmd = 'python %s/listELFInAPK.py -d %s -c %s' %(pwd,item,elfDict)
+        cmd = 'python %s/listELFInAPK.py -d %s -c %s' %(pwd,destPath,elfDict)
         print cmd
         res = execute_command(cmd, 60)
         print res
 
-        cmd = 'python %s/decompileAndFind.py -d %s -s %s -c %s' %(pwd,item,mystr,smaliDict)
-        print cmd
-        res = execute_command(cmd, 60)
-        print res
-
-        testedList.append(item)
+        # cmd = 'python %s/decompileAndFind.py -d %s -s %s -c %s' %(pwd,item,mystr,smaliDict)
+        # print cmd
+        # res = execute_command(cmd, 60)
+        # print res
+        os.remove(destPath)
+        testedList.append(apkName)
         writeList(testedList,testedPath)
         print '\n'
         # raw_input()

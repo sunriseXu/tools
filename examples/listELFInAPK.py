@@ -80,13 +80,14 @@ if __name__ == "__main__":
         if elfName not in elfNameList:
             elfNameList.append(elfName)
 
-    if apkName not in elfDict.keys():
+    if (apkName not in elfDict.keys()) and len(elfNameList)>0:
         elfDict.update({apkName:elfNameList})
         writeDict(elfDict,elfDictPath)
 
     l.warning("*****elfList*******")
     l.warning('list length:%d',len(elfFileList))
     showList(elfFileList)
+    shutil.rmtree(outPath)
 
 
     
