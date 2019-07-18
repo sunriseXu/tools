@@ -1,189 +1,78 @@
 #coding=utf-8
 from modules import FileUtils
 from modules import CollectionUtils
-from rooms import FileRoom
+
 from modules import RexUtils
 from modules import AdbUtils
+from modules import ApkUtils
+from modules.FileUtils import EasyDir
 import os
 import shutil
 import random
-class EasyDir:
-    def __init__(self, myDir):
-        self.currentDir = myDir
-        self.fileNameList = FileUtils.listDir2(myDir)
-        self.absPathDict = {}
-        for fileName in self.fileNameList:
-            absPath = os.path.join(myDir, fileName)
-            self.absPathDict.update({fileName:absPath})
-    def getFileAbsPath(self, fileName):
-        if fileName not in self.absPathDict:
-            return ''
-        return self.absPathDict[fileName]
-    def getAbsPathDict(self):
-        return self.absPathDict
-    def rexFindPath(self, myRex):
-        resDict = {}
-        for key,value in self.absPathDict.items():
-            if len(RexUtils.rexFind(myRex, key))>0:
-                resDict.update({key:value})
-        return resDict
-    
-    def getCatPath(self, fileName):
-        return os.path.join(self.currentDir,fileName)
-
-def mergeAllDict(myDir, myRex):
-    norDir = EasyDir(myDir)
-    norDictPath =norDir.rexFindPath(myRex)
-    norList = []
-    for i in norDictPath.values():
-        norList.append(FileUtils.readDict(i))
-    print len(norList)
-    norMerged = CollectionUtils.dictMerge(*norList)
-    norpkg ={}
-    for key, value in norMerged.items():
-        pkg=''
-        if CollectionUtils.typeof(value) in 'list':
-            pkg = value[0]
-        else:
-            pkg = value
-        norpkg.update({key:pkg})
-    return norpkg
-
-def pkg2Hash(pkgList, pkgNameDict):
-    '''
-    replace all pkgName in pkgList to its hash according to pkgName-Hash Dict
-    return a hash list
-    '''
-    if len(pkgList)==0:
-        return
-    resList = []
-    hashList = pkgNameDict.values()
-    for pkg in pkgList:
-        if pkg in hashList:
-            resList.append(pkg)
-            continue       
-        try:
-            myHash = pkgNameDict[pkg]
-        except KeyError:
-            print 'searching %s error!' %pkg
-            continue
-        resList.append(myHash)
-    return resList
-
-def pkg2HashInDir(myDir, pkgFileRex, malFlag):
-    pkgDir = EasyDir(myDir)
-    absDict = pkgDir.getAbsPathDict()
-    
-    fileNameRex = pkgFileRex
-    myFileDict = pkgDir.rexFindPath(fileNameRex)
-
-    malDict = FileUtils.readDict(absDict['allMalDict.txt'])
-    norDict = FileUtils.readDict(absDict['allNorDict.txt'])
-
-    malDict = dict(zip(malDict.values(), malDict.keys()))
-    norDict = dict(zip(norDict.values(), norDict.keys()))
-    selectDict = norDict
-    if malFlag:
-        selectDict = malDict
-    for key,value in myFileDict.items():
-        print key,value
-        pkgList = FileUtils.readList(value)
-        print len(pkgList)
-        hashList = pkg2Hash(pkgList,selectDict)
-        if not hashList:
-            print 'error******'
-            continue
-        print len(hashList)
-        FileUtils.writeList(hashList,pkgDir.getCatPath(key+'_hash'))
-
-def getHashPkgDict(myDir):
-    allApkPathList = FileUtils.listDir(myDir)
-    hashPkgDict = {}
-    idx = 0
-    for apkPath in allApkPathList:
-        idx += 1
-        print idx
-        apkHash = FileUtils.getFileName(apkPath)
-        packageName=AdbUtils.getApkInfo(apkPath,"package: name=")
-        print apkHash,packageName
-        if packageName:
-            hashPkgDict.update({apkHash:packageName})
-    return hashPkgDict
-
-def splitMalware():
-    return
+import logging
 import sys
+from rooms.FileRoom import *
+
+logging.basicConfig()
+l = logging.getLogger("playground")
+
+
+
 if __name__ == "__main__":
-    
-    # testalllist = FileUtils.readList(testallpath)
-
-    # test5List = FileUtils.readList(test5Path)
-    # logsPathList =[logsdir1,logsdir2,logsdir3,logsdir4,logsdir5,logsdir6,logsdir7,logsdir8,logsdir9]
-    
-    # LList = []
-    # for logpath in logsPathList:
-    #     mylist = FileUtils.listDir3(logpath)
-    #     if mylist:
-    #         LList.extend(mylist)
-    # LList.extend(test5List)
-    # print len(LList)
-    # LList = list(set(LList))
-    # print len(LList)
-    # print len(testalllist)
-    # restalllist = CollectionUtils.listDifference(testalllist, LList)
-    # print len(restalllist)
-
-    # restallpath='C:\\Users\\limin\\Desktop\\allnor\\restall.txt'
-    # FileUtils.writeList(restalllist,restallpath)
-    # 一个类，表示一个目录，只要一个文件名就能够获取文件的路径，basename和去后缀的basename
-    # 我已经受够了无限的windows路径
-    pkgDir = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg')
-    pkgPathDict = pkgDir.getAbsPathDict()
-
+    # # 对目标目录下的pkgList文件通过hash-pkg字典进行转换，变成对应的hashList文件，写入目标目录，两个字典文件也需要在目标目录下
     # pkg2HashInDir('C:\\Users\\limin\\Desktop\\v1pkg',r'v1_train_nor',False)
-    # # pkg2HashInDir('C:\\Users\\limin\\Desktop\\v1pkg',r'v1.*?mal',True)
+    # pkg2HashInDir('C:\\Users\\limin\\Desktop\\v1pkg',r'v1.*?mal',True)
     
-    # sys.exit()
-    v1TrainMal = FileUtils.readList(pkgPathDict['v1_train_mal_hash'])
-    v1TestMal = FileUtils.readList(pkgPathDict['v1_test_mal_hash'])
-    v1TrainNor = FileUtils.readList(pkgPathDict['v1_train_nor_hash'])
-    v1TestNor = FileUtils.readList(pkgPathDict['v1_test_nor'])
-
-    v2TrainMal = FileUtils.readList(pkgPathDict['v2_train_mal'])
-    v2TestMal = FileUtils.readList(pkgPathDict['v2_test_mal'])
-    v2TrainNor = FileUtils.readList(pkgPathDict['v2_train_nor'])
-    v2TestNor = FileUtils.readList(pkgPathDict['v2_test_nor'])
-
-    test1 = v2TrainNor
-    test2 =  v2TestNor
-
-
-    mydir = 'C:\\Users\\limin\\Desktop\\allMalDict'
-    malDictDir = EasyDir(mydir)
-    malDict = malDictDir.getAbsPathDict()
-
-    payDict = FileUtils.readDict(malDict['payAllDict.txt'])
-    rogDict = FileUtils.readDict(malDict['rogAllDict.txt'])
-    stealDict = FileUtils.readDict(malDict['stealAllDict.txt'])
-
-    paylist = FileUtils.listDir3("C:\\Users\\limin\\Desktop\\malware_test\\logs_rog\\rog_ruled")
+    # # 读取目标目录下的所有hashList文件，并且计算list之间的交集 并集 差集
+    # pkgDir = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg')
+    # pkgPathDict = pkgDir.getAbsPathDict()
+    # v1TrainMal = FileUtils.readList(pkgPathDict['v1_train_mal_hash'])
+    # v1TestMal = FileUtils.readList(pkgPathDict['v1_test_mal_hash'])
+    # v1TrainNor = FileUtils.readList(pkgPathDict['v1_train_nor_hash'])
+    # v1TestNor = FileUtils.readList(pkgPathDict['v1_test_nor'])
+    # v2TrainMal = FileUtils.readList(pkgPathDict['v2_train_mal'])
+    # v2TestMal = FileUtils.readList(pkgPathDict['v2_test_mal'])
+    # v2TrainNor = FileUtils.readList(pkgPathDict['v2_train_nor'])
+    # v2TestNor = FileUtils.readList(pkgPathDict['v2_test_nor'])
+    # test1 = v1TrainMal+v1TestMal
+    # print len(test1)
+    # test2 =  v2TrainMal+v2TestMal
+    # print len(test2)
+    # print len(CollectionUtils.listIntersection(test1,test2))
     
-
-    payList = []
-    rogList = []
-    stealList = []
-    for apkhash in paylist:
-        if apkhash in payDict:
-            payList.append(apkhash)
-        elif apkhash in rogDict:
-            rogList.append(apkhash)
-        elif apkhash in stealDict:
-            stealList.append(apkhash)
-        else:
-            print '%s dont match any one' %apkhash
-    print len(payList)
-    print len(rogList)
-    print len(stealList)
+    # # 首先对源目录下的log文件去掉log_前缀，然后根据hash-pkg字典对目录下所有以包名命名的log文件重命名成hash命名的文件
+    # srcdir = 'C:\\Users\\limin\\Desktop\\malfromHR\\testmalicious'
+    # FileRoom.trimAllPrefix(srcdir)
+    # destdir = 'C:\\Users\\limin\\Desktop\\malfromHR\\testmalicious_hash'
+    # FileRoom.renamePkg2Hash(srcdir,destdir,'C:\\Users\\limin\\Desktop\\allMalDict\\allMalDict.txt')
     
+    # # 读取文件夹下的logList，进行3种分类
+    # malList = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\v1Test500')
+    # splitMalware(malList)
 
+    # # 对不同文件夹下的文件进行读取，批量处理多个文件夹的文件
+    # # 1. 现在分出新的v1集合，首先从v2中读取已经分出来的列表，从目录获取文件，然后与list文件进行验证 
+    # # 2. 读取ruled文件夹下的list，同样和list进行验证
+    # # 3. 验证通过后 取差集，然后random选择 667 ， 再次取差集 random选择167 形成相应list，写入文件，然后根据list写入v1 train和test文件夹下
+    # pdirnameList = ['malSteal','malPay','malRog']
+    # for pdirname in pdirnameList:
+    #     srcDir = 'C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\%s' %pdirname
+    #     mysrcDir = EasyDir(srcDir)
+    #     childPathDict = mysrcDir.getAbsPathDict()
+    #     v2_train_list = FileUtils.readList(childPathDict['uploaded667.txt'])
+    #     v2_test_list = FileUtils.readList(childPathDict['ruled_test167.txt'])
 
+    #     v1_train_list = FileUtils.readList(childPathDict['v1Train667.txt'])
+    #     v1_test_list = FileUtils.readList(childPathDict['v1Test167.txt'])
+        
+    #     v1_train_dir_list = FileUtils.listDir3(childPathDict['v1Train667'])
+    #     v1_test_dir_list  = FileUtils.listDir3(childPathDict['v1Test167'])
+    #     all_ruled_dir_list = FileUtils.listDir3(childPathDict['ruled'])
+    #     # check valid
+    #     test1 = v1_test_list
+    #     test2 = v1_train_list
+    #     print len(test1)
+    #     print len(test2)
+    #     print len(CollectionUtils.listIntersection(test1,test2))
+    pass
+        

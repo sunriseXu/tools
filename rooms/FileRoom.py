@@ -13,6 +13,7 @@ sys.path.append(ppwd)
 
 from modules import FileUtils
 from modules import CollectionUtils
+from modules.FileUtils import EasyDir
 
 
 l = logging.getLogger("FileRoom")
@@ -77,6 +78,8 @@ def mergeAndWriteDict(srcPathList,destPath):
 def trimAllPrefix(srcDir):
     mylist = FileUtils.listDir2(srcDir)
     for i in mylist:
+        if 'log_' not in i:
+            continue
         srcpath=os.path.join(srcDir,i)
         ri = i.split('log_')[1]
         destpath=os.path.join(srcDir,ri)
@@ -84,7 +87,11 @@ def trimAllPrefix(srcDir):
 
 def renamePkg2Hash(srcDir, destDir, apkInfoDictPath):
     '''
-    rename all pkgname file in srcdir to hash name according to apkinfodict
+    rename all pkgname file in srcdir to hash name according to apkinfoDict
+    copy renamed file to destdir
+    usage egg:
+    renamePkg2Hash('./srcdir','./destdir','./allMalDict.txt')
+    such as: com.example.pkg.txt -> 123456789.txt
     '''
     fileList = FileUtils.listDir2(srcDir)
     fileList = CollectionUtils.trimListItem(fileList,'','.txt')
@@ -104,16 +111,142 @@ def renamePkg2Hash(srcDir, destDir, apkInfoDictPath):
     hashList = newdict.keys()
     hashList = [str(i) for i in hashList]
     FileUtils.mkdir(destDir)
+    newdict = dict(zip(newdict.values(), newdict.keys()))
     for pkg in fileList:
         if pkg in hashList:
             myHash = pkg
         else:
-            myHash = CollectionUtils.queryValueOfDict(newdict,pkg)
+            myHash = newdict[pkg]
         if not myHash:
-            return 
+            print 'error!'
+            continue 
         srcPath = os.path.join(srcDir, pkg+'.txt')
         destPath = os.path.join(destDir,myHash+'.txt')
         shutil.copy(srcPath, destPath)
+
+def splitMalware(mergedList):
+    '''
+    描述：将总hashList分类成三类恶意样本的lists
+    1. mydir 存放所有三类恶意样本的hash-pkgName字典文件，每类大概三千多个（不到四千）
+    2. mydir固定为C:\\Users\\limin\\Desktop\\allHashDict\\allMalDict
+    '''
+    mydir = 'C:\\Users\\limin\\Desktop\\allHashDict\\allMalDict'
+    #读取三类样本字典
+    malDictDir = EasyDir(mydir)
+    malDict = malDictDir.getAbsPathDict()
+    payDict = FileUtils.readDict(malDict['payAllDict.txt'])
+    rogDict = FileUtils.readDict(malDict['rogAllDict.txt'])
+    stealDict = FileUtils.readDict(malDict['stealAllDict.txt'])
+
+    payList = []
+    rogList = []
+    stealList = []
+    #匹配
+    for apkhash in mergedList:
+        if apkhash in payDict:
+            payList.append(apkhash)
+        elif apkhash in rogDict:
+            rogList.append(apkhash)
+        elif apkhash in stealDict:
+            stealList.append(apkhash)
+        else:
+            print '%s dont match any one' %apkhash
+    print 'pay: ',len(payList)
+    print 'rog: ',len(rogList)
+    print 'steal:', len(stealList)
+    # todo 可以将结果写入文件
+    return
+
+def pkg2Hash(pkgList, pkgNameDict):
+    '''
+    replace all pkgName in pkgList to its hash according to pkgName-Hash Dict(not hash-pkgName dict!)
+    so you need to reverse dict
+    return a hash list
+    '''
+    if len(pkgList)==0:
+        return
+    resList = []
+    # get all hash name 
+    hashList = pkgNameDict.values()
+    for pkg in pkgList:
+        # if the pkg is already a hash name, just append it 
+        if pkg in hashList:
+            resList.append(pkg)
+            continue       
+        try:
+            # else find its hash in pkgName-hash dict
+            myHash = pkgNameDict[pkg]
+        except KeyError:
+            l.error('searching %s key error!',pkg)
+            continue
+        resList.append(myHash)
+    return resList
+
+
+def pkg2HashInDir(myDir, pkgFileRex, malFlag):
+    '''
+    描述：将存放包名list的文件根据hash-pkg字典转换成hashList的文件
+    1.存放allMalDict.txt allNorDict.txt和pgk列表文件的文件夹myDir，其中dict={hash:pkg}
+    2.需要替换成hash列表的pkg的正则匹配式pkgFileRex
+    3.替换过程中需要查询的dict种类，标记malflag为真，那么查询maldict，反之
+    4.替换成hash名的列表写入相应文件的_hash新文件中
+    '''
+    pkgDir = EasyDir(myDir)
+    absDict = pkgDir.getAbsPathDict()
+    # get all matched listFile paths
+    fileNameRex = pkgFileRex
+    myFileDict = pkgDir.rexFindPath(fileNameRex)
+
+    malDict = FileUtils.readDict(absDict['allMalDict.txt'])
+    norDict = FileUtils.readDict(absDict['allNorDict.txt'])
+    # reverse dicts 
+    malDict = dict(zip(malDict.values(), malDict.keys()))
+    norDict = dict(zip(norDict.values(), norDict.keys()))
+    # choose a dict to query
+    selectDict = norDict
+    if malFlag:
+        selectDict = malDict
+    for key,value in myFileDict.items():
+        # key is listfile name, value is its AbsPath
+        # now read the matched listFile one by one
+        pkgList = FileUtils.readList(value)
+        # print len(pkgList)
+        # print len(pkgList[0])
+        hashList = pkg2Hash(pkgList,selectDict)
+        if not hashList:
+            l.warning('deal %s error!',key)
+            continue
+        # write hashList to hashFile in pkgDir
+        FileUtils.writeList(hashList,pkgDir.getCatPath(key+'_hash'))
+
+def mergeAllDict(myDir, myRex):
+    '''
+    desc: merge all apkInfoDicts into pkgNameDict
+    1. myDir reserve all dict files you need to merge
+    2. use myRex to match the dict file names you want to merge
+    3. convert merged dict value to str type when its value is list type
+    4. return merged and converted dict
+    '''
+    # create a obj to store dir info
+    norDir = EasyDir(myDir)
+    # find all dicts match the myRex, return a dict {dictfileName:dictAbsPath}
+    norDictPath =norDir.rexFindPath(myRex)
+    # reading all matched dictFiles and append them to a list
+    norList = []
+    for i in norDictPath.values():
+        norList.append(FileUtils.readDict(i))
+    # dict merge operation
+    norMerged = CollectionUtils.dictMerge(*norList)
+    # convert value list in merged dict to str type
+    norpkg ={}
+    for key, value in norMerged.items():
+        pkg=''
+        if CollectionUtils.typeof(value) in 'list':
+            pkg = value[0]
+        else:
+            pkg = value
+        norpkg.update({key:pkg})
+    return norpkg
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="test!!")

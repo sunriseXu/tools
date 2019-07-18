@@ -5,6 +5,7 @@ import logging
 import subprocess
 from InteractUtils import *
 from ThreadUtils import execute_command
+from FileUtils import *
 logging.basicConfig()
 l = logging.getLogger("AdbUtils")
 
@@ -23,6 +24,20 @@ def getApkInfo(apkPath,param):
 				break
 		line=res.readline()
 	return paramValue
+
+def getHashPkgDict(myDir):
+    allApkPathList = listDir(myDir)
+    hashPkgDict = {}
+    idx = 0
+    for apkPath in allApkPathList:
+        idx+=1
+        print(str(idx)+', '),
+        apkHash = getFileName(apkPath)
+        packageName= getApkInfo(apkPath,"package: name=")
+        # print apkHash,packageName
+        if packageName:
+            hashPkgDict.update({apkHash:packageName})
+    return hashPkgDict
 
 def getUid(packageName, selectedDevId):
 	getUidCom='adb'+selectedDevId+' shell "dumpsys package %s | grep userId="' %(packageName)

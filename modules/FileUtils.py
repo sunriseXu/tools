@@ -8,8 +8,32 @@ import shutil
 import sys
 import subprocess
 import logging
+from modules.RexUtils import rexFind
 logging.basicConfig()
 l = logging.getLogger("FileUtils")
+
+class EasyDir:
+    def __init__(self, myDir):
+        self.currentDir = myDir
+        self.fileNameList = listDir2(myDir)
+        self.absPathDict = {}
+        for fileName in self.fileNameList:
+            absPath = os.path.join(myDir, fileName)
+            self.absPathDict.update({fileName:absPath})
+    def getFileAbsPath(self, fileName):
+        if fileName not in self.absPathDict:
+            return ''
+        return self.absPathDict[fileName]
+    def getAbsPathDict(self):
+        return self.absPathDict
+    def rexFindPath(self, myRex):
+        resDict = {}
+        for key,value in self.absPathDict.items():
+            if len(rexFind(myRex, key))>0:
+                resDict.update({key:value})
+        return resDict
+    def getCatPath(self, fileName):
+        return os.path.join(self.currentDir,fileName)
 
 def mkdir(path):
 	folder = os.path.exists(path)
