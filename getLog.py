@@ -42,7 +42,7 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernel
 	logcmd="adb"+selectedDevId+" logcat -e "+uid
 	if kernelFlag:
 		logcmd='adb %s shell "dmesg |grep %s"' %(selectedDevId,uid)
-	# logcmdarg=logcmd.strip().split()
+	logcmd=logcmd.strip().split()
 	handle = subprocess.Popen(logcmd,stdout=logcat_file,stderr=subprocess.PIPE)
 	if interactFlag:
 		l.warning("press some key to stop logcat...")
@@ -50,20 +50,20 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernel
 		# raw_input()
 	else:
 		i=0
-		while i<6:
+		while i<4:
 			getUIXml(selectedDevId)
 			i+=1
 			l.warning("pass check!")
-		if i==6:
+		if i==4:
 			clickWelcome(selectedDevId)
-		time.sleep(0.5)
+		time.sleep(0.1)
 		i=0
-		while i<3:
+		while i<2:
 			getUIXml(selectedDevId)
 			i+=1
 			l.warning("pass check!")
 		clickWelcome(selectedDevId)
-		clickWelcome(selectedDevId)
+		# clickWelcome(selectedDevId)
 		stopMonkey(selectedDevId)
 		p = multiprocessing.Process(target=startMonkey, args=(packageName,selectedDevId,))
 		p.start()
@@ -102,6 +102,7 @@ if __name__ == "__main__":
 	parser.add_argument("-a", "--interact", help="interactive testing,this is an optional argument", action="store_true")
 	parser.add_argument("-k", "--keepall", help="dont uninstall after test one", action="store_true")
 	parser.add_argument("-l", "--logsdir", help="destination of logs",nargs='?', default=desktopDir)
+	parser.add_argument("-e", "--totest", help="dont uninstall after test one", action="store_true")
 	parser.add_argument("-x", "--kernel", help="dont uninstall after test one", action="store_true")
 	args = parser.parse_args() 
 
@@ -114,7 +115,7 @@ if __name__ == "__main__":
 	logsDir=args.logsdir
 	kernenflag=args.kernel
 	pureStop=True
-	testInListFlag=True
+	testInListFlag=args.totest
 	apkItems= []
 	logDir=logsDir+"/logs/traces/"
 	tmplogDir=logsDir+"/logs/tmplog/"
@@ -155,7 +156,7 @@ if __name__ == "__main__":
 	uninstallAllThird(selectedDevId,whiteList)
 
 
-	testedIdx=0
+	testedIdx=len(testedList)
 	for apkItem in apkItems:
 		if testedIdx>maxLength:
 			break
