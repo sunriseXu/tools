@@ -74,5 +74,8 @@ if __name__ == "__main__":
     #     print len(test1)
     #     print len(test2)
     #     print len(CollectionUtils.listIntersection(test1,test2))
-    pass
+    mydir = '/home/limin/Desktop/logs_more1w3/part2/logs/traces'
+    mylist = FileUtils.listDir3(mydir)
+    print len(mylist)
+    # FileUtils.writeList(mylist, '/home/limin/Desktop/logs_more1w3/part2/logs/traces/lastTest.txt')
         

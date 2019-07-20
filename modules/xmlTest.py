@@ -9,6 +9,7 @@ import logging
 import Levenshtein
 import random
 import re
+from modules.ThreadUtils import execute_command
 logging.basicConfig()
 l=logging.getLogger("xmlTest")
 
@@ -299,11 +300,17 @@ def clickBound(element,selectedDevId):
 
 
 def getUIXml(selectedDevId):
-	UICmd='adb'+selectedDevId+' shell "uiautomator dump --compressed /sdcard/window_dump.xml >/dev/null && cat /sdcard/window_dump.xml"'
-	uixml=os.popen(UICmd).read()
-	if not uixml:
-		return False
-	domres=xmldom.parseString(uixml)
+    UICmd='adb'+selectedDevId+' shell "uiautomator dump --compressed /sdcard/window_dump.xml >/dev/null && cat /sdcard/window_dump.xml"'
+    # uixml=os.popen(UICmd).read()
+    uixml = execute_command(UICmd, 10)
+    # print uixml
+    if (not uixml) or (uixml in 'TIME_OUT'):
+        return False
+    domres = ''
+    try:
+	    domres=xmldom.parseString(uixml)
+    except:
+        return False
 	elementobj = domres.documentElement
 	subElementObj = elementobj.getElementsByTagName("node")
 	resFlag=False

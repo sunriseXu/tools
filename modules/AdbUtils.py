@@ -139,7 +139,7 @@ def unlockPhone(selectedDevId):
 
 def startMonkey(packageName,selectedDevId):
 	useMonkeyCmd="adb"+selectedDevId+" shell monkey -v -v -v -s 123123 --throttle 800 --pct-touch 70 --pct-motion 10 --pct-appswitch 10  --pct-majornav 10  --pct-trackball 0 --ignore-crashes --ignore-timeouts --ignore-native-crashes -p %s 10000>nul" %(packageName)
-	os.popen(useMonkeyCmd)
+	os.popen(useMonkeyCmd).read()
 
 def stopMonkey(selectedDevId):
 	getUidCmd='adb'+selectedDevId+' shell "ps|grep monkey"'

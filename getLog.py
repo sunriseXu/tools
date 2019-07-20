@@ -58,7 +58,7 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernel
 			clickWelcome(selectedDevId)
 		time.sleep(0.1)
 		i=0
-		while i<2:
+		while i<3:
 			getUIXml(selectedDevId)
 			i+=1
 			l.warning("pass check!")
@@ -157,10 +157,12 @@ if __name__ == "__main__":
 
 
 	testedIdx=len(testedList)
+	testingFlag = False
 	for apkItem in apkItems:
 		if testedIdx>maxLength:
 			break
-		if testedIdx and testedIdx%2==0:
+		if testedIdx and testedIdx%2==0 and testingFlag: 
+			testingFlag = False
 			writeDict(apkInfoDict,apkInfoPath)
 			writeList(testedList,testedFilePath)
 		try:
@@ -175,7 +177,7 @@ if __name__ == "__main__":
 			if apkHash in notInstallList:
 				continue
 			l.warning(time.strftime('%H:%M:%S',time.localtime(time.time())))
-			
+			testingFlag = True
 			# query manifest for apkInfo
 			packageName=getApkInfo(apkItem,"package: name=")
 			launchActivity=getApkInfo(apkItem,"launchable-activity: name=")
