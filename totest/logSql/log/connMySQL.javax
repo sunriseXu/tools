@@ -1,0 +1,402 @@
+package log;
+import com.alibaba.fastjson.JSON;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.io.*;
+import java.sql.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+
+public class connMySQL {
+    static Map<Integer, String> apisparse = new HashMap<Integer, String>();
+    static String DeviceID = "H";
+    static String dirName = "C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\v1Test500";
+    static String packageNamePath="C:\\Users\\limin\\Desktop\\logs_28000\\normalPkgNameDict.txt";
+//static String packageNamePath="C:\\Users\\limin\\Desktop\\logs\\normalPkgNameDict.txt";
+
+    public static Map<String, String> map = new HashMap<String, String>();
+
+    public static void main(String[] args) throws Exception {
+        Connection conn = null;
+        BufferedReader reader = null;
+        ArrayList<ActionData> list;
+        initSparseArray();
+        try {
+            // 加载驱动类
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            long start = System.currentTimeMillis();
+
+            // 建立连接
+            conn = DriverManager.getConnection("jdbc:mysql://10.141.209.138:6603/antivirus",
+                    "antivirus", "antivirus");
+            long end = System.currentTimeMillis();
+            System.out.println(conn);
+            System.out.println("建立连接耗时： " + (end - start) + "ms 毫秒");
+
+            // 创建Statement对象
+            String sql = "insert into v1_test_malicious500(GUID, pkgName, timestamp, ActionID) values(?,?,?,?)";
+
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            conn.setAutoCommit(false);
+
+            String uploaded = "C:\\Users\\limin\\Desktop\\logs\\uploaded.txt";
+            BufferedReader br = new BufferedReader(new FileReader(uploaded));
+            ArrayList<String> uploadedList = new ArrayList<String>();
+            String line;
+            while((line = br.readLine()) != null) {
+
+                uploadedList.add(line);
+            }
+            br.close();
+
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(uploaded,true));
+            File logsFile = new File(dirName);
+            File[] files = logsFile.listFiles();
+            int loglen=files.length;
+            int idx = 0;
+            for (File file : files) {
+                idx +=1;
+                System.out.println("process:"+idx+"/"+loglen);
+                list = new ArrayList<>();
+                String appName=file.getName();
+                String pkgName = appName.substring(0,appName.lastIndexOf("."));
+                uploadedList.add(pkgName);
+                bw.write(pkgName);
+                bw.newLine();
+                bw.flush();
+                System.out.println(appName);
+
+
+
+                reader = new BufferedReader(new FileReader(file));
+
+                String tempString = null;
+                while ((tempString = reader.readLine()) != null) {
+                    String[] stringArray = tempString.split(",",4);
+                    String[] timestring = stringArray[0].split(": ");
+                    long time = Long.parseLong(timestring[1]);
+                    String[] uidstring = stringArray[1].split(": ");
+                    int uid = Integer.valueOf(uidstring[1]);
+                    String[] methodstring = stringArray[2].split(" ");
+                    int mid = Integer.valueOf(methodstring[2]);
+                    String paras = "";
+                    if (stringArray.length == 4) {
+                        paras = stringArray[3];
+                    }
+
+                    ActionData data = new ActionData(uid, mid, time, paras);
+                    list.add(data);
+                }
+                reader.close();
+
+                int len = list.size();
+                System.out.println("list size " + len);
+                for (int i = 0; i < len; i++) {
+                    stmt.setString(1, getGUID());
+                    stmt.setString(2, pkgName);
+                    stmt.setString(3,  String.valueOf(list.get(i).getTime()));
+                    stmt.setInt(4, list.get(i).getMid());
+                    stmt.addBatch();
+
+                    if ((i != 0 && i % 10000 == 0) || i == len - 1) {
+                        stmt.executeBatch();
+                        conn.commit();
+                        stmt.clearBatch();
+                    }
+                }
+                System.out.println("\n");
+
+            }
+
+            if (stmt != null) {
+                stmt.close();
+            }
+            bw.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+    }
+    public static  String filterEmoji(String source,String slipStr) {
+
+        return source.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", slipStr);
+
+    }
+    public static String getGUID()
+    {
+        return UUID.randomUUID().toString();
+    }
+    public static String getPkgName(int uid) {
+        String pkgName;
+            pkgName = "gqk4";
+        return pkgName;
+    }
+    public static String getAPI(int mid)
+    {
+        String api = apisparse.get(mid);
+        if(api == null)
+        {
+            api = "API unavailable";
+        }
+        return api;
+    }
+
+    public static void getMethodDict(){
+
+        Map<String,String> map=new HashMap();
+        for (Integer key : apisparse.keySet()) {
+            String mid=key.toString();
+            String fname=apisparse.get(key);
+            map.put(mid,fname);
+//            System.out.println(key + ":" + apisparse.get(key));
+
+        }
+
+        String json1=JSON.toJSONString(map);
+        byte[] bytes = json1.getBytes();
+        File txt = new File("C:\\Users\\limin\\Desktop\\methodDict.txt");
+        try {
+            FileOutputStream fos=new FileOutputStream(txt);
+            fos.write(bytes);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    static int[] maliciousMid={
+            100101601,100101602,1003007,
+            1017001,14005,14007,14007001,
+            14007002,14015,14016,14017,
+            15007001,15009001,15010001,
+            15010002,8006001,
+
+    };
+    public static boolean isMaliciousTrace(int mid){
+
+        boolean flag=false;
+        for(int i=0;i<maliciousMid.length;i++){
+            if(mid==maliciousMid[i]){
+                flag=true;
+                break;
+            }
+        }
+
+        return flag;
+    }
+    public static String transferLongToDate(String dateFormat, Long millSec) {
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        Date date = new Date(millSec);
+        return sdf.format(date);
+    }
+
+    public static Boolean isSampleMalware(String pkgname)
+    {
+        return true;
+    }
+
+    private static void initSparseArray(){
+
+        apisparse.put(1001, "Action_startActivity");
+        apisparse.put(1001001, "Action_startActivity_send");
+        apisparse.put(1001002, "Action_startActivity_websearch");
+        apisparse.put(1001003, "Action_startActivity_edit");
+        apisparse.put(1001004, "Action_startActivity_addadmin");
+        apisparse.put(1001005, "Action_startActivity_attachdata");
+        apisparse.put(1001006, "Action_startActivity_call");
+        apisparse.put(1001007, "Action_startActivity_delete");
+        apisparse.put(1001008, "Action_startActivity_search");
+        apisparse.put(1001009, "Action_startActivity_pick");
+        apisparse.put(1001010, "Action_startActivity_pickActivity");
+        apisparse.put(1001011, "Action_startActivity_sendto");
+        apisparse.put(1001012, "Action_startActivity_getcontent");
+        apisparse.put(1001013, "Action_startActivity_dial");
+        apisparse.put(1001014, "Action_startActivity_main");
+        apisparse.put(1001015, "Action_startActivity_insert");
+        apisparse.put(1001016, "Action_startActivity_view");
+        apisparse.put(100101601, "Action_startAct_VIEW_install");
+        apisparse.put(100101602, "Action__startAct_VIEW_web");
+        apisparse.put(100101603, "Action_startAct_ChangeSMS");
+
+        apisparse.put(1002, "Action_bindService");
+        apisparse.put(1003, "Action_broadcastIntent");
+        apisparse.put(1003001, "Action_broadcastIntent_pakchange");
+        apisparse.put(1003002, "Action_broadcastIntent_pakremove");
+        apisparse.put(1003003, "Action_broadcastIntent_timetick");
+        apisparse.put(1003004, "Action_broadcastIntent_timeset");
+        apisparse.put(1003005, "Action_broadcastIntent_pakchange");
+        apisparse.put(1003006, "Action_broadcastIntent_pakadd");
+        apisparse.put(1003007, "Action_broadcastIntent_installshortcut");
+
+        apisparse.put(1004, "Action_closeSystemDialogs");
+        apisparse.put(1005, "Action_finishActivity");
+        apisparse.put(1006, "Action_getAppTasks");
+        apisparse.put(1007, "Action_getProcessMemoryInfo");
+        apisparse.put(1008, "Action_getProcessesInErrorState");
+        apisparse.put(1009, "Action_killBackgroundProcesses");
+        apisparse.put(1010, "Action_moveTaskToFront");
+        apisparse.put(1011, "Action_navigateUpTo");
+        apisparse.put(1012, "Action_setRequestedOrientation");
+        apisparse.put(1013, "Action_startActivities");
+        apisparse.put(1014, "Action_unbindService");
+        apisparse.put(1015, "Action_unregisterReceiver");
+        apisparse.put(1016, "Action_updateConfiguration");
+        apisparse.put(1017, "Action_registerReceiver");
+        apisparse.put(1017001, "Action_registerReceiver_SMS");
+
+        apisparse.put(2001, "Action_LockSettingsServicegetLong");
+        apisparse.put(2002, "Action_LockSettingsServicegetString");
+        apisparse.put(2003, "Action_LockSettingsServicesetLong");
+        apisparse.put(2004, "Action_LockSettingsServicesetString");
+
+        apisparse.put(3001, "Action_createAndManageUser");
+        apisparse.put(3002, "Action_removeActiveAdmin");
+        apisparse.put(3003, "Action_resetPassword");
+        apisparse.put(3004, "Action_DevicePolicyManager_lockNow");
+        apisparse.put(3005, "Action_wipeData");
+
+        apisparse.put(4004, "Action_setSystemUiVisibility");
+        apisparse.put(4005, "Action_StatusBarManagerServicedisable");
+        apisparse.put(4006, "Action_StatusBarManagerServicesetIcon");
+        apisparse.put(5001, "Action_requestLocationUpdates");
+        apisparse.put(5002, "Action_getBestProvider");
+        apisparse.put(5003, "Action_getProviders");
+        apisparse.put(5004, "Action_isProviderEnabled");
+        apisparse.put(5005, "Action_registerGnssStatusCallback");
+        apisparse.put(5006, "Action_removeUpdates");
+        apisparse.put(5007, "Action_sendExtraCommand");
+
+        apisparse.put(6001, "Action_getActiveNetworkInfo");
+        apisparse.put(6002, "Action_getAllNetworkInfo");
+        apisparse.put(6003, "Action_getLinkProperties");
+        apisparse.put(6004, "Action_getNetworkInfo");
+        apisparse.put(6005, "Action_isActiveNetworkMetered");
+        apisparse.put(6006, "Action_prepareVpn");
+        apisparse.put(6007, "Action_requestAudioFocus");
+        apisparse.put(6008, "Action_AudioServicesetMode");
+        apisparse.put(6009, "Action_setStreamVolume");
+        apisparse.put(6010, "Action_MediaPlayer_create");
+        apisparse.put(6011, "Action_MediaPlayer_start");
+        apisparse.put(6012, "Action_getStreamMaxVolume");
+        apisparse.put(6013, "Action_setRingerMode_silence");
+
+        apisparse.put(7001, "Action_addPreferredActivity");
+        apisparse.put(7002, "Action_clearPackagePreferredActivities");
+        apisparse.put(7003, "Action_setApplicationEnabledSetting");
+        apisparse.put(7004, "Action_setComponentEnabledSetting");
+        apisparse.put(7004001, "Action_setComponent_hideIcon");
+        apisparse.put(7005, "Action_addWindow");
+        apisparse.put(7005001, "Action_addWindow_status_bar");
+        apisparse.put(7005002, "Action_addWindow_system");
+        apisparse.put(7005003, "Action_addWindow_toast");
+        apisparse.put(7005004, "Action_addWindow_Hijack");
+
+        apisparse.put(7006, "Action_disableKeyguard");
+        apisparse.put(7007, "Action_lockNow");
+        apisparse.put(7008, "Action_reenableKeyguard");
+        apisparse.put(7009, "Action_addRoute");
+        apisparse.put(7010, "Action_registerObserver");
+
+        apisparse.put(8001, "Action_resumeTopActivityInnerLocked");
+        apisparse.put(8002, "Action_minimalResumeActivityLocked");
+        apisparse.put(8003, "Action_registerListener");
+        apisparse.put(8004, "Action_startActivityMayWait");
+        apisparse.put(8005, "Action_getApplicationRestrictions");
+        apisparse.put(8006, "Action_AppOpsServicesetMode");
+        apisparse.put(8006001, "Action_AppOpsServicesetMode_SMS");
+        apisparse.put(8007, "Action_setPrimaryClip");
+        apisparse.put(8008, "Action_enforceCallingPermission");
+        apisparse.put(8009, "Action_setWallpaper");
+        apisparse.put(8010, "Action_VibratorServicevibrate");
+        apisparse.put(8011, "Action_enqueueNotificationWithTag");
+        apisparse.put(8012, "Action_PackageInstallerServiceuninstall");
+        apisparse.put(12001, "Action_getInstalledPackages");
+        apisparse.put(14001, "Action_startProcessLocked");
+        apisparse.put(14002, "Action_getAllMessagesFromIccEfForSubscriber");
+        apisparse.put(14003, "Action_updateMessageOnIccEfForSubscriber");
+        apisparse.put(14004, "Action_copyMessageToIccEfForSubscriber");
+        apisparse.put(14005, "Action_sendDataForSubscriber");
+        apisparse.put(14006, "Action_sendDataForSubscriberWithSelfPermissions");
+        apisparse.put(14007, "Action_sendTextForSubscriber");
+        apisparse.put(14007001, "Action_sendSMS_malicious");
+        apisparse.put(14007002, "Action_sendSMS_maybe_malicious");
+
+        apisparse.put(14008, "Action_sendTextForSubscriberWithSelfPermissions");
+        apisparse.put(14009, "Action_injectSmsPduForSubscriber");
+        apisparse.put(14010, "Action_sendMultipartTextForSubscriber");
+        apisparse.put(14011, "Action_getPremiumSmsPermissionForSubscriber");
+        apisparse.put(14012, "Action_setPremiumSmsPermissionForSubscriber");
+        apisparse.put(14013, "Action_enableCellBroadcastRangeForSubscriber");
+        apisparse.put(14014, "Action_disableCellBroadcastRangeForSubscriber");
+        apisparse.put(14015, "Action_isImsSmsSupportedForSubscriber");
+        apisparse.put(14016, "Action_isSmsSimPickActivityNeeded");
+        apisparse.put(14017, "Action_getPreferredSmsSubscription");
+        apisparse.put(14018, "Action_getImsSmsFormatForSubscriber");
+        apisparse.put(14019, "Action_isSMSPromptEnabled");
+        apisparse.put(14020, "Action_sendStoredText");
+        apisparse.put(14021, "Action_sendStoredMultipartText");
+        apisparse.put(14022, "Action_createAppSpecificSmsToken");
+        apisparse.put(15001, "Action_getSimStateForSlotIndex");
+        apisparse.put(15002, "Action_getLine1NumberForSubscriber");
+        apisparse.put(15003, "Action_getSubscriberIdForSubscriber");
+        apisparse.put(15004, "Action_getDeviceIdForPhone");
+        apisparse.put(15005, "Action_getIccSerialNumberForSubscriber");
+        apisparse.put(15006, "Action_abortBroadcast");
+        apisparse.put(15007, "Action_ContentResolverDelete");
+        apisparse.put(15007001, "Action_ContentResolver_delete_SMS");
+        apisparse.put(15009, "Action_registerContentObserver");
+        apisparse.put(15009001, "Action_ContentResolver_regContObser_SMS");
+        apisparse.put(15009002, "Action_ContentResolver_regContObser_SimInfo");
+        apisparse.put(15009003, "Action_ContentResolver_regContObser_Contact");
+        apisparse.put(15010, "Action_ContentResolverquery");
+        apisparse.put(15010001, "Action_ContentResolver_query_SMS");
+        apisparse.put(15010002, "Action_ContentResolver_query_SimInfo");
+        apisparse.put(15010003, "Action_ContentResolver_query_Contact");
+        apisparse.put(15010004, "Action_ContentResolver_query_bookmarks");
+        apisparse.put(15010005, "Action_ContentResolver_query_media");
+        apisparse.put(15008, "Action_getPhoneId");
+        apisparse.put(16001, "Action_setCancelable");
+        apisparse.put(16002, "Action_setCanceledOnTouchOutside");
+        apisparse.put(16003, "Action_AlertDialogshow");
+        apisparse.put(17001, "Action_createFromPdu");
+        apisparse.put(17002, "Action_getMessageBody");
+        apisparse.put(17003, "Action_getOriginatingAddress");
+        apisparse.put(17004, "Action_getDisplayMessageBody");
+        apisparse.put(18001, "Action_endCall");
+        apisparse.put(18002, "Action_getCallState");
+        apisparse.put(18003, "Action_answerRingingCall");
+        apisparse.put(18004, "Action_silenceRinger");
+        apisparse.put(19001, "Action_MediaRecorder_prepare");
+        apisparse.put(19002, "Action_MediaRecorder_setAudioSamplingRate");
+        apisparse.put(20001, "Action_getAccounts");
+        apisparse.put(20002, "Action_getSimCountryIso");
+        apisparse.put(20003, "Action_createVirtualDisplay");
+        apisparse.put(20004, "Action_takePicture");
+        apisparse.put(20005, "Action_stopPreview");
+        apisparse.put(20006, "Action_acquireLatestImage");
+        apisparse.put(20007, "Action_getSubscriptionInfo");
+        apisparse.put(21001, "Action_performAction");
+        apisparse.put(21002, "Action_performGlobalAction");
+    }
+}
