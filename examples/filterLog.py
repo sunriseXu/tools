@@ -39,14 +39,15 @@ def trimLog(logPath):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="test!!")
     parser.add_argument("-s", "--filtersize", help="filter size", action="store_true")
+    parser.add_argument('-d', '--dirname', help='dir name', nargs='?')
     args = parser.parse_args() 
+
+    logsDir = args.dirname
     filterSize=args.filtersize
 
+    desktopDir=os.path.join(os.path.expanduser("~"), 'Desktop')
+    abondonedPath=desktopDir+'/abandon.txt'
 
-
-    logsDir='C:\\Users\\limin\\Desktop\\allMal\\malRogNo2\\traces'
-    # logsDir='C:\\Users\\limin\\Desktop\\malware_test\\logs_eykf_huawei\\traces'
-    abondonedPath='C:\\Users\\limin\\Desktop\\abandon.txt'
     startActionId='14001'
     myWindow=10
     maxlen=9
@@ -83,7 +84,7 @@ if __name__ == "__main__":
             if maxcount > maxlen:
                 abandonedList.append(logName)
         else:
-            if len(actionIdList)<4:
+            if len(actionIdList)<10:
                 abandonedList.append(logName)
     # print abandonedList
     writeList(abandonedList,abondonedPath)

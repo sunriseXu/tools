@@ -74,8 +74,63 @@ if __name__ == "__main__":
     #     print len(test1)
     #     print len(test2)
     #     print len(CollectionUtils.listIntersection(test1,test2))
-    mydir = '/home/limin/Desktop/logs_more1w3/part2/logs/traces'
-    mylist = FileUtils.listDir3(mydir)
-    print len(mylist)
+    
     # FileUtils.writeList(mylist, '/home/limin/Desktop/logs_more1w3/part2/logs/traces/lastTest.txt')
-        
+
+    # # 对文件夹下的所有log文件的log_前缀去掉,重命名
+    # srcDir = '/home/limin/Desktop/norAll/total/traces'
+    # trimAllPrefix(srcDir)
+
+    # # 根据abandon文件,将不符合的log剪切到指定文件夹下
+    # abandonPath = '/home/limin/Desktop/abandon.txt'
+    # abandonList = FileUtils.readList(abandonPath)
+    # mySrc = '/home/limin/Desktop/norAll/total/traces'
+    # abandonDir = '/home/limin/Desktop/norAll/total/abandon'
+    # FileUtils.listCut(abandonList, mySrc, abandonDir)
+
+    # 在所有normal trace的文件夹下, 包含v1 所有上传到数据库的列表, 筛选出v2列表和文件夹
+    # myDir = EasyDir('/home/limin/Desktop/norAll/total')
+    # dirDict = myDir.getAbsPathDict()
+    # v1_train_list = FileUtils.readList(dirDict['v1_train_nor_hash'])
+    # v1_test_list = FileUtils.readList(dirDict['v1_test_nor'])
+    # #testing
+    # # print len(v1_train_list)
+    # # print len(v1_test_list)
+    # # print len(CollectionUtils.listIntersection(v1_train_list,v1_test_list))
+
+    # v1_list = v1_train_list+v1_test_list
+    # print len(v1_list)
+
+    # all_list = FileUtils.listDir3(dirDict['traces'])
+    # # print len(nor_rest_list)
+    # # print nor_rest_list[0]
+
+    # rest_list = CollectionUtils.listDifference(all_list, v1_list)
+    # # print len(rest_list)
+    # #print len(CollectionUtils.listIntersection(rest_list, v1_list))
+
+    # v2_train_20000 = random.sample(rest_list, 20000)
+    
+    # rest_list = CollectionUtils.listDifference(rest_list, v2_train_20000)
+    # v2_test_5000 = random.sample(rest_list, 5000)
+    
+    # print len(CollectionUtils.listIntersection(v2_test_5000,v2_train_20000))
+
+    # # FileUtils.writeList(v2_train_20000, myDir.getCatPath('v2Train20000.txt'))
+    # # FileUtils.writeList(v2_test_5000, myDir.getCatPath('v2Test5000.txt'))
+
+    # v2_train_20000 = CollectionUtils.graftListItem(v2_train_20000, '','.txt')
+    # v2_test_5000 = CollectionUtils.graftListItem(v2_test_5000, '','.txt')
+
+    # v2_train_20000 = FileUtils.readList(dirDict['v2Train20000.txt'])
+    # v2_test_5000 = FileUtils.readList(dirDict['v2Test5000.txt'])
+
+    # v2_train_2 = FileUtils.listDir3(dirDict['v2Train'])
+    # v2_test_2 = FileUtils.listDir3(dirDict['v2Test'])
+
+    # print len(CollectionUtils.listIntersection(v2_train_2, v2_train_20000))
+    # print len(CollectionUtils.listIntersection(v2_test_2, v2_test_5000))
+    # # FileUtils.listCopy(v2_train_20000,dirDict['traces'],myDir.getCatPath('v2Train'))
+    # # FileUtils.listCopy(v2_test_5000, dirDict['traces'], myDir.getCatPath('v2Test'))
+
+    
