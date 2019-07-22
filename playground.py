@@ -89,14 +89,24 @@ if __name__ == "__main__":
     # FileUtils.listCut(abandonList, mySrc, abandonDir)
 
     # 在所有normal trace的文件夹下, 包含v1 所有上传到数据库的列表, 筛选出v2列表和文件夹
-    # myDir = EasyDir('/home/limin/Desktop/norAll/total')
-    # dirDict = myDir.getAbsPathDict()
-    # v1_train_list = FileUtils.readList(dirDict['v1_train_nor_hash'])
-    # v1_test_list = FileUtils.readList(dirDict['v1_test_nor'])
-    # #testing
-    # # print len(v1_train_list)
-    # # print len(v1_test_list)
-    # # print len(CollectionUtils.listIntersection(v1_train_list,v1_test_list))
+    myDir = EasyDir('/home/limin/Desktop/allHashInDb')
+    dirDict = myDir.getAbsPathDict()
+    v1_test_mal = FileUtils.readList(dirDict['v1_test_malicious500_201907221211.csv'])
+    v1_test_nor = FileUtils.readList(dirDict['v1_test_normal5000_201907221220.csv'])
+    v1_train_mal = FileUtils.readList(dirDict['v1_train_malicious2000_201907221216.csv'])
+    v1_train_nor = FileUtils.readList(dirDict['v1_train_normal20000_201907221220.csv'])
+    v2_test_mal = FileUtils.readList(dirDict['v2_test_malicious500_201907220955.csv'])
+    v2_test_nor = FileUtils.readList(dirDict['v2_test_normal5000_2_201907220950.csv'])
+    v2_train_mal = FileUtils.readList(dirDict['v2_train_malicious2000_201907220955.csv'])
+    v2_train_nor = FileUtils.readList(dirDict['v2_train_normal20000_2_201907220953.csv'])
+    all_list = [v1_test_mal,v1_test_nor,v1_train_mal,v1_train_nor,v2_test_mal,v2_test_nor,v2_train_mal,v2_train_nor]
+    for i in range(0,len(all_list)):
+        all_list[i] = [item.strip('"') for item in all_list[i]]
+        print len(all_list[i])
+    #testing
+    # print len(v1_train_list)
+    # print len(v1_test_list)
+    # print len(CollectionUtils.listIntersection(v1_train_list,v1_test_list))
 
     # v1_list = v1_train_list+v1_test_list
     # print len(v1_list)
@@ -134,3 +144,4 @@ if __name__ == "__main__":
     # # FileUtils.listCopy(v2_test_5000, dirDict['traces'], myDir.getCatPath('v2Test'))
 
     
+
