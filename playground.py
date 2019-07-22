@@ -23,7 +23,7 @@ if __name__ == "__main__":
     # pkg2HashInDir('C:\\Users\\limin\\Desktop\\v1pkg',r'v1_train_nor',False)
     # pkg2HashInDir('C:\\Users\\limin\\Desktop\\v1pkg',r'v1.*?mal',True)
     
-    # # 读取目标目录下的所有hashList文件，并且计算list之间的交集 并集 差集
+    # 读取目标目录下的所有hashList文件，并且计算list之间的交集 并集 差集
     # pkgDir = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg')
     # pkgPathDict = pkgDir.getAbsPathDict()
     # v1TrainMal = FileUtils.readList(pkgPathDict['v1_train_mal_hash'])
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     # v1TrainNor = FileUtils.readList(pkgPathDict['v1_train_nor_hash'])
     # v1TestNor = FileUtils.readList(pkgPathDict['v1_test_nor'])
     # v2TrainMal = FileUtils.readList(pkgPathDict['v2_train_mal'])
-    # v2TestMal = FileUtils.readList(pkgPathDict['v2_test_mal'])
+    # v2TestMal = FileUtils.readList(pkgPathDict['v2testMal.txt'])
     # v2TrainNor = FileUtils.readList(pkgPathDict['v2_train_nor'])
     # v2TestNor = FileUtils.readList(pkgPathDict['v2_test_nor'])
     # test1 = v1TrainMal+v1TestMal
@@ -39,6 +39,7 @@ if __name__ == "__main__":
     # test2 =  v2TrainMal+v2TestMal
     # print len(test2)
     # print len(CollectionUtils.listIntersection(test1,test2))
+    # splitMalware(v2TestMal)
     
     # # 首先对源目录下的log文件去掉log_前缀，然后根据hash-pkg字典对目录下所有以包名命名的log文件重命名成hash命名的文件
     # srcdir = 'C:\\Users\\limin\\Desktop\\malfromHR\\testmalicious'
@@ -132,5 +133,18 @@ if __name__ == "__main__":
     # print len(CollectionUtils.listIntersection(v2_test_2, v2_test_5000))
     # # FileUtils.listCopy(v2_train_20000,dirDict['traces'],myDir.getCatPath('v2Train'))
     # # FileUtils.listCopy(v2_test_5000, dirDict['traces'], myDir.getCatPath('v2Test'))
-
-    
+    # # 对三类恶意样本文件夹下相关文件进行操作，统计
+    # v2TrainList = []
+    # v2TestList = []
+    # pdirnameList = ['malStealNo2','malPayNo2','malRogNo2']
+    # for pdirname in pdirnameList:
+    #     srcDir = 'C:\\Users\\limin\\Desktop\\allMal\\%s' %pdirname
+    #     mysrcDir = EasyDir(srcDir)
+    #     childPathDict = mysrcDir.getAbsPathDict()
+    #     v2_train_list = FileUtils.listDir3(childPathDict['uploaded667'])
+    #     v2_test_list = FileUtils.listDir3(childPathDict['ruled_test167'])
+    #     v2TrainList = v2TrainList + v2_train_list
+    #     v2TestList = v2TestList + v2_test_list
+    # print len(v2TrainList)
+    # print len(v2TestList)
+    # print len(CollectionUtils.listIntersection(v2TestList,v2TestMal))
