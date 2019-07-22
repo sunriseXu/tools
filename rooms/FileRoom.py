@@ -161,7 +161,7 @@ def splitMalware(mergedList):
 def pkg2Hash(pkgList, pkgNameDict):
     '''
     replace all pkgName in pkgList to its hash according to pkgName-Hash Dict(not hash-pkgName dict!)
-    so you need to reverse dict
+    so you need to reverse dict, dict(zip(malDict.values(), malDict.keys()))
     return a hash list
     '''
     if len(pkgList)==0:

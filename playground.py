@@ -94,15 +94,102 @@ if __name__ == "__main__":
     v1_test_mal = FileUtils.readList(dirDict['v1_test_malicious500_201907221211.csv'])
     v1_test_nor = FileUtils.readList(dirDict['v1_test_normal5000_201907221220.csv'])
     v1_train_mal = FileUtils.readList(dirDict['v1_train_malicious2000_201907221216.csv'])
-    v1_train_nor = FileUtils.readList(dirDict['v1_train_normal20000_201907221220.csv'])
+    v1_train_nor = FileUtils.readList(dirDict['v1_train_nor_Hash.csv'])
     v2_test_mal = FileUtils.readList(dirDict['v2_test_malicious500_201907220955.csv'])
     v2_test_nor = FileUtils.readList(dirDict['v2_test_normal5000_2_201907220950.csv'])
     v2_train_mal = FileUtils.readList(dirDict['v2_train_malicious2000_201907220955.csv'])
     v2_train_nor = FileUtils.readList(dirDict['v2_train_normal20000_2_201907220953.csv'])
     all_list = [v1_test_mal,v1_test_nor,v1_train_mal,v1_train_nor,v2_test_mal,v2_test_nor,v2_train_mal,v2_train_nor]
+    # print all_list[2]
     for i in range(0,len(all_list)):
         all_list[i] = [item.strip('"') for item in all_list[i]]
         print len(all_list[i])
+    # all_mal_dict = FileUtils.readDict(dirDict['allNorDict.txt'])
+    # all_mal_dict=dict(zip(all_mal_dict.values(), all_mal_dict.keys()))
+    # v1_train_nor = pkg2Hash(all_list[3],all_mal_dict)
+    # all_list[3]  = v1_train_nor
+    # FileUtils.writeList(v1_train_nor, myDir.getCatPath('v1_train_nor_Hash.csv'))
+    v1_test_mal = all_list[0]
+    v1_test_nor = all_list[1]
+    v1_train_mal = all_list[2]
+    v1_train_nor = all_list[3]
+    v2_test_mal = all_list[4]
+    v2_test_nor = all_list[5]
+    v2_train_mal = all_list[6]
+    v2_train_nor = all_list[7]
+    
+    v1_mal_list = v1_train_mal + v1_test_mal
+    v2_mal_list = v2_train_mal + v2_test_mal
+
+    FileUtils.writeList(v1_mal_list, myDir.getCatPath('v1_mal.txt'))
+    FileUtils.writeList(v2_mal_list, myDir.getCatPath('v2_mal.txt'))
+
+    # for i in range(0,len(all_list)):
+    #     for j in range(0, len(all_list)):
+    #         if i!=j:
+    #             print len(CollectionUtils.listIntersection(all_list[i],all_list[j]))
+
+    # with open("repeatlist", "w") as f:
+    #     tmp = [val for val in v1_train_nor if val in v1_test_nor]
+    #     f.write("v1_train_nor v1_test_nor: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v1_train_nor if val in v2_train_nor]
+    #     f.write("v1_train_nor v2_train_nor: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v1_train_nor if val in v2_test_nor]
+    #     f.write("v1_train_nor v2_test_nor: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v1_test_nor if val in v2_train_nor]
+    #     f.write("v1_test_nor v2_train_nor: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v1_test_nor if val in v2_test_nor]
+    #     f.write("v1_test_nor v2_test_nor: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v2_train_nor if val in v2_test_nor]
+    #     f.write("v2_train_nor v2_test_nor: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+
+    #     tmp = [val for val in v1_train_mal if val in v1_test_mal]
+    #     f.write("v1_train_mal v1_test_mal: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v1_train_mal if val in v2_train_mal]
+    #     f.write("v1_train_mal v2_train_mal: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v1_train_mal if val in v2_test_mal]
+    #     f.write("v1_train_mal v2_test_mal: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v1_test_mal if val in v2_train_mal]
+    #     f.write("v1_test_mal v2_train_mal: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v1_test_mal if val in v2_test_mal]
+    #     f.write("v1_test_mal v2_test_mal: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
+
+    #     tmp = [val for val in v2_train_mal if val in v2_test_mal]
+    #     f.write("v2_train_mal v2_test_mal: {:d}\n".format(len(tmp)))
+    #     for i in tmp:
+    #         f.write(i+"\n")
     #testing
     # print len(v1_train_list)
     # print len(v1_test_list)
