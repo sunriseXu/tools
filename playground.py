@@ -89,41 +89,41 @@ if __name__ == "__main__":
     # abandonDir = '/home/limin/Desktop/norAll/total/abandon'
     # FileUtils.listCut(abandonList, mySrc, abandonDir)
 
-    # 在所有normal trace的文件夹下, 包含v1 所有上传到数据库的列表, 筛选出v2列表和文件夹
-    myDir = EasyDir('/home/limin/Desktop/allHashInDb')
-    dirDict = myDir.getAbsPathDict()
-    v1_test_mal = FileUtils.readList(dirDict['v1_test_malicious500_201907221211.csv'])
-    v1_test_nor = FileUtils.readList(dirDict['v1_test_normal5000_201907221220.csv'])
-    v1_train_mal = FileUtils.readList(dirDict['v1_train_malicious2000_201907221216.csv'])
-    v1_train_nor = FileUtils.readList(dirDict['v1_train_nor_Hash.csv'])
-    v2_test_mal = FileUtils.readList(dirDict['v2_test_malicious500_201907220955.csv'])
-    v2_test_nor = FileUtils.readList(dirDict['v2_test_normal5000_2_201907220950.csv'])
-    v2_train_mal = FileUtils.readList(dirDict['v2_train_malicious2000_201907220955.csv'])
-    v2_train_nor = FileUtils.readList(dirDict['v2_train_normal20000_2_201907220953.csv'])
-    all_list = [v1_test_mal,v1_test_nor,v1_train_mal,v1_train_nor,v2_test_mal,v2_test_nor,v2_train_mal,v2_train_nor]
-    # print all_list[2]
-    for i in range(0,len(all_list)):
-        all_list[i] = [item.strip('"') for item in all_list[i]]
-        print len(all_list[i])
+    # # 在所有normal trace的文件夹下, 包含v1 所有上传到数据库的列表, 筛选出v2列表和文件夹
+    # myDir = EasyDir('/home/limin/Desktop/allHashInDb')
+    # dirDict = myDir.getAbsPathDict()
+    # v1_test_mal = FileUtils.readList(dirDict['v1_test_malicious500_201907221211.csv'])
+    # v1_test_nor = FileUtils.readList(dirDict['v1_test_normal5000_201907221220.csv'])
+    # v1_train_mal = FileUtils.readList(dirDict['v1_train_malicious2000_201907221216.csv'])
+    # v1_train_nor = FileUtils.readList(dirDict['v1_train_nor_Hash.csv'])
+    # v2_test_mal = FileUtils.readList(dirDict['v2_test_malicious500_201907220955.csv'])
+    # v2_test_nor = FileUtils.readList(dirDict['v2_test_normal5000_2_201907220950.csv'])
+    # v2_train_mal = FileUtils.readList(dirDict['v2_train_malicious2000_201907220955.csv'])
+    # v2_train_nor = FileUtils.readList(dirDict['v2_train_normal20000_2_201907220953.csv'])
+    # all_list = [v1_test_mal,v1_test_nor,v1_train_mal,v1_train_nor,v2_test_mal,v2_test_nor,v2_train_mal,v2_train_nor]
+    # # print all_list[2]
+    # for i in range(0,len(all_list)):
+    #     all_list[i] = [item.strip('"') for item in all_list[i]]
+    #     print len(all_list[i])
     # all_mal_dict = FileUtils.readDict(dirDict['allNorDict.txt'])
     # all_mal_dict=dict(zip(all_mal_dict.values(), all_mal_dict.keys()))
     # v1_train_nor = pkg2Hash(all_list[3],all_mal_dict)
     # all_list[3]  = v1_train_nor
     # FileUtils.writeList(v1_train_nor, myDir.getCatPath('v1_train_nor_Hash.csv'))
-    v1_test_mal = all_list[0]
-    v1_test_nor = all_list[1]
-    v1_train_mal = all_list[2]
-    v1_train_nor = all_list[3]
-    v2_test_mal = all_list[4]
-    v2_test_nor = all_list[5]
-    v2_train_mal = all_list[6]
-    v2_train_nor = all_list[7]
+    # v1_test_mal = all_list[0]
+    # v1_test_nor = all_list[1]
+    # v1_train_mal = all_list[2]
+    # v1_train_nor = all_list[3]
+    # v2_test_mal = all_list[4]
+    # v2_test_nor = all_list[5]
+    # v2_train_mal = all_list[6]
+    # v2_train_nor = all_list[7]
     
-    v1_mal_list = v1_train_mal + v1_test_mal
-    v2_mal_list = v2_train_mal + v2_test_mal
+    # v1_mal_list = v1_train_mal + v1_test_mal
+    # v2_mal_list = v2_train_mal + v2_test_mal
 
-    FileUtils.writeList(v1_mal_list, myDir.getCatPath('v1_mal.txt'))
-    FileUtils.writeList(v2_mal_list, myDir.getCatPath('v2_mal.txt'))
+    # FileUtils.writeList(v1_mal_list, myDir.getCatPath('v1_mal.txt'))
+    # FileUtils.writeList(v2_mal_list, myDir.getCatPath('v2_mal.txt'))
 
     # for i in range(0,len(all_list)):
     #     for j in range(0, len(all_list)):
@@ -231,5 +231,128 @@ if __name__ == "__main__":
     # # FileUtils.listCopy(v2_train_20000,dirDict['traces'],myDir.getCatPath('v2Train'))
     # # FileUtils.listCopy(v2_test_5000, dirDict['traces'], myDir.getCatPath('v2Test'))
 
+    # 读取目标目录下的所有hashList文件，并且计算list之间的交集 并集 差集
+    # pkgDir = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg')
+    # pkgPathDict = pkgDir.getAbsPathDict()
+    # v1TrainMal = FileUtils.readList(pkgPathDict['v1_train_mal_hash'])
+    # v1TestMal = FileUtils.readList(pkgPathDict['v1_test_mal_hash'])
+    # v1_all = list(set(v1TrainMal+v1TestMal))
+    # splitMalware(v1_all)
+    # print '\n'
+    
+    # v2TrainMal = FileUtils.readList(pkgPathDict['v2_train_mal'])
+    # v2TestMal = FileUtils.readList(pkgPathDict['v2testMal.txt'])
+    # v2_all = list(set(v2TrainMal+v2TestMal))
+    # splitMalware(v2_all)
+    # print '\n'
+    # print len(CollectionUtils.listIntersection(v1_all,v2_all))
+    
+    
+    # allMal = list(set(v1TestMal+v1TrainMal+v2TrainMal+v2TestMal))
+    
+    # splitMalware(allMal)
+    # pdirnameList = ['malPay','malRog','malSteal']
+
+
+    # new_500 = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\v1Test_new500')
+    # new_2000 = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\v1Train_new2000')
+
+    # steal_no_rule = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\malStealNo2\\rest_norule')
+    # FileUtils.writeList(steal_no_rule, 'C:\\Users\\limin\\Desktop\\toTest.txt')
+
+    # for pdirname in pdirnameList:
+    #     srcDir = 'C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\%s' %pdirname
+    #     mysrcDir = EasyDir(srcDir)
+    #     childPathDict = mysrcDir.getAbsPathDict()
+    #     all_ruled_dir_list = FileUtils.listDir3(childPathDict['ruled'])
+    #     print '\n'
+    #     print len(all_ruled_dir_list)
+    #     new_rule_167 = FileUtils.readList(childPathDict['new_rule_167.txt'])
+    #     new_667 = FileUtils.readList(childPathDict['new_667.txt'])
+
+    #     new_rule_167 = CollectionUtils.graftListItem(new_rule_167, '','.txt')
+    #     new_667 = CollectionUtils.graftListItem(new_667, '', '.txt')
+    #     FileUtils.listCopy(new_rule_167, childPathDict['ruled'], mysrcDir.getCatPath('new_167'))
+    #     FileUtils.listCopy(new_667, childPathDict['ruled'], mysrcDir.getCatPath('new_667'))
     
 
+    # 打开json文件，然后搜索关键字，包含超过spy>5的就是信息窃取软件
+    # 如果符合条件，记录文件hash生成列表文件 起码要2000个起步
+    # 从数据库中拷贝2000个spy软件，跑一分钟
+    # jsonDir = 'C:\\Users\\limin\\Desktop\\VirusShare_Android_reports'
+    # fileList = FileUtils.listDir(jsonDir)
+    # resList = []
+    # idx = 0
+    # for item in fileList:
+    #     idx += 1
+    #     # if idx > 10000:
+    #     #     break
+    #     fileName = FileUtils.getFileName(item)
+    #     fileContent = FileUtils.readFile(item)
+        
+    #     spyRex = r'spy|Spy'
+    #     foundgroup = RexUtils.rexFind(spyRex,fileContent)
+    #     if len(foundgroup)>9:
+    #         resList.append(fileName)
+    #         print fileName
+    # FileUtils.writeList(resList,'C:\\Users\\limin\\Desktop\\stealFoundList_9spy.txt')
+
+    # 对找到的spy list与安天提供的spylist取交集，不重复测试
+    # spyList = FileUtils.readList('C:\\Users\\limin\\Desktop\\stealFoundList.txt')
+    # spyList  = [i.upper() for i in spyList]
+    
+    # antianDict = FileUtils.readDict('C:\\Users\\limin\\Desktop\\allHashDict\\allMalDict\\stealAllDict.txt')
+    # antianList = antianDict.keys()
+    # antianList = [str(i) for i in antianList]
+    # diffList = CollectionUtils.listIntersection(spyList,antianList)
+    # print len(diffList)
+
+    # spyList = FileUtils.readList('C:\\Users\\limin\\Desktop\\stealFoundList.txt')
+
+    # toTestList = random.sample(spyList, 600)
+    # FileUtils.writeList(toTestList, 'C:\\Users\\limin\\Desktop\\toText_spy.txt')
+    # FileUtils.mkdir('./apkTotest')
+    # toTest = FileUtils.readList('./toTest.txt')
+    # apkdirList = ['/mnt/VirusShare/VirusShare_Android_2013',
+    #               '/mnt/VirusShare/VirusShare_Android_2014',
+    #               '/mnt/VirusShare/VirusShare_Android_2015',
+    #               '/mnt/VirusShare/VirusShare_Android_2016',
+    #               '/mnt/VirusShare/VirusShare_Android_2017',
+    #               '/mnt/VirusShare/VirusShare_Android_2018',
+    #                 ]
+    # listDict = {}
+    # for item in apkdirList:
+    #     itemlist = FileUtils.listDir3(item)
+    #     itemlist = CollectionUtils.trimListItem(itemlist,'VirusShare_','')
+    #     listDict.update({item:itemlist})
+    # for apkitem in toTest:  
+    #     for key, value in listDict:
+    #         if apkitem in value:
+    #             srcPath = os.path.join(key,'VirusShare_'+apkitem)
+    #             destPath = './apkTotest/'+apkitem+'.apk'
+    #             shutil.copy(srcPath,destPath)
+    #             break
+
+    # srcDir = 'C:\\Users\\limin\\Desktop\\traces_enRog\\traces'
+    # mylist = FileUtils.readList('C:\Users\limin\Desktop\\abandon.txt')
+    # FileUtils.listCut(mylist,srcDir)
+
+    spy6list = FileUtils.readList('C:\\Users\\limin\\Desktop\\stealFoundList.txt')
+    spytestlist = FileUtils.readList('C:\\Users\\limin\\Desktop\\toText_spy.txt')
+    print len(spy6list)
+    spy6rest = CollectionUtils.listDifference(spy6list, spytestlist)
+    print len(spy6rest)
+
+    spyRan = random.sample(spy6rest, 200)
+
+    # FileUtils.writeList()
+    # spyList = FileUtils.readList('C:\\Users\\limin\\Desktop\\stealFoundList.txt')
+    spyList  = [i.upper() for i in spyRan]
+    
+    antianDict = FileUtils.readDict('C:\\Users\\limin\\Desktop\\allHashDict\\allMalDict\\stealAllDict.txt')
+    antianList = antianDict.keys()
+    antianList = [str(i) for i in antianList]
+    diffList = CollectionUtils.listIntersection(spyList,antianList)
+    print len(diffList)
+    if len(diffList) ==0:
+        FileUtils.writeList(spyRan, 'C:\\Users\\limin\\Desktop\\totest6spy.txt')

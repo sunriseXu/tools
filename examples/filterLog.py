@@ -39,16 +39,18 @@ def trimLog(logPath):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="test!!")
     parser.add_argument("-s", "--filtersize", help="filter size", action="store_true")
+    parser.add_argument('-a', '--action', help='app name', nargs='?', default="14001")
     parser.add_argument('-d', '--dirname', help='dir name', nargs='?')
     args = parser.parse_args() 
 
     logsDir = args.dirname
     filterSize=args.filtersize
+    startActionId=args.action
 
     desktopDir=os.path.join(os.path.expanduser("~"), 'Desktop')
     abondonedPath=desktopDir+'/abandon.txt'
 
-    startActionId='14001'
+    # startActionId='14001'
     myWindow=10
     maxlen=9
     logsList=listDir(logsDir,'')
