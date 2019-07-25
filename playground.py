@@ -423,5 +423,29 @@ if __name__ == "__main__":
     # print len(CollectionUtils.listIntersection(dblist,malTest500))
 
     # 首先读取所有hash文件，由zm提供，读取其成为dict
-    # 为什么要读取hash文件呢，直接读取json文件就行了，哦，因为hash文件有正常样本与hash的映射
+    # 为什么要读取hash文件呢，直接读取json文件就行了，哦，因为hash文件有正常样本与hash的映射，所以只要读取正常样本的json文件就行了，到时候和文件名做一个映射关系就行了
+    hashListPath = '/mnt/apk/huawei/md5_malware.log'
+    hashList = FileUtils.readList(hashListPath)
     
+
+    targetDir = '/mnt/apk/huawei/reports_malware'
+    positiveDictPath = './positiveDict.json'
+    positiveDict = {}
+    for myHash in hashList:
+        apkHash = myHash.lower()
+        jsonName = apkHash+'.json'
+        jsonPath = os.path.join(targetDir, jsonName)
+        positivesCount = -1
+        firstSeen = ''
+        if os.path.exists(jsonPath):
+            # apkHash = FileUtils.getFileName(jsonItem)
+            jsonDict = FileUtils.readDict(jsonPath)
+            positivesCount = jsonDict['positives']
+            firstSeen = jsonDict['first_seen']
+        if apkHash not in positiveDict:
+            positiveDict.update({apkHash:[positivesCount, firstSeen]})
+        
+        
+
+
+
