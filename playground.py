@@ -466,14 +466,16 @@ if __name__ == "__main__":
         itemList = item.split()
         myHash = itemList[0].strip()
         apkName = itemList[1].strip().strip('\r')
+        print myHash,apkName
         if myHash not in hashApkNameDict:
             hashApkNameDict.update({myHash:apkName})
     FileUtils.writeDict(hashApkNameDict, hashApkNameDictPath)
-
+    print 'write hashapkName done!'
     for key, value in hashApkNameDict.items():
         apkHash = key
         jsonName = key+'.json'
         jsonPath = os.path.join(reportsDir,jsonName)
+        print jsonPath
         positivesCount = -1
         firstSeen = ''
         if os.path.exists(jsonPath):
