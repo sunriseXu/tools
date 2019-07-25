@@ -433,7 +433,7 @@ if __name__ == "__main__":
     positiveDictPath = './positiveDict.json'
     positiveDict = {}
     for myHash in hashList:
-        apkHash = myHash.lower()
+        apkHash = myHash.lower().strip('\r')
         jsonName = apkHash+'.json'
         jsonPath = os.path.join(targetDir, jsonName)
         positivesCount = -1
