@@ -424,18 +424,56 @@ if __name__ == "__main__":
 
     # 首先读取所有hash文件，由zm提供，读取其成为dict
     # 为什么要读取hash文件呢，直接读取json文件就行了，哦，因为hash文件有正常样本与hash的映射，所以只要读取正常样本的json文件就行了，到时候和文件名做一个映射关系就行了
-    hashListPath = '/mnt/apk/huawei/md5_malware.log'
-    hashList = FileUtils.readList(hashListPath)
-    print len(hashList)
+    # hashListPath = '/mnt/apk/huawei/md5_malware.log'
+    # hashList = FileUtils.readList(hashListPath)
+    # print len(hashList)
     
 
-    targetDir = '/mnt/apk/huawei/reports_malware'
-    positiveDictPath = './positiveDict.json'
-    positiveDict = {}
-    for myHash in hashList:
-        apkHash = myHash.lower().strip('\r')
-        jsonName = apkHash+'.json'
-        jsonPath = os.path.join(targetDir, jsonName)
+    # targetDir = '/mnt/apk/huawei/reports_malware'
+    # positiveDictPath = './positiveDict.json'
+    # positiveDict = {}
+    # for myHash in hashList:
+    #     apkHash = myHash.lower().strip('\r')
+    #     jsonName = apkHash+'.json'
+    #     jsonPath = os.path.join(targetDir, jsonName)
+    #     positivesCount = -1
+    #     firstSeen = ''
+    #     if os.path.exists(jsonPath):
+    #         jsonDict = FileUtils.readDict(jsonPath)
+    #         positivesCount = jsonDict['positives']
+    #         firstSeen = jsonDict['first_seen']
+    #     if apkHash not in positiveDict:
+    #         positiveDict.update({apkHash:[positivesCount, firstSeen]})
+    # FileUtils.writeDict(positiveDict, positiveDictPath)
+    
+    hashListPath1 = '/mnt/apk/huawei/md5_201902.log'
+    hashListPath2 = '/mnt/apk/huawei/md5_201905.log'
+    reportsDir = '/mnt/apk/huawei/reports_normal'
+    hashApkNameDictPath = './norhashApkNameDict.txt'
+    positiveDictPath = './positiveDictNor.json'
+
+    hashList1 = FileUtils.readList(hashListPath1)
+    hashList2 = FileUtils.readList(hashListPath2)
+    print len(hashList1)
+    print len(hashList2)
+    print len(hashList1)+len(hashList2)
+    hashList = list(set(hashList1 + hashList2))
+    print len(hashList)
+    hashApkNameDict = {}
+    positiveDict={}
+
+    for item in hashList:
+        itemList = item.split()
+        myHash = itemList[0].strip()
+        apkName = itemList[1].strip().strip('\r')
+        if myHash not in hashApkNameDict:
+            hashApkNameDict.update({myHash:apkName})
+    FileUtils.writeDict(hashApkNameDict, hashApkNameDictPath)
+
+    for key, value in hashApkNameDict.items():
+        apkHash = key
+        jsonName = key+'.json'
+        jsonPath = os.path.join(reportsDir,jsonName)
         positivesCount = -1
         firstSeen = ''
         if os.path.exists(jsonPath):
@@ -445,7 +483,5 @@ if __name__ == "__main__":
         if apkHash not in positiveDict:
             positiveDict.update({apkHash:[positivesCount, firstSeen]})
     FileUtils.writeDict(positiveDict, positiveDictPath)
-        
-
 
 
