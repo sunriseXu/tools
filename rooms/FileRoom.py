@@ -142,6 +142,7 @@ def splitMalware(mergedList):
     payList = []
     rogList = []
     stealList = []
+    noMatch = []
     #匹配
     for apkhash in mergedList:
         if apkhash in payDict:
@@ -151,10 +152,12 @@ def splitMalware(mergedList):
         elif apkhash in stealDict:
             stealList.append(apkhash)
         else:
-            print '%s dont match any one' %apkhash
+            # print '%s dont match any one' %apkhash
+            noMatch.append(apkhash)
     print 'pay: ',len(payList)
     print 'rog: ',len(rogList)
     print 'steal:', len(stealList)
+    print 'noMath', len(noMatch)
     # todo 可以将结果写入文件
     return
 

@@ -187,6 +187,10 @@ def listCopy2(myList,destDir):
 		shutil.copy(myPath,destPath)
 
 
+def listCopy3(listPath, srcDir, destDir):
+	myList = readList(listPath)
+	listCopy(myList, srcDir, destDir)
+
 def listCut(myList,srcDir,destDir=''):
 	'''
 	cut file in myList to destDir from srcDir, default destDir is $srcDir_cut 
@@ -209,6 +213,10 @@ def listCut(myList,srcDir,destDir=''):
 		destPath=os.path.join(destDir,item)
 		shutil.move(srcPath,destPath)
 	return 
+
+def listCut2(listPath, srcDir, destDir):
+	myList = readList(listPath)
+	listCut(myList, srcDir, destDir)
 
 def xorFileWithByte(src,dest,myByte):
 	'''

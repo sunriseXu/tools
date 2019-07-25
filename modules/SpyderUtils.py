@@ -12,10 +12,15 @@ import time
 
 
 def getContent(url):
-	request = urllib2.Request(url)
-	response = urllib2.urlopen(request)
-	content = response.read().decode('utf-8')
-	return content
+    request = urllib2.Request(url)
+    request.add_header('User-Agent','Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6')
+    content = ''
+    try:
+        response = urllib2.urlopen(request)
+        content = response.read().decode('utf-8')
+    except:
+        content = ''
+    return content
 
 
 

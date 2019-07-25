@@ -86,7 +86,7 @@ if __name__ == "__main__":
             if maxcount > maxlen:
                 abandonedList.append(logName)
         else:
-            if len(actionIdList)<10:
+            if len(actionIdList)<4:
                 abandonedList.append(logName)
     # print abandonedList
     writeList(abandonedList,abondonedPath)

@@ -6,13 +6,14 @@ from modules import RexUtils
 from modules import AdbUtils
 from modules import ApkUtils
 from modules.FileUtils import EasyDir
+from modules import SpyderUtils
 import os
 import shutil
 import random
 import logging
 import sys
 from rooms.FileRoom import *
-
+from datetime import datetime
 logging.basicConfig()
 l = logging.getLogger("playground")
 
@@ -251,30 +252,70 @@ if __name__ == "__main__":
     # allMal = list(set(v1TestMal+v1TrainMal+v2TrainMal+v2TestMal))
     
     # splitMalware(allMal)
+    
+    # 统计v1_old 和 v2 恶意软件列表， 并且与新的v1进行交叉比较
+    # pkgDir = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg')
+    # pkgPathDict = pkgDir.getAbsPathDict()
+    # v1TrainMal = FileUtils.readList(pkgPathDict['v1_train_mal_hash'])
+    # v1TestMal = FileUtils.readList(pkgPathDict['v1_test_mal_hash'])
+    # v2TestMal = FileUtils.readList(pkgPathDict['v2_test_mal'])
+    # v2TrainMal = FileUtils.readList(pkgPathDict['v2_train_mal'])
+    # v1_all = list(set(v1TrainMal+v1TestMal))
+    # v2_all = list(set(v2TestMal+v2TrainMal))
+    # v1_all = list(set(v1_all + v2_all))
     # pdirnameList = ['malPay','malRog','malSteal']
-
-
-    # new_500 = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\v1Test_new500')
-    # new_2000 = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\v1Train_new2000')
-
-    # steal_no_rule = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\malStealNo2\\rest_norule')
-    # FileUtils.writeList(steal_no_rule, 'C:\\Users\\limin\\Desktop\\toTest.txt')
-
     # for pdirname in pdirnameList:
     #     srcDir = 'C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\%s' %pdirname
     #     mysrcDir = EasyDir(srcDir)
     #     childPathDict = mysrcDir.getAbsPathDict()
     #     all_ruled_dir_list = FileUtils.listDir3(childPathDict['ruled'])
     #     print '\n'
-    #     print len(all_ruled_dir_list)
+    #     # print len(all_ruled_dir_list)
     #     new_rule_167 = FileUtils.readList(childPathDict['new_rule_167.txt'])
     #     new_667 = FileUtils.readList(childPathDict['new_667.txt'])
+    #     new_667  = [i.upper() for i in new_667]
+    #     new_all = new_rule_167 + new_667
 
-    #     new_rule_167 = CollectionUtils.graftListItem(new_rule_167, '','.txt')
-    #     new_667 = CollectionUtils.graftListItem(new_667, '', '.txt')
-    #     FileUtils.listCopy(new_rule_167, childPathDict['ruled'], mysrcDir.getCatPath('new_167'))
-    #     FileUtils.listCopy(new_667, childPathDict['ruled'], mysrcDir.getCatPath('new_667'))
-    
+    #     new_667_dirlist = FileUtils.listDir3(childPathDict['new_667'])
+    #     new_667_dirlist = [i.upper() for i in new_667_dirlist]
+    #     new_167_dirlist = FileUtils.listDir3(childPathDict['new_167'])
+    #     new_all_dirlist = new_667_dirlist + new_167_dirlist
+
+    #     print 'train667 && test167'
+    #     print len(CollectionUtils.listIntersection(new_rule_167, new_667))
+    #     # print len(CollectionUtils.listIntersection(new_667_dirlist, new_167_dirlist))
+
+
+    #     # print len(CollectionUtils.listDifference(new_667_dirlist, new_167_dirlist))
+    #     # print len(CollectionUtils.listDifference(new_667, new_rule_167))
+    #     # print len(CollectionUtils.listDifference(new_all, new_all_dirlist))
+    #     print 'test167 && (v1_old+v2)'
+    #     print len(CollectionUtils.listIntersection(new_rule_167, v1_all))
+    #     print 'train667 && (v1_old+v2)'
+    #     print len(CollectionUtils.listIntersection(new_667, v1_all))
+
+    #     print 'train:'
+    #     splitMalware(new_667)
+    #     print '\ntest:'
+    #     splitMalware(new_rule_167)
+
+
+
+
+    # steal 类的分类 和 筛选
+    # srcDir = 'C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\malSteal'
+    # mysrcDir = EasyDir(srcDir)
+    # childPathDict = mysrcDir.getAbsPathDict()
+    # all_ruled_dir_list = FileUtils.listDir3(childPathDict['ruled'])
+    # print len(all_ruled_dir_list)
+    # new_rule_167 = FileUtils.readList(childPathDict['new_rule_167.txt'])
+    # rest_ruled = CollectionUtils.listDifference(all_ruled_dir_list, new_rule_167)
+    # print len(rest_ruled)
+    # new_rule_667  = random.sample(rest_ruled, 667)
+    # FileUtils.writeList(new_rule_667, mysrcDir.getCatPath('new_667.txt'))
+    # new_rule_667 = CollectionUtils.graftListItem(new_rule_667, '','.txt')
+    # FileUtils.listCopy(new_rule_667, childPathDict['ruled'], mysrcDir.getCatPath('new_667'))
+
 
     # 打开json文件，然后搜索关键字，包含超过spy>5的就是信息窃取软件
     # 如果符合条件，记录文件hash生成列表文件 起码要2000个起步
@@ -320,39 +361,67 @@ if __name__ == "__main__":
     #               '/mnt/VirusShare/VirusShare_Android_2017',
     #               '/mnt/VirusShare/VirusShare_Android_2018',
     #                 ]
-    # listDict = {}
-    # for item in apkdirList:
-    #     itemlist = FileUtils.listDir3(item)
-    #     itemlist = CollectionUtils.trimListItem(itemlist,'VirusShare_','')
-    #     listDict.update({item:itemlist})
-    # for apkitem in toTest:  
-    #     for key, value in listDict:
-    #         if apkitem in value:
-    #             srcPath = os.path.join(key,'VirusShare_'+apkitem)
-    #             destPath = './apkTotest/'+apkitem+'.apk'
-    #             shutil.copy(srcPath,destPath)
-    #             break
-
-    # srcDir = 'C:\\Users\\limin\\Desktop\\traces_enRog\\traces'
-    # mylist = FileUtils.readList('C:\Users\limin\Desktop\\abandon.txt')
-    # FileUtils.listCut(mylist,srcDir)
-
-    spy6list = FileUtils.readList('C:\\Users\\limin\\Desktop\\stealFoundList.txt')
-    spytestlist = FileUtils.readList('C:\\Users\\limin\\Desktop\\toText_spy.txt')
-    print len(spy6list)
-    spy6rest = CollectionUtils.listDifference(spy6list, spytestlist)
-    print len(spy6rest)
-
-    spyRan = random.sample(spy6rest, 200)
-
-    # FileUtils.writeList()
-    # spyList = FileUtils.readList('C:\\Users\\limin\\Desktop\\stealFoundList.txt')
-    spyList  = [i.upper() for i in spyRan]
     
-    antianDict = FileUtils.readDict('C:\\Users\\limin\\Desktop\\allHashDict\\allMalDict\\stealAllDict.txt')
-    antianList = antianDict.keys()
-    antianList = [str(i) for i in antianList]
-    diffList = CollectionUtils.listIntersection(spyList,antianList)
-    print len(diffList)
-    if len(diffList) ==0:
-        FileUtils.writeList(spyRan, 'C:\\Users\\limin\\Desktop\\totest6spy.txt')
+    
+    #筛选出 除去原v1和v2的 新v1的spy类
+    # pkgDir = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg')
+    # pkgPathDict = pkgDir.getAbsPathDict()
+    # v1TrainMal = FileUtils.readList(pkgPathDict['v1_train_mal_hash'])
+    # v1TestMal = FileUtils.readList(pkgPathDict['v1_test_mal_hash'])
+    # v2TestMal = FileUtils.readList(pkgPathDict['v2_test_mal'])
+    # v2TrainMal = FileUtils.readList(pkgPathDict['v2_train_mal'])
+    # v1_all = list(set(v1TrainMal+v1TestMal))
+    # v2_all = list(set(v2TestMal+v2TrainMal))
+    # v1_all = v1_all + v2_all
+    # srcDir = 'C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\malSteal'
+    # mysrcDir = EasyDir(srcDir)
+    # childPathDict = mysrcDir.getAbsPathDict()
+    # all_ruled_dir_list = FileUtils.listDir3(childPathDict['ruled'])
+    # new_rule_167 = FileUtils.readList(childPathDict['new_rule_167.txt'])
+    # rest_ruled = CollectionUtils.listDifference(all_ruled_dir_list, new_rule_167)
+    # rest_ruled = CollectionUtils.listDifference(rest_ruled, v1_all)
+    # new_rule_667  = random.sample(rest_ruled, 667)
+    # FileUtils.writeList(new_rule_667, mysrcDir.getCatPath('new_667.txt'))
+    # new_rule_667 = CollectionUtils.graftListItem(new_rule_667, '','.txt')
+    # FileUtils.listCopy(new_rule_667, childPathDict['ruled'], mysrcDir.getCatPath('new_667'))
+
+    #从ruled.txt中拷贝对应log
+    # ruledPath = 'C:\\Users\\limin\\Desktop\\ruled.txt'
+    # srcdir = 'C:\\Users\\limin\\Desktop\\traces_enRog\\traces'
+    # destdir = 'C:\\Users\\limin\\Desktop\\traces_enRog\\traces_ruled'
+    # FileUtils.listCopy3(ruledPath, srcdir, destdir)
+
+    #从abandon.txt中剪切对应log
+    # ruledPath = 'C:\\Users\\limin\\Desktop\\abandon.txt'
+    # srcdir = 'C:\\Users\\limin\\Desktop\\traces_enRog\\traces'
+    # destdir = 'C:\\Users\\limin\\Desktop\\traces_enRog\\traces_cut'
+    # FileUtils.listCut2(ruledPath, srcdir, destdir)
+
+    # 挑选规则：
+    # 1. 首先将符合rule的挑选出来 （避免在第二步将其筛掉）
+    # 2. 然后筛除了log小于4，和startlock多于9条的log
+    # 3. 将剩余的和ruled合并
+
+    # 对3类总集进行统计和重复计算
+    # srcDir = 'C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\v1FinalMalTrain2000'
+    # srcDir2 = 'C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\v1FinalMalTest500'
+    # malTrain2000 =  FileUtils.listDir3(srcDir)
+    # malTest500 = FileUtils.listDir3(srcDir2)
+    # malTrain2000 = [i.upper() for i in malTrain2000]
+    # malTrain2000 = list(set(malTrain2000))
+
+    # print len(CollectionUtils.listIntersection(malTrain2000, malTest500))
+    # splitMalware(malTrain2000)
+    # splitMalware(malTest500)
+    # print len(CollectionUtils.listIntersection(malTrain2000+malTest500,v1_all))
+
+    # 对数据库抓取的列表于本地文件夹列表进行比较确定无误
+    # dbpath = 'C:\\Users\\limin\\Desktop\\v1pkg\\v1TrainMal2000.txt'
+    # srcDir2 = 'C:\\Users\\limin\\Desktop\\allMal\\malAllRuled\\v1FinalMalTrain2000'
+    # malTest500 = FileUtils.listDir3(srcDir2)
+    # dblist = FileUtils.readList(dbpath)
+    # print len(CollectionUtils.listIntersection(dblist,malTest500))
+
+    # 首先读取所有hash文件，由zm提供，读取其成为dict
+    # 为什么要读取hash文件呢，直接读取json文件就行了，哦，因为hash文件有正常样本与hash的映射
+    
