@@ -466,7 +466,7 @@ if __name__ == "__main__":
         itemList = item.split()
         myHash = itemList[0].strip()
         apkName = itemList[1].strip().strip('\r')
-        apkName = os.path.splitext()[0]
+        apkName = os.path.splitext(apkName)[0]
         print myHash,apkName
         if myHash not in hashApkNameDict:
             hashApkNameDict.update({myHash:apkName})
