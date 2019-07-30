@@ -221,7 +221,13 @@ def pkg2HashInDir(myDir, pkgFileRex, malFlag):
             l.warning('deal %s error!',key)
             continue
         # write hashList to hashFile in pkgDir
-        FileUtils.writeList(hashList,pkgDir.getCatPath(key+'_hash'))
+        newNameList = os.path.splitext(key)
+        newName  = newNameList[0]
+        extendName = ''
+        if len(newNameList)>1:
+            extendName = newNameList[1]
+        newName = newName+'_hash'+extendName
+        FileUtils.writeList(hashList,pkgDir.getCatPath(newName))
 
 def mergeAllDict(myDir, myRex):
     '''

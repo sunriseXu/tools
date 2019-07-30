@@ -5,6 +5,8 @@ import re
 import os
 import json
 import sys
+from lxml import etree
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import time
@@ -22,7 +24,12 @@ def getContent(url):
         content = ''
     return content
 
-
+def getUrlTextEtree(url):
+	content = getContent(url)
+	res = ''
+	if content:
+		return etree.HTML(content)
+	return res
 
 # 前台开启浏览器模式
 def openChrome():

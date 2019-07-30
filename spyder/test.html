@@ -1,0 +1,385 @@
+<table class="jd-inheritance-table">
+
+
+    <tr>
+
+        <td colspan="5" class="jd-inheritance-class-cell"><a
+                href="../../../../reference/java/lang/Object.html">java.lang.Object</a>
+        </td>
+    </tr>
+
+
+    <tr>
+
+        <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+
+        <td colspan="4" class="jd-inheritance-class-cell"><a
+                href="../../../../reference/android/text/method/MetaKeyKeyListener.html">android.text.method.MetaKeyKeyListener</a>
+        </td>
+    </tr>
+
+
+    <tr>
+
+        <td class="jd-inheritance-space">&nbsp;</td>
+
+        <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+
+        <td colspan="3" class="jd-inheritance-class-cell"><a
+                href="../../../../reference/android/text/method/BaseKeyListener.html">android.text.method.BaseKeyListener</a>
+        </td>
+    </tr>
+
+
+    <tr>
+
+        <td class="jd-inheritance-space">&nbsp;</td>
+
+        <td class="jd-inheritance-space">&nbsp;</td>
+
+        <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+
+        <td colspan="2" class="jd-inheritance-class-cell"><a
+                href="../../../../reference/android/text/method/NumberKeyListener.html">android.text.method.NumberKeyListener</a>
+        </td>
+    </tr>
+
+
+    <tr>
+
+        <td class="jd-inheritance-space">&nbsp;</td>
+
+        <td class="jd-inheritance-space">&nbsp;</td>
+
+        <td class="jd-inheritance-space">&nbsp;</td>
+
+        <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
+
+        <td colspan="1" class="jd-inheritance-class-cell">android.text.method.DateKeyListener
+        </td>
+    </tr>
+
+
+</table>
+
+
+
+
+
+<A NAME="getNextSibling()"></A>
+<div class="api apilevel-8">
+    <h3 class="api-name">getNextSibling</h3>
+    <div class="api-level">
+        <div>
+            Added in <a href="../../../../../guide/topics/manifest/uses-sdk-element.html#ApiLevels">API level 8</a>
+        </div>
+    </div>
+    <pre class="api-signature no-pretty-print">
+        <a href="../../../../../reference/org/w3c/dom/Node.html">Node</a> getNextSibling ()
+    </pre>
+    <p>
+        <p>Get the child node before which the result nodes will be inserted.</p>
+        <p>If no node was set via
+            <code><a href="../../../../../reference/javax/xml/transform/dom/DOMResult.html#DOMResult(org.w3c.dom.Node, org.w3c.dom.Node)">DOMResult(Node, Node)</a></code>,
+            <code><a href="../../../../../reference/javax/xml/transform/dom/DOMResult.html#DOMResult(org.w3c.dom.Node, org.w3c.dom.Node, java.lang.String)">DOMResult(Node, Node, String)</a></code>
+            or
+            <code><a href="../../../../../reference/javax/xml/transform/dom/DOMResult.html#setNextSibling(org.w3c.dom.Node)">setNextSibling(Node)</a></code>,
+            then <code>null</code> will be returned.</p>
+    </p>
+    <table class="responsive">
+        <tr>
+            <th colspan=2>Returns</th>
+        </tr>
+        <tr>
+            <td><code><a href="../../../../../reference/org/w3c/dom/Node.html">Node</a></code></td>
+            <td width="100%">The child node before which the result nodes will be inserted.</td>
+        </tr>
+    </table>
+</div>
+
+<A NAME="getNode()"></A>
+
+<div class="api apilevel-8">
+    <h3 class="api-name">getSystemId</h3>
+    <div class="api-level">
+        <div>
+            Added in <a href="../../../../../guide/topics/manifest/uses-sdk-element.html#ApiLevels">API level 8</a>
+        </div>
+    </div>
+    <pre class="api-signature no-pretty-print">
+<a href="../../../../../reference/java/lang/String.html">String</a> getSystemId ()</pre>
+    <p>
+        <p>Get the System Identifier.</p>
+        <p>If no System ID was set via
+            <code><a href="../../../../../reference/javax/xml/transform/dom/DOMResult.html#DOMResult(org.w3c.dom.Node, java.lang.String)">DOMResult(Node, String)</a></code>,
+            <code><a href="../../../../../reference/javax/xml/transform/dom/DOMResult.html#DOMResult(org.w3c.dom.Node, org.w3c.dom.Node, java.lang.String)">DOMResult(Node, Node, String)</a></code>
+            or
+            <code><a href="../../../../../reference/javax/xml/transform/dom/DOMResult.html#setSystemId(java.lang.String)">setSystemId(String)</a></code>,
+            then <code>null</code> will be returned.</p>
+    </p>
+    <table class="responsive">
+        <tr>
+            <th colspan=2>Returns</th>
+        </tr>
+        <tr>
+            <td><code><a href="../../../../../reference/java/lang/String.html">String</a></code></td>
+            <td width="100%">The system identifier.
+            </td>
+        </tr>
+    </table>
+</div>
+
+<A NAME="getRunningTasks(int)"></A>
+
+<div class="api apilevel-1">
+    <h3 class="api-name">getRunningTasks</h3>
+    <div class="api-level">
+        <div>
+            Added in <a href="../../../guide/topics/manifest/uses-sdk-element.html#ApiLevels">API level 1</a></div>
+
+
+
+    </div>
+    <pre class="api-signature no-pretty-print">
+<a href="../../../reference/java/util/List.html">List</a>&lt;<a href="../../../reference/android/app/ActivityManager.RunningTaskInfo.html">ActivityManager.RunningTaskInfo</a>&gt; getRunningTasks (int maxNum)</pre>
+
+
+
+    <p>
+        <p class="caution"><strong>
+                This method was deprecated
+                in API level 21.</strong><br />
+            As of <code><a href="../../../reference/android/os/Build.VERSION_CODES.html#LOLLIPOP">LOLLIPOP</a></code>,
+            this method
+            is no longer available to third party
+            applications: the introduction of document-centric recents means
+            it can leak person information to the caller. For backwards compatibility,
+            it will still retu rn a small subset of its data: at least the caller's
+            own tasks, and possibly some other tasks
+            such as home that are known to not be sensitive.
+        </p>
+        <p>Return a list of the tasks that are currently running, with
+            the most recent being first and older ones after in order. Note that
+            "running" does not mean any of the task's code is currently loaded or
+            activity -- the task may have been frozen by the system, so that it
+            can be restarted in its previous state when next brought to the
+            foreground.
+
+            <p><b>Note: this method is only intended for debugging and presenting
+                    task management user interfaces</b>. This should never be used for
+                core logic in an application, such as deciding between different
+                behaviors based on the information found here. Such uses are
+                <em>not</em> supported, and will likely break in the future. For
+                example, if multiple applications can be actively running at the
+                same time, assumptions made about the meaning of the data here for
+                purposes of control flow will be incorrect.</p>
+        </p>
+        <table class="responsive">
+            <tr>
+                <th colspan=2>Parameters</th>
+            </tr>
+            <tr>
+                <td><code>maxNum</code></td>
+                <td width="100%">
+                    <code>int</code>:
+                    The maximum number of entries to return in the list. The
+                    actual number returned may be smaller, depending on how many tasks the
+                    user has started.</td>
+            </tr>
+        </table>
+        <table class="responsive">
+            <tr>
+                <th colspan=2>Returns</th>
+            </tr>
+            <tr>
+                <td><code><a href="../../../reference/java/util/List.html">List</a>&lt;<a href="../../../reference/android/app/ActivityManager.RunningTaskInfo.html">ActivityManager.RunningTaskInfo</a>&gt;</code>
+                </td>
+                <td width="100%">Returns a list of RunningTaskInfo records describing each of
+                    the running tasks.
+                </td>
+            </tr>
+        </table>
+        <table class="responsive">
+            <tr>
+                <th colspan=2>Throws</th>
+            </tr>
+            <tr>
+                <td><code><a href="../../../reference/java/lang/SecurityException.html">SecurityException</a></code>
+                </td>
+                <td width="100%"></td>
+            </tr>
+        </table>
+
+
+</div>
+
+
+<A NAME="createBond()"></A>
+
+<div class="api apilevel-19">
+    <h3 class="api-name">createBond</h3>
+    <div class="api-level">
+        <div>
+            Added in <a href="../../../guide/topics/manifest/uses-sdk-element.html#ApiLevels">API level 19</a></div>
+
+
+
+    </div>
+    <pre class="api-signature no-pretty-print">
+boolean createBond ()</pre>
+
+
+
+
+    <p>Start the bonding (pairing) process with the remote device.
+        <p>This is an asynchronous call, it will return immediately. Register
+            for
+            <code><a href="../../../reference/android/bluetooth/BluetoothDevice.html#ACTION_BOND_STATE_CHANGED">ACTION_BOND_STATE_CHANGED</a></code>
+            intents to be notified when
+            the bonding process completes, and its result.
+            <p>Android system services will handle the necessary user interactions
+                to confirm and complete the bonding process.
+                <p>Requires
+                    <code><a href="../../../reference/android/Manifest.permission.html#BLUETOOTH_ADMIN">BLUETOOTH_ADMIN</a></code>.
+                </p>
+                <table class="responsive">
+                    <tr>
+                        <th colspan=2>Returns</th>
+                    </tr>
+                    <tr>
+                        <td><code>boolean</code></td>
+                        <td width="100%">false on immediate error, true if bonding will begin
+                        </td>
+                    </tr>
+                </table>
+
+</div>
+
+<A NAME="writeToParcel(android.os.Parcel, int)"></A>
+
+<div class="api apilevel-5">
+    <h3 class="api-name">writeToParcel</h3>
+    <div class="api-level">
+        <div>
+            Added in <a href="../../../guide/topics/manifest/uses-sdk-element.html#ApiLevels">API level 5</a></div>
+
+
+
+    </div>
+    <pre class="api-signature no-pretty-print">
+void writeToParcel (<a href="../../../reference/android/os/Parcel.html">Parcel</a> out, 
+                int flags)</pre>
+
+
+
+
+    <p>Flatten this object in to a Parcel.</p>
+    <table class="responsive">
+        <tr>
+            <th colspan=2>Parameters</th>
+        </tr>
+        <tr>
+            <td><code>out</code></td>
+            <td width="100%">
+                <code>Parcel</code>:
+                The Parcel in which the object should be written.</td>
+        </tr>
+        <tr>
+            <td><code>flags</code></td>
+            <td width="100%">
+                <code>int</code>:
+                Additional flags about how the object should be written.
+                May be 0 or
+                <code><a href="../../../reference/android/os/Parcelable.html#PARCELABLE_WRITE_RETURN_VALUE">PARCELABLE_WRITE_RETURN_VALUE</a></code>.
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+
+
+
+
+<!-- ========= METHOD DETAIL ======== -->
+
+
+
+<!-- ========= END OF CLASS DATA ========= -->
+
+</div><!-- end jd-content -->
+
+
+
+
+
+<div class="wrap">
+    <div class="dac-footer">
+        <div class="cols dac-footer-main">
+            <div class="col-1of2">
+                <a class="dac-footer-getnews" id="newsletter" data-modal-toggle="newsletter" href="javascript:;">Get
+                    news &amp; tips <span class="dac-fab dac-primary"><i class="dac-sprite dac-mail"></i></span></a>
+            </div>
+            <div class="col-1of2 dac-footer-reachout">
+                <div class="dac-footer-contact">
+                    <a class="dac-footer-contact-link" href="http://android-developers.blogspot.com/">Blog</a>
+                    <a class="dac-footer-contact-link" href="/support.html">Support</a>
+                </div>
+                <div class="dac-footer-social">
+                    <a class="dac-button-social dac-youtube dac-footer-social-link"
+                        href="https://www.youtube.com/user/androiddevelopers"><i class="dac-sprite dac-youtube"></i></a>
+                    <a class="dac-button-social dac-gplus dac-footer-social-link"
+                        href="https://plus.google.com/+AndroidDevelopers"><i class="dac-sprite dac-gplus"></i></a>
+                    <a class="dac-button-social dac-twitter dac-footer-social-link"
+                        href="https://twitter.com/AndroidDev"><i class="dac-sprite dac-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="dac-footer-separator" />
+
+
+        <p class="dac-footer-copyright">
+
+            Except as noted, this content is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache
+                2.0</a>.
+            For details and restrictions, see the <a href="../../../license.html">
+                Content License</a>.
+
+        </p>
+        <p class="dac-footer-build">
+
+
+            Android 6.0&nbsp;r1 &mdash;
+
+            <script src="../../../timestamp.js" type="text/javascript"></script>
+            <script>document.write(BUILD_TIMESTAMP)</script>
+
+        </p>
+
+
+        <p class="dac-footer-links">
+            <a href="/about/android.html">About Android</a>
+            <a href="/auto/index.html">Auto</a>
+            <a href="/tv/index.html">TV</a>
+            <a href="/wear/index.html">Wear</a>
+            <a href="/legal.html">Legal</a>
+
+            <span id="language" class="locales">
+                <select name="language" onchange="changeLangPref(this.value, true)">
+                    <option value="en" selected="selected">English</option>
+                    <option value="es">Español</option>
+                    <option value="in">Bahasa Indonesia</option>
+                    <option value="ja">日本語</option>
+                    <option value="ko">한국어</option>
+                    <option value="pt-br">Português Brasileiro</option>
+                    <option value="ru">Русский</option>
+                    <option value="vi">tiếng Việt</option>
+                    <option value="zh-cn">中文（简体)</option>
+                    <option value="zh-tw">中文（繁體)</option>
+                </select>
+            </span>
+        </p>
+    </div>
+</div>
+<!-- end footer -->

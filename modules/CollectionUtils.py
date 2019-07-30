@@ -31,6 +31,31 @@ def listMerge(*lists):
 		allList += mylist
 	return allList
 
+def listLower(myList):
+	resList = []
+	for i in myList:
+		resList.append(i.lower())
+	return resList
+
+def listUpper(myList):
+	resList = []
+	for i in myList:
+		resList.append(i.upper())
+	return resList
+
+def dict2List(myDict):
+	resList = []
+	for key,value in myDict.items():
+		tmpStr = str(key)+', '
+		valueType = typeof(value)
+		if valueType in 'list':
+			tmpStr = tmpStr + ','.join(value)
+		elif valueType in ['str','int']:
+			tmpStr = tmpStr + str(value)
+		else:
+			l.warning('unhandled type')
+		resList.append(tmpStr)
+	return resList
 
 def trimListItem(myList,unHeadStr='', unTailStr=''):
 	'''
@@ -115,8 +140,11 @@ def queryValueOfDict(myDict, myValue):
 	    print 'search %s error!' %myValue
 	    return ''
 	return myKey
-	reversedDict = dict(zip(myDict.values(), myDict.keys()))
-	
+
+def dictReverse(myDict):
+	reDict = dict(zip(myDict.values(),myDict.keys()))
+	return reDict
+
 
 
 def dictMerge(*dicts):

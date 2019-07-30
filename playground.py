@@ -21,7 +21,7 @@ l = logging.getLogger("playground")
 
 if __name__ == "__main__":
     # # 对目标目录下的pkgList文件通过hash-pkg字典进行转换，变成对应的hashList文件，写入目标目录，两个字典文件也需要在目标目录下
-    # pkg2HashInDir('C:\\Users\\limin\\Desktop\\v1pkg',r'v1_train_nor',False)
+    # pkg2HashInDir('C:\\Users\\limin\\Desktop\\v1pkg',r'v1_train_nor20000.txt',False)
     # pkg2HashInDir('C:\\Users\\limin\\Desktop\\v1pkg',r'v1.*?mal',True)
     
     # 读取目标目录下的所有hashList文件，并且计算list之间的交集 并集 差集
@@ -446,45 +446,143 @@ if __name__ == "__main__":
     #         positiveDict.update({apkHash:[positivesCount, firstSeen]})
     # FileUtils.writeDict(positiveDict, positiveDictPath)
     
-    hashListPath1 = '/mnt/apk/huawei/md5_201902.log'
-    hashListPath2 = '/mnt/apk/huawei/md5_201905.log'
-    reportsDir = '/mnt/apk/huawei/reports_normal'
-    hashApkNameDictPath = './norhashApkNameDict.txt'
-    positiveDictPath = './positiveDictNor.json'
+    # 对normal的vt报告进行统计
+    # hashListPath1 = '/mnt/apk/huawei/md5_201902.log'
+    # hashListPath2 = '/mnt/apk/huawei/md5_201905.log'
+    # reportsDir = '/mnt/apk/huawei/reports_normal'
+    # hashApkNameDictPath = './norhashApkNameDict.txt'
+    # positiveDictPath = './positiveDictNor.json'
 
-    hashList1 = FileUtils.readList(hashListPath1)
-    hashList2 = FileUtils.readList(hashListPath2)
-    print len(hashList1)
-    print len(hashList2)
-    print len(hashList1)+len(hashList2)
-    hashList = list(set(hashList1 + hashList2))
-    print len(hashList)
-    hashApkNameDict = {}
-    positiveDict={}
+    # hashList1 = FileUtils.readList(hashListPath1)
+    # hashList2 = FileUtils.readList(hashListPath2)
+    # print len(hashList1)
+    # print len(hashList2)
+    # print len(hashList1)+len(hashList2)
+    # hashList = list(set(hashList1 + hashList2))
+    # print len(hashList)
+    # hashApkNameDict = {}
+    # positiveDict={}
 
-    for item in hashList:
-        itemList = item.split()
-        myHash = itemList[0].strip()
-        apkName = itemList[1].strip().strip('\r')
-        apkName = os.path.splitext(apkName)[0]
-        print myHash,apkName
-        if myHash not in hashApkNameDict:
-            hashApkNameDict.update({myHash:apkName})
-    FileUtils.writeDict(hashApkNameDict, hashApkNameDictPath)
-    print 'write hashapkName done!'
-    for key, value in hashApkNameDict.items():
-        apkHash = key
-        jsonName = key+'.json'
-        jsonPath = os.path.join(reportsDir,jsonName)
-        print jsonPath
-        positivesCount = -1
-        firstSeen = ''
-        if os.path.exists(jsonPath):
-            jsonDict = FileUtils.readDict(jsonPath)
-            positivesCount = jsonDict['positives']
-            firstSeen = jsonDict['first_seen']
-        if apkHash not in positiveDict:
-            positiveDict.update({apkHash:[positivesCount, firstSeen]})
-    FileUtils.writeDict(positiveDict, positiveDictPath)
+    # for item in hashList:
+    #     itemList = item.split()
+    #     myHash = itemList[0].strip()
+    #     apkName = itemList[1].strip().strip('\r')
+    #     apkName = os.path.splitext(apkName)[0]
+    #     print myHash,apkName
+    #     if myHash not in hashApkNameDict:
+    #         hashApkNameDict.update({myHash:apkName})
+    # FileUtils.writeDict(hashApkNameDict, hashApkNameDictPath)
+    # print 'write hashapkName done!'
+    # for key, value in hashApkNameDict.items():
+    #     apkHash = key
+    #     jsonName = key+'.json'
+    #     jsonPath = os.path.join(reportsDir,jsonName)
+    #     print jsonPath
+    #     positivesCount = -1
+    #     firstSeen = ''
+    #     if os.path.exists(jsonPath):
+    #         jsonDict = FileUtils.readDict(jsonPath)
+    #         positivesCount = jsonDict['positives']
+    #         firstSeen = jsonDict['first_seen']
+    #     if apkHash not in positiveDict:
+    #         positiveDict.update({apkHash:[positivesCount, firstSeen]})
+    # FileUtils.writeDict(positiveDict, positiveDictPath)
 
+    # 统计数量信息
+    # dirPath = 'C:\\Users\\limin\\Desktop\\vTInfo'
+    # myDir = EasyDir(dirPath)
+    # pathDict = myDir.getAbsPathDict()
+    # myDict = FileUtils.readDict(pathDict['positiveDictMal.json'])
+    # print len(myDict)
+    # resDict = {}
+    # for key,value in myDict.items():
+    #     countEngine = value[0]
+    #     if countEngine in resDict:
+    #         resDict[countEngine] += 1
+    #     else:
+    #         resDict.update({countEngine:1})
+    # print resDict
+    # resDictPath = myDir.getCatPath('norVtCount.json')
+    # FileUtils.writeDict(resDict, resDictPath)
+
+    # dirPath = 'C:\\Users\\limin\\Desktop\\vTInfo'
+    # myDir = EasyDir(dirPath)
+    # pathDict = myDir.getAbsPathDict()
+
+    # mydict = FileUtils.readDict(pathDict['malVtCount.json'])
+    
+    # keyList = mydict.keys()
+    # keyList  = [int(i) for i in keyList]
+    # keyList.sort()
+    # for key  in keyList:
+    #     print '%d\t%s' %(key, mydict[str(key)])
+    
+    # 读取v1 v2所有训练集和测试集 list，包括正常的和恶意的,还有的问题是v1maltrain有近300个vt上的
+    # 恶意样本提取hash值， 正常样本提取pkgName，与zm给的dict转换成hash值
+    # 昨天晚上获取的dict可以进行以上信息统计
+    # 对每个hash值找到其对应的count计数，并且形成计数dict
+    # 对极端的count值找到对应的hash，人工确定极端情况
+
+    pkgDir = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg')
+    pkgPathDict = pkgDir.getAbsPathDict()
+    v1MalTrain  =FileUtils.readList(pkgPathDict['v1TrainMal2000.txt'])
+    v1MalTest  = FileUtils.readList(pkgPathDict['v1TestMal500.txt'])
+    v1NorTrain = FileUtils.readList(pkgPathDict['v1NorTrainHash.txt'])
+    v1NorTest = FileUtils.readList(pkgPathDict['v1NorTestHash.txt'])
+
+    v1_all = v1MalTrain+v1MalTest+v1NorTrain+v1NorTest
+
+    v2MalTrain  = FileUtils.readList(pkgPathDict['v2_train_mal'])
+    v2MalTest  = FileUtils.readList(pkgPathDict['v2_test_mal'])
+    v2NorTrain = FileUtils.readList(pkgPathDict['v2NorTrainHash.txt'])
+    v2NorTest = FileUtils.readList(pkgPathDict['v2NorTestHash.txt'])
+
+    v2_all = v2MalTrain+v2MalTest+v2NorTrain+v2NorTest
+    print len(CollectionUtils.listIntersection(v1_all,v2_all))
+
+    nor_all = v1NorTest+v1NorTrain+v2NorTest+v2NorTrain
+    mal_all = v1MalTest+v1MalTrain+v2MalTest+v2MalTrain
+
+    dirPath = 'C:\\Users\\limin\\Desktop\\vTInfo'
+    vtPath = EasyDir(dirPath)
+    vtPathDict = vtPath.getAbsPathDict()
+
+    # norpkgHash = FileUtils.readDict(vtPathDict['norApkNameHashDict.json'])
+    # v1NorTest = CollectionUtils.key2Valuelist(v1NorTest, norpkgHash)
+    # FileUtils.writeList(v1NorTest,pkgDir.getCatPath('v1NorTestHash.txt'))
+    
+
+    pCountMal = FileUtils.readDict(vtPathDict['positiveDictMal.json'])
+    pCountNor = FileUtils.readDict(vtPathDict['positiveDictNor.json'])
+
+
+    print len(pCountMal)
+    print len(pCountNor)
+
+    noRuledList = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\noruled')
+    
+
+    resDict = {}
+    minCount = 8
+    maxCount = 15
+    dirtyCase = []
+    myList =CollectionUtils.listLower(noRuledList)
+    myDict = pCountMal
+    for key,value in myDict.items():
+        if key not in myList:
+            continue
+        countEngine = value[0]
+        # if (countEngine<=minCount) and (countEngine!=-1):
+        #     dirtyCase.append(key)
+        if countEngine>=maxCount:
+            dirtyCase.append(key)
+        if countEngine in resDict:
+            resDict[countEngine] += 1
+        else:
+            resDict.update({countEngine:1})
+
+    reslist = CollectionUtils.dict2List(resDict)
+    # print len(dirtyCase)
+    FileUtils.writeList(reslist,vtPath.getCatPath('res/noruleMalAll.csv'))
+    
 
