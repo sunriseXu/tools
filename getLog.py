@@ -151,7 +151,7 @@ if __name__ == "__main__":
 		l.warning("no device attached!")
 		sys.exit()
 	
-	whiteList=['com.zhanhong.message',]
+	whiteList=['com.zhanhong.message','com.antivirus.dbconnector']
 	l.warning("uninstall thirdParty apps")
 	uninstallAllThird(selectedDevId,whiteList)
 

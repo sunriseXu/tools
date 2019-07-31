@@ -523,66 +523,76 @@ if __name__ == "__main__":
     # 对每个hash值找到其对应的count计数，并且形成计数dict
     # 对极端的count值找到对应的hash，人工确定极端情况
 
-    pkgDir = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg')
-    pkgPathDict = pkgDir.getAbsPathDict()
-    v1MalTrain  =FileUtils.readList(pkgPathDict['v1TrainMal2000.txt'])
-    v1MalTest  = FileUtils.readList(pkgPathDict['v1TestMal500.txt'])
-    v1NorTrain = FileUtils.readList(pkgPathDict['v1NorTrainHash.txt'])
-    v1NorTest = FileUtils.readList(pkgPathDict['v1NorTestHash.txt'])
+    # pkgDir = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg')
+    # pkgPathDict = pkgDir.getAbsPathDict()
+    # v1MalTrain  =FileUtils.readList(pkgPathDict['v1TrainMal2000.txt'])
+    # v1MalTest  = FileUtils.readList(pkgPathDict['v1TestMal500.txt'])
+    # v1NorTrain = FileUtils.readList(pkgPathDict['v1NorTrainHash.txt'])
+    # v1NorTest = FileUtils.readList(pkgPathDict['v1NorTestHash.txt'])
 
-    v1_all = v1MalTrain+v1MalTest+v1NorTrain+v1NorTest
+    # v1_all = v1MalTrain+v1MalTest+v1NorTrain+v1NorTest
 
-    v2MalTrain  = FileUtils.readList(pkgPathDict['v2_train_mal'])
-    v2MalTest  = FileUtils.readList(pkgPathDict['v2_test_mal'])
-    v2NorTrain = FileUtils.readList(pkgPathDict['v2NorTrainHash.txt'])
-    v2NorTest = FileUtils.readList(pkgPathDict['v2NorTestHash.txt'])
+    # v2MalTrain  = FileUtils.readList(pkgPathDict['v2_train_mal'])
+    # v2MalTest  = FileUtils.readList(pkgPathDict['v2_test_mal'])
+    # v2NorTrain = FileUtils.readList(pkgPathDict['v2NorTrainHash.txt'])
+    # v2NorTest = FileUtils.readList(pkgPathDict['v2NorTestHash.txt'])
 
-    v2_all = v2MalTrain+v2MalTest+v2NorTrain+v2NorTest
-    print len(CollectionUtils.listIntersection(v1_all,v2_all))
+    # v2_all = v2MalTrain+v2MalTest+v2NorTrain+v2NorTest
+    # print len(CollectionUtils.listIntersection(v1_all,v2_all))
 
-    nor_all = v1NorTest+v1NorTrain+v2NorTest+v2NorTrain
-    mal_all = v1MalTest+v1MalTrain+v2MalTest+v2MalTrain
+    # nor_all = v1NorTest+v1NorTrain+v2NorTest+v2NorTrain
+    # mal_all = v1MalTest+v1MalTrain+v2MalTest+v2MalTrain
 
-    dirPath = 'C:\\Users\\limin\\Desktop\\vTInfo'
-    vtPath = EasyDir(dirPath)
-    vtPathDict = vtPath.getAbsPathDict()
+    # dirPath = 'C:\\Users\\limin\\Desktop\\vTInfo'
+    # vtPath = EasyDir(dirPath)
+    # vtPathDict = vtPath.getAbsPathDict()
 
-    # norpkgHash = FileUtils.readDict(vtPathDict['norApkNameHashDict.json'])
-    # v1NorTest = CollectionUtils.key2Valuelist(v1NorTest, norpkgHash)
-    # FileUtils.writeList(v1NorTest,pkgDir.getCatPath('v1NorTestHash.txt'))
+    # # norpkgHash = FileUtils.readDict(vtPathDict['norApkNameHashDict.json'])
+    # # v1NorTest = CollectionUtils.key2Valuelist(v1NorTest, norpkgHash)
+    # # FileUtils.writeList(v1NorTest,pkgDir.getCatPath('v1NorTestHash.txt'))
     
 
-    pCountMal = FileUtils.readDict(vtPathDict['positiveDictMal.json'])
-    pCountNor = FileUtils.readDict(vtPathDict['positiveDictNor.json'])
+    # pCountMal = FileUtils.readDict(vtPathDict['positiveDictMal.json'])
+    # pCountNor = FileUtils.readDict(vtPathDict['positiveDictNor.json'])
 
 
-    print len(pCountMal)
-    print len(pCountNor)
+    # print len(pCountMal)
+    # print len(pCountNor)
 
-    noRuledList = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\noruled')
+    # noRuledList = FileUtils.listDir3('C:\\Users\\limin\\Desktop\\allMal\\noruled')
     
 
-    resDict = {}
-    minCount = 8
-    maxCount = 15
-    dirtyCase = []
-    myList =CollectionUtils.listLower(noRuledList)
-    myDict = pCountMal
-    for key,value in myDict.items():
-        if key not in myList:
-            continue
-        countEngine = value[0]
-        # if (countEngine<=minCount) and (countEngine!=-1):
-        #     dirtyCase.append(key)
-        if countEngine>=maxCount:
-            dirtyCase.append(key)
-        if countEngine in resDict:
-            resDict[countEngine] += 1
-        else:
-            resDict.update({countEngine:1})
+    # resDict = {}
+    # minCount = 8
+    # maxCount = 15
+    # dirtyCase = []
+    # myList =CollectionUtils.listLower(noRuledList)
+    # myDict = pCountMal
+    # for key,value in myDict.items():
+    #     if key not in myList:
+    #         continue
+    #     countEngine = value[0]
+    #     # if (countEngine<=minCount) and (countEngine!=-1):
+    #     #     dirtyCase.append(key)
+    #     if countEngine>=maxCount:
+    #         dirtyCase.append(key)
+    #     if countEngine in resDict:
+    #         resDict[countEngine] += 1
+    #     else:
+    #         resDict.update({countEngine:1})
 
-    reslist = CollectionUtils.dict2List(resDict)
-    # print len(dirtyCase)
-    FileUtils.writeList(reslist,vtPath.getCatPath('res/noruleMalAll.csv'))
+    # reslist = CollectionUtils.dict2List(resDict)
+    # # print len(dirtyCase)
+    # FileUtils.writeList(reslist,vtPath.getCatPath('res/noruleMalAll.csv'))
     
+    # 统计所有类的个数和方法的总数， 有什么意义 ！
+    # dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\jsonRes'
+    # pathList = FileUtils.listDir(dirname)
+    # functionCount = 0
+    # for myPath in pathList:
+    #     jsonDict = FileUtils.readDict(myPath)
+    #     functionDict = jsonDict['Functions']
+    #     functionCount += len(functionDict.keys())
+    # print functionCount
 
+    

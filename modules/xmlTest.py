@@ -308,30 +308,32 @@ def getUIXml(selectedDevId):
         return False
     domres = ''
     try:
-	    domres=xmldom.parseString(uixml)
+        domres=xmldom.parseString(uixml)
     except:
         return False
-	elementobj = domres.documentElement
-	subElementObj = elementobj.getElementsByTagName("node")
-	resFlag=False
-	for element in subElementObj:
-		resId=element.getAttribute("resource-id")
-		text=element.getAttribute("text")
-		className=element.getAttribute("class")
-		scrollable=element.getAttribute("scrollable")
-		# focused=element.getAttribute("focused")
-		if ("permission_allow_button" in resId) and ("ALLOW" in text):
-			resFlag=True
-			clickBound(element,selectedDevId)
-			break
-		elif ("ViewPager" in className) and ("true" in scrollable):
-			resFlag=True
-			# print "viewpaper found!"
-			lswipeCmd='adb'+selectedDevId+' shell input swipe 1000 1500 200 1500'
-			print os.popen(lswipeCmd)
-			break	
-	time.sleep(0.2)		
-	return resFlag
+    elementobj = domres.documentElement
+    subElementObj = elementobj.getElementsByTagName("node")
+    resFlag=False
+    for element in subElementObj:
+        resId=element.getAttribute("resource-id")
+        text=element.getAttribute("text")
+        className=element.getAttribute("class")
+        scrollable=element.getAttribute("scrollable")
+        # focused=element.getAttribute("focused")
+        # print 'checking...'
+        if ("permission_allow_button" in resId) and ("ALLOW" in text):
+            # print "permission found!"
+            resFlag=True
+            clickBound(element,selectedDevId)
+            break
+        elif ("ViewPager" in className) and ("true" in scrollable):
+            resFlag=True
+            # print "viewpaper found!"
+            lswipeCmd='adb'+selectedDevId+' shell input swipe 1000 1500 200 1500'
+            print os.popen(lswipeCmd)
+            break	
+    time.sleep(0.2)		
+    return resFlag
 
 def clickWelcome(selectedDevId):
 	UICmd='adb'+selectedDevId+' shell "uiautomator dump --compressed /sdcard/window_dump.xml >/dev/null && cat /sdcard/window_dump.xml"'
