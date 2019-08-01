@@ -4,7 +4,7 @@ import os
 import sys
 import re
 import argparse
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 from datetime import datetime
 import lxml
 from lxml import etree
