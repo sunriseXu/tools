@@ -8,7 +8,9 @@ import argparse
 from datetime import datetime
 import lxml
 from lxml import etree
-
+import logging
+logging.basicConfig()
+l = logging.getLogger("spyderAndroid")
 
 
 pwd = os.path.dirname(os.path.realpath(__file__))
@@ -91,10 +93,13 @@ def getTableRowsLinks(myTable):
 def fetchData(localPath, onlineLink):
     myData = ''
     if os.path.exists(localPath):
+        l.warning('fetching from local: %s', localPath)
         myData = FileUtils.readFile(localPath)
     else:
+        l.warning('fetching from online: %s', onlineLink)
         myData = SpyderUtils.getUrlContent(onlineLink)
         if myData:
+            l.warning('fetching online failed!')
             FileUtils.writeFile(localPath,myData.encode('utf-8'))
     return myData
 
@@ -149,16 +154,16 @@ if __name__ == "__main__":
         print 'No %d/%d' %(idx,classLen)
         print 'className: %s; link: %s' %(className, classOnlineLink)
 
-        classHtmlData = ''
+        classHtmlData = fetchData(localPath, classOnlineLink)
         
-        if os.path.exists(localPath):
-            print 'file in local'
-            classHtmlData = FileUtils.readFile(localPath)
-        else:
-            print 'file online, fetching'
-            classHtmlData = SpyderUtils.getUrlContent(classOnlineLink)
-            FileUtils.writeFile(localPath,classHtmlData.encode('utf-8'))
-            print 'file written'
-        # input()
+        # if os.path.exists(localPath):
+        #     print 'file in local'
+        #     classHtmlData = FileUtils.readFile(localPath)
+        # else:
+        #     print 'file online, fetching'
+        #     classHtmlData = SpyderUtils.getUrlContent(classOnlineLink)
+        #     FileUtils.writeFile(localPath,classHtmlData.encode('utf-8'))
+        #     print 'file written'
+        
 
 
