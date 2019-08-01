@@ -11,6 +11,7 @@ import threading
 import logging
 import re
 import traceback 
+import datetime
 import xml.dom.minidom as xmldom
 from modules.xmlTest import *
 from modules.FileUtils import *
@@ -124,6 +125,7 @@ if __name__ == "__main__":
 	toTestFilePath=logsDir+"/toTest.txt"
 	testedFilePath=logsDir+"/logs/lastTest.txt"
 	notInstallPath=logsDir+"/logs/notInstalled.txt"
+	
 
 	mkdir(tmplogDir)
 	mkdir(logDir)
@@ -155,7 +157,18 @@ if __name__ == "__main__":
 	l.warning("uninstall thirdParty apps")
 	uninstallAllThird(selectedDevId,whiteList)
 
+	date = time.strftime('%H-%M-%S',time.localtime(time.time()))
+	# antivirusOutPath = '%s/antivirusOut-%s.txt' %(logsDir,date)
+	fileName = 'antivirusOut-%s.txt' %(date)
+	antivirusOutPath = os.path.join(logsDir,fileName)
+	antiResHandle = open(antivirusOutPath, 'w')
+	filteredStr = 'Modelresult:'
+	logcmd = 'adb %s shell "logcat|grep %s"' %(selectedDevId,filteredStr)
+	logcmd = 'adb %s logcat '
+	
+	handle = subprocess.Popen(logcmd, stdout=antiResHandle,stderr=subprocess.PIPE)
 
+	
 	testedIdx=len(testedList)
 	testingFlag = False
 	for apkItem in apkItems:
@@ -222,6 +235,7 @@ if __name__ == "__main__":
 			trimLog(uid,tmplogPath,newlogPath)
 			
 			testedList.append(apkHash)
+			# antiResHandle.flush()
 			testedIdx+=1
 			if testedIdx%5==0:
 				uninstallAllThird(selectedDevId,whiteList)

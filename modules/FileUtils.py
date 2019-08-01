@@ -44,6 +44,10 @@ def mkdir(path):
 	if not folder:
 		os.makedirs(path)
 
+def createPDkir(fPath):
+	dirName = os.path.dirname(fPath)
+	mkdir(dirName)
+
 def listDir(dirPath,filePath=''):
 	fileList=[]
 	if not filePath.strip():
@@ -152,6 +156,7 @@ def readFile(filePath):
 	return myStr
 
 def writeFile(filePath,myStr):
+	createPDkir(filePath)
 	with open(filePath,'a') as f:
 		f.write(myStr)
 	return

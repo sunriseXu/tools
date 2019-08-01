@@ -10,10 +10,10 @@ import requests
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import time
+from modules.FileUtils import writeFile
 
 
-
-def getContent(url):
+def getUrlContent(url):
     request = urllib2.Request(url)
     request.add_header('User-Agent','Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6')
     content = ''
@@ -25,7 +25,8 @@ def getContent(url):
     return content
 
 def getUrlTextEtree(url):
-	content = getContent(url)
+	content = getUrlContent(url)
+	# writeFile('C:\\Users\\limin\\Desktop\\today\\test.html',content.encode('utf-8'))
 	res = ''
 	if content:
 		return etree.HTML(content)

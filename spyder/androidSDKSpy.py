@@ -238,6 +238,8 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
     FileUtils.writeDict(classDict, fileResDictPath)
     return succList[-1]
 
+
+
 if __name__ == "__main__":
     apiLevel = 14
     sdkRefDir = 'D:\\androidsdkdoc\\docs-%d_r01\\docs\\reference' %apiLevel
