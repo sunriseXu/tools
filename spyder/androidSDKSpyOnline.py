@@ -88,15 +88,33 @@ def getTableRowsLinks(myTable):
             allRows.append(oneRow[0])
     return allRows
 
+def fetchData(localPath, onlineLink):
+    myData = ''
+    if os.path.exists(localPath):
+        myData = FileUtils.readFile(localPath)
+    else:
+        myData = SpyderUtils.getUrlContent(onlineLink)
+        if myData:
+            FileUtils.writeFile(localPath,myData.encode('utf-8'))
+    return myData
 
 
 
 if __name__ == "__main__":
     baseUrl = 'https://developer.android.com'
+    homeDir = os.getenv("HOME")
+    baseDir = os.path.join(homeDir,'androidSdkInAll')
+    FileUtils.mkdir(baseDir)
+
     classesUrl = 'https://developer.android.com/reference/classes'
+    classSummaryPath = baseDir + '/reference/classes.html'
+    classesData = fetchData(classSummaryPath, classesUrl)
+    if not classesData:
+        print 'classes fetching failed!'
+        sys.exit()
     # classesData = SpyderUtils.getUrlTextEtree(classesUrl)
-    classesPath = 'C:\\Users\\limin\\Desktop\\today\\test.html'
-    classesData = FileUtils.readFile(classesPath)
+    # classesPath = 'C:\\Users\\limin\\Desktop\\today\\test.html'
+    # classesData = FileUtils.readFile(classesPath)
     classesDataE = etree.HTML(classesData)
 
     # allClasses = classesDataE.xpath('//*[@id="gc-wrapper"]/div/devsite-content/article/article/div[3]/div[1]/table/tbody')
@@ -106,14 +124,6 @@ if __name__ == "__main__":
     # 边爬边存！并且以某种目录的形式存起来
     # 爬的时候检查本地是否有缓存，优先从本地读取，如果没有那么从网上读取
     # 检查链接是否以 /reference开头，否则怎么办？否则停止 debug， 但是要注意下次需要从中断处开始
-
-    homeDir = os.getenv("HOME")
-    baseDir = os.path.join(homeDir,'androidSdkInAll')
-    # baseDir = 'C:/Users/limin/Desktop/androidSdkInAll'
-    FileUtils.mkdir(baseDir)
-    print baseDir
-    input()
-    
 
     classLen = len(classList)
     idx = 0
