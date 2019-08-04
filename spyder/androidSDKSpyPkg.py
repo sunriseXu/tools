@@ -244,7 +244,7 @@ if __name__ == "__main__":
             jsonName = jsonName.replace('?','!')
             fileResDictPath = os.path.join(fileResDictDir, jsonName+'.json')
 
-            if os.path.exists(fileResDictDir):
+            if os.path.exists(fileResDictPath):
                 continue
 
             functionsDict = {}
