@@ -4,7 +4,6 @@ import os
 import sys
 import re
 import argparse
-# from bs4 import BeautifulSoup
 from datetime import datetime
 import lxml
 from lxml import etree
@@ -19,7 +18,7 @@ sys.path.append(ppwd)
 
 from modules import SpyderUtils
 from modules import FileUtils
-from modules import CollectionUtils,RexUtils,InteractUtils
+from modules import CollectionUtils,RexUtils
 
 def getMatchContent(description,rex,lowerFlag=False):
 	content=""
@@ -105,36 +104,11 @@ def fetchData(localPath, onlineLink):
             pass
     return myData
 
+def getElementInRawHtml(rawData, myXpath):
+    eRaw = etree.HTML(rawData)
+    return eRaw.xpath(myXpath)
+
+
 if __name__ == "__main__":
-    apiLevel = 24
-    allDictDir = 'C:\\Users\\limin\\androidSdkInAll\\classRes'
-
-    allDictPaths = FileUtils.listDir(allDictDir)
-    classList = []
-
-    for dictPath in allDictPaths:
-        classDict = FileUtils.readDict(dictPath)
-        classAddApiLevel = classDict['AddedLevel']
-
-        if 'REL' in classAddApiLevel:
-            continue
-        if not classAddApiLevel:
-            continue
-        classAddApiLevel = classAddApiLevel.split('.')[0]
-        if int(classAddApiLevel) <= apiLevel:
-            classList.append(classDict['ClassName'])
-    print len(classList)
-
-    anotherList = []
-    anotherDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24_bk\\jsonRes'
-    allDictPaths = FileUtils.listDir(anotherDir)
-    # print len(allDictPaths)
-    for dictPath in allDictPaths:
-        classDict = FileUtils.readDict(dictPath)
-        className = classDict['ClassName']
-        anotherList.append(className)
-    print len(anotherList)
-    print len(CollectionUtils.listIntersection(classList,anotherList))
-    diffList =  CollectionUtils.listDifference(anotherList,classList)
-    diffList = sorted(diffList)
-    InteractUtils.showList(diffList)
+    permissionPath = 'D:\\androidsdkdoc\\docs-24_r01\\docs\\reference\\android\\Manifest.permission.html'
+    
