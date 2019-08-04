@@ -349,5 +349,7 @@ if __name__ == "__main__":
                         print 'some else'
                         print myTag
                 # # 提取完毕 # # 
+            print "******************write Dict file******************"
+            print fileResDictPath
             FileUtils.writeDict(classDict, fileResDictPath)
 
