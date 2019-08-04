@@ -635,14 +635,14 @@ if __name__ == "__main__":
     antiResHandle = open(antivirusOutPath, 'w')
     filteredStr = 'Modelresult'
     # filteredStr = 'uid'
-    logcmd = 'adb shell logcat|grep %s' %(filteredStr)
+    logcmd = 'adb shell logcat -s %s' %(filteredStr)
     print logcmd
     # logcmd = 'adb %s logcat '
     logcmd=logcmd.strip().split()
     p = subprocess.Popen(logcmd, stdout=antiResHandle,stderr=antiResHandle)
     time.sleep(3)
     # ret_code = p.wait()
-    antiResHandle.flush()
+    # antiResHandle.flush()
     p.terminate()
 
     
