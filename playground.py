@@ -641,7 +641,7 @@ if __name__ == "__main__":
     logcmd=logcmd.strip().split()
     p = subprocess.Popen(logcmd, stdout=antiResHandle,stderr=antiResHandle)
     time.sleep(3)
-    ret_code = p.wait()
+    # ret_code = p.wait()
     antiResHandle.flush()
     p.terminate()
 
