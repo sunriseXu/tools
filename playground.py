@@ -7,6 +7,7 @@ from modules import AdbUtils
 from modules import ApkUtils
 from modules.FileUtils import EasyDir
 from modules import SpyderUtils
+from modules import InteractUtils
 import os
 import shutil
 import random
@@ -585,14 +586,48 @@ if __name__ == "__main__":
     # # print len(dirtyCase)
     # FileUtils.writeList(reslist,vtPath.getCatPath('res/noruleMalAll.csv'))
     
-    # 统计所有类的个数和方法的总数， 有什么意义 ！
-    # dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\jsonRes'
-    # pathList = FileUtils.listDir(dirname)
-    # functionCount = 0
-    # for myPath in pathList:
-    #     jsonDict = FileUtils.readDict(myPath)
-    #     functionDict = jsonDict['Functions']
-    #     functionCount += len(functionDict.keys())
-    # print functionCount
+    # 统计所有出现的权限api
+    dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24\\jsonRes'
+    pathList = FileUtils.listDir(dirname)
+    functionCount = []
+    for myPath in pathList:
+        jsonDict = FileUtils.readDict(myPath)
+        className = jsonDict['ClassName']
+        functionDict = jsonDict['Functions']
+        for key,value in functionDict.items():
+            if value['Permissions']:
+                fullName = key
+                perm = value['Permissions'][0].split('#')[1]
+                functionCount.append((className,fullName,perm))
+
+                # print key,value['Permissions']
+    print len(functionCount)
+    resDict = {}
+    permissionlist = []
+    classList = []
+    functionList = []
+    for function in functionCount:
+        className = function[0]
+        functionName = function[1]
+        permission = function[2]
+        if permission not in permissionlist:
+            permissionlist.append(permission)
+        if className not in classList:
+            classList.append(className)
+
+        if permission not in resDict:
+            subDict = {className:[functionName]}
+            resDict.update({permission:subDict})
+        elif className not in resDict[permission]:
+            subDict = {className:[functionName]}
+            resDict[permission].update(subDict)
+        else:
+            resDict[permission][className].append(functionName)
+    # FileUtils.writeDict(resDict,'./res.json')
+    print 'permission length:'
+    print len(permissionlist)
+    InteractUtils.showList(permissionlist)
+    # print 'class length'
+    # print len(classList)
 
     

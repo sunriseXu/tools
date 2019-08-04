@@ -1,0 +1,551 @@
+{
+    "WRITE_SETTINGS": {
+        "android.provider.Settings.System": [
+            "canWrite(android.content.Context)"
+        ]
+    },
+    "ACCESS_NETWORK_STATE": {
+        "android.net.ConnectivityManager": [
+            "getLinkProperties(android.net.Network)",
+            "getNetworkInfo(int)",
+            "getAllNetworkInfo()",
+            "getActiveNetworkInfo()",
+            "getAllNetworks()",
+            "getNetworkInfo(android.net.Network)",
+            "registerNetworkCallback(android.net.NetworkRequest, android.app.PendingIntent)",
+            "registerDefaultNetworkCallback(android.net.ConnectivityManager.NetworkCallback)",
+            "getNetworkPreference()",
+            "isActiveNetworkMetered()",
+            "registerNetworkCallback(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback)",
+            "getActiveNetwork()",
+            "getNetworkCapabilities(android.net.Network)"
+        ]
+    },
+    "RECORD_AUDIO": {
+        "android.net.sip.SipAudioCall": [
+            "startAudio()"
+        ]
+    },
+    "READ_EXTERNAL_STORAGE": {
+        "android.media.RingtoneManager": [
+            "getValidRingtoneUri(android.content.Context)",
+            "getCursor()"
+        ],
+        "android.os.storage.StorageVolume": [
+            "createAccessIntent(java.lang.String)"
+        ],
+        "android.os.StrictMode.VmPolicy.Builder": [
+            "detectFileUriExposure()"
+        ]
+    },
+    "DUMP": {
+        "android.app.ActivityManager": [
+            "dumpPackageState(java.io.FileDescriptor, java.lang.String)"
+        ]
+    },
+    "MODIFY_PHONE_STATE": {
+        "android.telecom.TelecomManager": [
+            "handleMmi(java.lang.String)",
+            "cancelMissedCallsNotification()",
+            "getAdnUriForPhoneAccount(android.telecom.PhoneAccountHandle)",
+            "handleMmi(java.lang.String, android.telecom.PhoneAccountHandle)",
+            "silenceRinger()"
+        ],
+        "android.service.carrier.CarrierService": [
+            "notifyCarrierNetworkChange(boolean)"
+        ],
+        "android.telephony.TelephonyManager": [
+            "iccExchangeSimIO(int, int, int, int, int, java.lang.String)",
+            "iccOpenLogicalChannel(java.lang.String)",
+            "iccTransmitApduBasicChannel(int, int, int, int, int, java.lang.String)",
+            "iccCloseLogicalChannel(int)",
+            "sendEnvelopeWithStatus(java.lang.String)",
+            "iccTransmitApduLogicalChannel(int, int, int, int, int, int, java.lang.String)"
+        ]
+    },
+    "WRITE_SYNC_SETTINGS": {
+        "android.content.ContentResolver": [
+            "removePeriodicSync(android.accounts.Account, java.lang.String, android.os.Bundle)",
+            "setIsSyncable(android.accounts.Account, java.lang.String, int)",
+            "addPeriodicSync(android.accounts.Account, java.lang.String, android.os.Bundle, long)",
+            "setMasterSyncAutomatically(boolean)",
+            "cancelSync(android.content.SyncRequest)",
+            "setSyncAutomatically(android.accounts.Account, java.lang.String, boolean)"
+        ]
+    },
+    "DISABLE_KEYGUARD": {
+        "android.app.KeyguardManager.KeyguardLock": [
+            "disableKeyguard()",
+            "reenableKeyguard()"
+        ],
+        "android.app.KeyguardManager": [
+            "exitKeyguardSecurely(android.app.KeyguardManager.OnKeyguardExitResult)"
+        ]
+    },
+    "SEND_SMS": {
+        "android.telephony.SmsManager": [
+            "sendTextMessage(java.lang.String, java.lang.String, java.lang.String, android.app.PendingIntent, android.app.PendingIntent)",
+            "sendDataMessage(java.lang.String, java.lang.String, short, byte[], android.app.PendingIntent, android.app.PendingIntent)",
+            "sendMultipartTextMessage(java.lang.String, java.lang.String, java.util.ArrayList<java.lang.String>, java.util.ArrayList<android.app.PendingIntent>, java.util.ArrayList<android.app.PendingIntent>)"
+        ]
+    },
+    "VIBRATE": {
+        "android.os.Vibrator": [
+            "vibrate(long, android.media.AudioAttributes)",
+            "cancel()",
+            "vibrate(long[], int)",
+            "vibrate(long[], int, android.media.AudioAttributes)",
+            "vibrate(long)"
+        ]
+    },
+    "REORDER_TASKS": {
+        "android.app.ActivityManager": [
+            "moveTaskToFront(int, int, android.os.Bundle)"
+        ]
+    },
+    "ACCESS_COARSE_LOCATION": {
+        "android.telephony.TelephonyManager": [
+            "getAllCellInfo()",
+            "getCellLocation()"
+        ],
+        "android.webkit.WebSettings": [
+            "setGeolocationEnabled(boolean)"
+        ],
+        "android.net.wifi.WifiManager": [
+            "getScanResults()"
+        ]
+    },
+    "BIND_VPN_SERVICE": {
+        "android.app.admin.DevicePolicyManager": [
+            "setAlwaysOnVpnPackage(android.content.ComponentName, java.lang.String, boolean)"
+        ]
+    },
+    "READ_SYNC_STATS": {
+        "android.content.ContentResolver": [
+            "isSyncActive(android.accounts.Account, java.lang.String)",
+            "getCurrentSyncs()",
+            "isSyncPending(android.accounts.Account, java.lang.String)",
+            "getCurrentSync()"
+        ]
+    },
+    "GET_ACCOUNTS": {
+        "android.accounts.AccountManager": [
+            "getAccountsByTypeAndFeatures(java.lang.String, java.lang.String[], android.accounts.AccountManagerCallback<android.accounts.Account[]>, android.os.Handler)",
+            "hasFeatures(android.accounts.Account, java.lang.String[], android.accounts.AccountManagerCallback<java.lang.Boolean>, android.os.Handler)",
+            "getAccountsByType(java.lang.String)",
+            "getAccounts()"
+        ]
+    },
+    "READ_SYNC_SETTINGS": {
+        "android.content.ContentResolver": [
+            "getPeriodicSyncs(android.accounts.Account, java.lang.String)",
+            "getMasterSyncAutomatically()",
+            "getSyncAutomatically(android.accounts.Account, java.lang.String)",
+            "getIsSyncable(android.accounts.Account, java.lang.String)"
+        ]
+    },
+    "NFC": {
+        "android.nfc.tech.NfcA": [
+            "transceive(byte[])",
+            "getTimeout()",
+            "setTimeout(int)",
+            "close()",
+            "connect()"
+        ],
+        "android.nfc.tech.NfcB": [
+            "transceive(byte[])",
+            "close()",
+            "connect()"
+        ],
+        "android.nfc.NfcAdapter": [
+            "enableForegroundDispatch(android.app.Activity, android.app.PendingIntent, android.content.IntentFilter[], java.lang.String[][])",
+            "disableForegroundDispatch(android.app.Activity)",
+            "setBeamPushUris(android.net.Uri[], android.app.Activity)",
+            "enableForegroundNdefPush(android.app.Activity, android.nfc.NdefMessage)",
+            "setNdefPushMessageCallback(android.nfc.NfcAdapter.CreateNdefMessageCallback, android.app.Activity, android.app.Activity...)",
+            "setOnNdefPushCompleteCallback(android.nfc.NfcAdapter.OnNdefPushCompleteCallback, android.app.Activity, android.app.Activity...)",
+            "setNdefPushMessage(android.nfc.NdefMessage, android.app.Activity, android.app.Activity...)",
+            "disableForegroundNdefPush(android.app.Activity)",
+            "setBeamPushUrisCallback(android.nfc.NfcAdapter.CreateBeamUrisCallback, android.app.Activity)"
+        ],
+        "android.nfc.tech.NfcF": [
+            "transceive(byte[])",
+            "getTimeout()",
+            "setTimeout(int)",
+            "close()",
+            "connect()"
+        ],
+        "android.nfc.tech.NfcBarcode": [
+            "close()",
+            "connect()"
+        ],
+        "android.nfc.tech.NdefFormatable": [
+            "formatReadOnly(android.nfc.NdefMessage)",
+            "close()",
+            "format(android.nfc.NdefMessage)",
+            "connect()"
+        ],
+        "android.nfc.cardemulation.CardEmulation": [
+            "isDefaultServiceForAid(android.content.ComponentName, java.lang.String)",
+            "isDefaultServiceForCategory(android.content.ComponentName, java.lang.String)"
+        ],
+        "android.nfc.tech.MifareClassic": [
+            "authenticateSectorWithKeyB(int, byte[])",
+            "increment(int, int)",
+            "transceive(byte[])",
+            "restore(int)",
+            "decrement(int, int)",
+            "writeBlock(int, byte[])",
+            "readBlock(int)",
+            "close()",
+            "transfer(int)",
+            "getTimeout()",
+            "authenticateSectorWithKeyA(int, byte[])",
+            "setTimeout(int)",
+            "connect()"
+        ],
+        "android.nfc.tech.MifareUltralight": [
+            "transceive(byte[])",
+            "getTimeout()",
+            "readPages(int)",
+            "writePage(int, byte[])",
+            "setTimeout(int)",
+            "close()",
+            "connect()"
+        ],
+        "android.nfc.tech.NfcV": [
+            "transceive(byte[])",
+            "close()",
+            "connect()"
+        ],
+        "android.nfc.tech.TagTechnology": [
+            "close()",
+            "connect()"
+        ],
+        "android.nfc.tech.Ndef": [
+            "close()",
+            "getNdefMessage()",
+            "writeNdefMessage(android.nfc.NdefMessage)",
+            "makeReadOnly()",
+            "connect()",
+            "isWritable()"
+        ],
+        "android.nfc.tech.IsoDep": [
+            "transceive(byte[])",
+            "getTimeout()",
+            "setTimeout(int)",
+            "close()",
+            "connect()"
+        ]
+    },
+    "CHANGE_NETWORK_STATE": {
+        "android.net.ConnectivityManager": [
+            "stopUsingNetworkFeature(int, java.lang.String)",
+            "requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback)",
+            "requestRouteToHost(int, int)",
+            "requestNetwork(android.net.NetworkRequest, android.app.PendingIntent)",
+            "startUsingNetworkFeature(int, java.lang.String)"
+        ]
+    },
+    "INTERNET": {
+        "android.webkit.WebSettings": [
+            "setBlockNetworkLoads(boolean)"
+        ]
+    },
+    "WAKE_LOCK": {
+        "android.media.MediaPlayer": [
+            "setWakeMode(android.content.Context, int)"
+        ],
+        "android.os.PowerManager": [
+            "newWakeLock(int, java.lang.String)"
+        ]
+    },
+    "WRITE_EXTERNAL_STORAGE": {
+        "android.os.Environment": [
+            "getExternalStorageDirectory()"
+        ],
+        "android.support.v4.content.ContextCompat": [
+            "getObbDirs(android.content.Context)",
+            "getExternalFilesDirs(android.content.Context, java.lang.String)",
+            "getExternalCacheDirs(android.content.Context)"
+        ],
+        "android.content.Context": [
+            "getExternalFilesDirs(java.lang.String)",
+            "getExternalCacheDirs()",
+            "getExternalCacheDir()",
+            "getExternalMediaDirs()",
+            "getObbDirs()",
+            "getExternalFilesDir(java.lang.String)",
+            "getObbDir()"
+        ],
+        "android.content.ContextWrapper": [
+            "getExternalFilesDirs(java.lang.String)",
+            "getExternalCacheDirs()",
+            "getExternalCacheDir()",
+            "getExternalMediaDirs()",
+            "getObbDirs()",
+            "getExternalFilesDir(java.lang.String)",
+            "getObbDir()"
+        ],
+        "android.test.mock.MockContext": [
+            "getExternalFilesDirs(java.lang.String)",
+            "getExternalCacheDirs()",
+            "getExternalCacheDir()",
+            "getExternalMediaDirs()",
+            "getObbDirs()",
+            "getExternalFilesDir(java.lang.String)",
+            "getObbDir()"
+        ]
+    },
+    "READ_PHONE_STATE": {
+        "android.telecom.TelecomManager": [
+            "getCallCapablePhoneAccounts()",
+            "isVoiceMailNumber(android.telecom.PhoneAccountHandle, java.lang.String)",
+            "getDefaultOutgoingPhoneAccount(java.lang.String)",
+            "getLine1Number(android.telecom.PhoneAccountHandle)",
+            "showInCallScreen(boolean)",
+            "getVoiceMailNumber(android.telecom.PhoneAccountHandle)",
+            "isInCall()"
+        ],
+        "android.telephony.PhoneStateListener": [
+            "onCallStateChanged(int, java.lang.String)"
+        ],
+        "android.telephony.TelephonyManager": [
+            "getSubscriberId()",
+            "getDeviceId()",
+            "getDeviceId(int)",
+            "getVoiceMailNumber()",
+            "getDeviceSoftwareVersion()",
+            "getSimSerialNumber()",
+            "getVoiceNetworkType()",
+            "getGroupIdLevel1()",
+            "getVoiceMailAlphaTag()",
+            "getLine1Number()"
+        ],
+        "android.telephony.CarrierConfigManager": [
+            "getConfigForSubId(int)",
+            "getConfig()"
+        ]
+    },
+    "BROADCAST_STICKY": {
+        "android.content.Context": [
+            "sendStickyBroadcast(android.content.Intent)",
+            "removeStickyBroadcast(android.content.Intent)",
+            "removeStickyBroadcastAsUser(android.content.Intent, android.os.UserHandle)"
+        ],
+        "android.content.ContextWrapper": [
+            "sendStickyBroadcast(android.content.Intent)",
+            "removeStickyBroadcast(android.content.Intent)",
+            "removeStickyBroadcastAsUser(android.content.Intent, android.os.UserHandle)"
+        ],
+        "android.test.mock.MockContext": [
+            "sendStickyBroadcast(android.content.Intent)",
+            "removeStickyBroadcast(android.content.Intent)",
+            "removeStickyBroadcastAsUser(android.content.Intent, android.os.UserHandle)"
+        ]
+    },
+    "KILL_BACKGROUND_PROCESSES": {
+        "android.app.ActivityManager": [
+            "killBackgroundProcesses(java.lang.String)"
+        ]
+    },
+    "CALL_PHONE": {
+        "android.telecom.TelecomManager": [
+            "placeCall(android.net.Uri, android.os.Bundle)"
+        ]
+    },
+    "SYSTEM_ALERT_WINDOW": {
+        "android.provider.Settings": [
+            "canDrawOverlays(android.content.Context)"
+        ]
+    },
+    "BLUETOOTH_ADMIN": {
+        "android.bluetooth.BluetoothAdapter": [
+            "cancelDiscovery()",
+            "enable()",
+            "startDiscovery()",
+            "startLeScan(android.bluetooth.BluetoothAdapter.LeScanCallback)",
+            "setName(java.lang.String)",
+            "stopLeScan(android.bluetooth.BluetoothAdapter.LeScanCallback)",
+            "startLeScan(java.util.UUID[], android.bluetooth.BluetoothAdapter.LeScanCallback)",
+            "disable()"
+        ],
+        "android.bluetooth.le.BluetoothLeAdvertiser": [
+            "stopAdvertising(android.bluetooth.le.AdvertiseCallback)",
+            "startAdvertising(android.bluetooth.le.AdvertiseSettings, android.bluetooth.le.AdvertiseData, android.bluetooth.le.AdvertiseData, android.bluetooth.le.AdvertiseCallback)",
+            "startAdvertising(android.bluetooth.le.AdvertiseSettings, android.bluetooth.le.AdvertiseData, android.bluetooth.le.AdvertiseCallback)"
+        ],
+        "android.bluetooth.le.BluetoothLeScanner": [
+            "startScan(android.bluetooth.le.ScanCallback)",
+            "stopScan(android.bluetooth.le.ScanCallback)",
+            "startScan(java.util.List<android.bluetooth.le.ScanFilter>, android.bluetooth.le.ScanSettings, android.bluetooth.le.ScanCallback)"
+        ],
+        "android.bluetooth.BluetoothDevice": [
+            "setPairingConfirmation(boolean)",
+            "setPin(byte[])",
+            "createBond()"
+        ]
+    },
+    "BLUETOOTH": {
+        "android.bluetooth.BluetoothManager": [
+            "getConnectionState(android.bluetooth.BluetoothDevice, int)",
+            "getConnectedDevices(int)",
+            "getDevicesMatchingConnectionStates(int, int[])"
+        ],
+        "android.bluetooth.BluetoothHealth": [
+            "getConnectionState(android.bluetooth.BluetoothDevice)",
+            "getMainChannelFd(android.bluetooth.BluetoothDevice, android.bluetooth.BluetoothHealthAppConfiguration)",
+            "connectChannelToSource(android.bluetooth.BluetoothDevice, android.bluetooth.BluetoothHealthAppConfiguration)",
+            "unregisterAppConfiguration(android.bluetooth.BluetoothHealthAppConfiguration)",
+            "getConnectedDevices()",
+            "registerSinkAppConfiguration(java.lang.String, int, android.bluetooth.BluetoothHealthCallback)",
+            "getDevicesMatchingConnectionStates(int[])",
+            "disconnectChannel(android.bluetooth.BluetoothDevice, android.bluetooth.BluetoothHealthAppConfiguration, int)"
+        ],
+        "android.bluetooth.BluetoothA2dp": [
+            "getConnectionState(android.bluetooth.BluetoothDevice)",
+            "isA2dpPlaying(android.bluetooth.BluetoothDevice)",
+            "getConnectedDevices()",
+            "getDevicesMatchingConnectionStates(int[])"
+        ],
+        "android.bluetooth.BluetoothGatt": [
+            "beginReliableWrite()",
+            "abortReliableWrite()",
+            "disconnect()",
+            "discoverServices()",
+            "writeDescriptor(android.bluetooth.BluetoothGattDescriptor)",
+            "getServices()",
+            "executeReliableWrite()",
+            "readRemoteRssi()",
+            "readCharacteristic(android.bluetooth.BluetoothGattCharacteristic)",
+            "setCharacteristicNotification(android.bluetooth.BluetoothGattCharacteristic, boolean)",
+            "requestMtu(int)",
+            "readDescriptor(android.bluetooth.BluetoothGattDescriptor)",
+            "getService(java.util.UUID)",
+            "writeCharacteristic(android.bluetooth.BluetoothGattCharacteristic)"
+        ],
+        "android.bluetooth.BluetoothGattServer": [
+            "sendResponse(android.bluetooth.BluetoothDevice, int, int, int, byte[])",
+            "removeService(android.bluetooth.BluetoothGattService)",
+            "addService(android.bluetooth.BluetoothGattService)",
+            "connect(android.bluetooth.BluetoothDevice, boolean)",
+            "getServices()",
+            "cancelConnection(android.bluetooth.BluetoothDevice)",
+            "clearServices()",
+            "notifyCharacteristicChanged(android.bluetooth.BluetoothDevice, android.bluetooth.BluetoothGattCharacteristic, boolean)",
+            "getService(java.util.UUID)"
+        ],
+        "android.bluetooth.BluetoothAdapter": [
+            "getScanMode()",
+            "getName()",
+            "isDiscovering()",
+            "getBondedDevices()",
+            "getProfileConnectionState(int)",
+            "isEnabled()",
+            "getAddress()",
+            "listenUsingInsecureRfcommWithServiceRecord(java.lang.String, java.util.UUID)",
+            "getState()",
+            "listenUsingRfcommWithServiceRecord(java.lang.String, java.util.UUID)"
+        ],
+        "android.bluetooth.BluetoothProfile": [
+            "getConnectionState(android.bluetooth.BluetoothDevice)",
+            "getDevicesMatchingConnectionStates(int[])",
+            "getConnectedDevices()"
+        ],
+        "android.bluetooth.BluetoothHeadset": [
+            "getConnectionState(android.bluetooth.BluetoothDevice)",
+            "isAudioConnected(android.bluetooth.BluetoothDevice)",
+            "getConnectedDevices()",
+            "startVoiceRecognition(android.bluetooth.BluetoothDevice)",
+            "stopVoiceRecognition(android.bluetooth.BluetoothDevice)",
+            "getDevicesMatchingConnectionStates(int[])",
+            "sendVendorSpecificResultCode(android.bluetooth.BluetoothDevice, java.lang.String, java.lang.String)"
+        ],
+        "android.bluetooth.BluetoothDevice": [
+            "getBluetoothClass()",
+            "getType()",
+            "getBondState()",
+            "getName()",
+            "fetchUuidsWithSdp()",
+            "createRfcommSocketToServiceRecord(java.util.UUID)",
+            "createInsecureRfcommSocketToServiceRecord(java.util.UUID)",
+            "getUuids()"
+        ],
+        "android.bluetooth.BluetoothGattDescriptor": [
+            "BluetoothGattDescriptor(java.util.UUID, int)"
+        ],
+        "android.bluetooth.BluetoothGattCharacteristic": [
+            "addDescriptor(android.bluetooth.BluetoothGattDescriptor)",
+            "BluetoothGattCharacteristic(java.util.UUID, int, int)"
+        ],
+        "android.bluetooth.BluetoothGattService": [
+            "addCharacteristic(android.bluetooth.BluetoothGattCharacteristic)",
+            "BluetoothGattService(java.util.UUID, int)",
+            "addService(android.bluetooth.BluetoothGattService)"
+        ]
+    },
+    "RECEIVE_BOOT_COMPLETED": {
+        "android.app.job.JobInfo.Builder": [
+            "setPersisted(boolean)"
+        ]
+    },
+    "SET_WALLPAPER": {
+        "android.app.WallpaperManager": [
+            "clear()",
+            "setBitmap(android.graphics.Bitmap)",
+            "setStream(java.io.InputStream, android.graphics.Rect, boolean)",
+            "setBitmap(android.graphics.Bitmap, android.graphics.Rect, boolean)",
+            "setResource(int)",
+            "setStream(java.io.InputStream)"
+        ],
+        "android.content.Context": [
+            "setWallpaper(java.io.InputStream)",
+            "setWallpaper(android.graphics.Bitmap)",
+            "clearWallpaper()"
+        ],
+        "android.content.ContextWrapper": [
+            "setWallpaper(java.io.InputStream)",
+            "setWallpaper(android.graphics.Bitmap)",
+            "clearWallpaper()"
+        ],
+        "android.test.mock.MockContext": [
+            "setWallpaper(java.io.InputStream)",
+            "setWallpaper(android.graphics.Bitmap)",
+            "clearWallpaper()"
+        ]
+    },
+    "SET_WALLPAPER_HINTS": {
+        "android.app.WallpaperManager": [
+            "suggestDesiredDimensions(int, int)"
+        ]
+    },
+    "ACCESS_FINE_LOCATION": {
+        "android.location.LocationManager": [
+            "addProximityAlert(double, double, float, long, android.app.PendingIntent)",
+            "removeProximityAlert(android.app.PendingIntent)"
+        ]
+    },
+    "MODIFY_AUDIO_SETTINGS": {
+        "android.net.sip.SipAudioCall": [
+            "setSpeakerMode(boolean)"
+        ],
+        "android.media.AudioManager": [
+            "stopBluetoothSco()",
+            "startBluetoothSco()"
+        ]
+    },
+    "REBOOT": {
+        "android.os.RecoverySystem": [
+            "rebootWipeUserData(android.content.Context)",
+            "installPackage(android.content.Context, java.io.File)"
+        ],
+        "android.os.PowerManager": [
+            "reboot(java.lang.String)"
+        ]
+    },
+    "BIND_APPWIDGET": {
+        "android.appwidget.AppWidgetManager": [
+            "bindAppWidgetIdIfAllowed(int, android.os.UserHandle, android.content.ComponentName, android.os.Bundle)"
+        ]
+    }
+}

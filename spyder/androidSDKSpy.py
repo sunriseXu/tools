@@ -17,7 +17,7 @@ sys.path.append(ppwd)
 
 from modules import SpyderUtils
 from modules import FileUtils
-from modules import CollectionUtils,RexUtils
+from modules import CollectionUtils,RexUtils, InteractUtils
 
 def getMatchContent(description,rex,lowerFlag=False):
 	content=""
@@ -241,7 +241,7 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
 
 
 if __name__ == "__main__":
-    apiLevel = 14
+    apiLevel = 24
     sdkRefDir = 'D:\\androidsdkdoc\\docs-%d_r01\\docs\\reference' %apiLevel
     fileResDictDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk%d\\jsonRes' %apiLevel
     noFilePath = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk%d\\noFileError.txt' %apiLevel
@@ -258,11 +258,27 @@ if __name__ == "__main__":
         print 'deal with: %s' %oneHtmlPath
         dirPath = os.path.dirname(oneHtmlPath)
         htmlContent = FileUtils.readFile(oneHtmlPath)
+
+        # tableSplitRex = r'<h2>.*?</h2>'
+        # segMents = RexUtils.rexSplit(tableSplitRex,htmlContent)
+        # classHtml = ''
+        # tables = ''
+        # for seg in segMents:
+        #     segName = RexUtils.rexFind(r'<h2>(.*?)</h2>',seg)
+        #     if segName:
+        #         segName = segName[0]
+        #     if 'Classes' in segName:
+        #         classHtml = seg
+        #         se = etree.HTML(classHtml)
+        #         tables = se.xpath('.//table')
+        #         if len(tables) == 0:
+        #             continue
         se = etree.HTML(htmlContent)
-        tables = se.xpath('//table')
+        tables = se.xpath('.//table')
 
         for myTable in tables:
             allClassLinkList = getTableRowsLinks(myTable)
+            
             for classLink in allClassLinkList:
                 # classPath = os.path.join(dirPath, classLink)
                 classPath = dirPath+'/'+classLink

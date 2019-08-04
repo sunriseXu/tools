@@ -180,6 +180,22 @@ def typeof(variate):
 	return type
 
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        pass
+ 
+    try:
+        import unicodedata
+        unicodedata.numeric(s)
+        return True
+    except (TypeError, ValueError):
+        pass
+ 
+    return False
+
 if __name__ == "__main__":
     a={'a':'aa','b':'bb'}
     b={'c':'cc','d':'dd'}

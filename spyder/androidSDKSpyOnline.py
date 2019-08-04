@@ -93,14 +93,16 @@ def getTableRowsLinks(myTable):
 def fetchData(localPath, onlineLink):
     myData = ''
     if os.path.exists(localPath):
-        l.warning('fetching from local: %s', localPath)
+        # l.warning('fetching from local: %s', localPath)
         myData = FileUtils.readFile(localPath)
     else:
         l.warning('fetching from online: %s', onlineLink)
         myData = SpyderUtils.getUrlContent(onlineLink)
         if myData:
-            l.warning('fetching online failed!')
             FileUtils.writeFile(localPath,myData.encode('utf-8'))
+        else:
+            l.warning('fetching online failed!')
+            pass
     return myData
 
 
@@ -110,20 +112,17 @@ if __name__ == "__main__":
     homeDir = os.getenv("HOME")
     baseDir = os.path.join(homeDir,'androidSdkInAll')
     FileUtils.mkdir(baseDir)
-
+    fileResDictDir = os.path.join(baseDir,'classRes')
+    FileUtils.mkdir(fileResDictDir)
     classesUrl = 'https://developer.android.com/reference/classes'
     classSummaryPath = baseDir + '/reference/classes.html'
     classesData = fetchData(classSummaryPath, classesUrl)
     if not classesData:
         print 'classes fetching failed!'
         sys.exit()
-    # classesData = SpyderUtils.getUrlTextEtree(classesUrl)
-    # classesPath = 'C:\\Users\\limin\\Desktop\\today\\test.html'
-    # classesData = FileUtils.readFile(classesPath)
+
     classesDataE = etree.HTML(classesData)
 
-    # allClasses = classesDataE.xpath('//*[@id="gc-wrapper"]/div/devsite-content/article/article/div[3]/div[1]/table/tbody')
-    # print len(allClasses)
     classList = classesDataE.xpath('.//tr[@data-version-added]')
     print len(classList)
     # 边爬边存！并且以某种目录的形式存起来
@@ -135,35 +134,172 @@ if __name__ == "__main__":
 
     for myClass in classList:
         idx += 1
-        
+        # if idx % 100 == 0:
+            
+        classDict = {}
+        classDict['ClassName'] = ''
+        classDict['AddedLevel'] = ''
+        classDict['DeprecatedLevel'] = ''
+        classDict['Functions'] = ''
+        classDict['Inheritance'] = None
+
+
         className = myClass.xpath('.//td[@class="jd-linkcol"]/a/text()')[0]
+        classDict['ClassName'] = className
+
+        classAddedLevel = myClass.xpath('@data-version-added')[0]
+        classDeprecatedLevel = myClass.xpath('@data-version-deprecated')
+        if classDeprecatedLevel:
+            classDeprecatedLevel = classDeprecatedLevel[0]
+        else:
+            classDeprecatedLevel = ''
+        classDict['ClassName'] = ''
+        classDict['AddedLevel'] = classAddedLevel
+        classDict['DeprecatedLevel'] = classDeprecatedLevel
+
+
+
+        # print className
         classLink = myClass.xpath('.//td[@class="jd-linkcol"]/a/@href')[0]
-        # print className 
         if not className:
             print "className not found"
         if not classLink:
             print 'classLink not found'
         if not classLink.startswith('/reference'):
             print 'classlink erro'
-
-
-
         classOnlineLink = baseUrl + classLink
         localPath = baseDir + classLink
-        
-        print 'No %d/%d' %(idx,classLen)
-        print 'className: %s; link: %s' %(className, classOnlineLink)
-
         classHtmlData = fetchData(localPath, classOnlineLink)
-        
-        # if os.path.exists(localPath):
-        #     print 'file in local'
-        #     classHtmlData = FileUtils.readFile(localPath)
-        # else:
-        #     print 'file online, fetching'
-        #     classHtmlData = SpyderUtils.getUrlContent(classOnlineLink)
-        #     FileUtils.writeFile(localPath,classHtmlData.encode('utf-8'))
-        #     print 'file written'
-        
+        # classHtmlData = FileUtils.readFile('C:/Users/limin/androidSdkInAll/reference/android/bluetooth/BluetoothDevice.html')
+        print 'No %d/%d' %(idx,classLen)
+        print 'className: %s; link: %s; localPath: %s' %(className, classOnlineLink,localPath)
 
+        # # 获取类页面所有类成员的list # #
+        methodXpath = './/div[@data-version-added]'
+        classHtmlE = etree.HTML(classHtmlData)
+        methodEList = classHtmlE.xpath(methodXpath)
+        # # methodEList 包含所有成员的列表xpath元素 # #
+
+        # # # 获取文件的所有继承类 API 24, 23 # # #
+        succList = []
+        succXpath = './/table[@class="jd-inheritance-table"]'
+        succRes = classHtmlE.xpath(succXpath)
+        if len(succRes)>0:
+            #过滤所有含有相应class的td标签，获取它们之间的字符串
+            wtf = getAllTextByTag(succRes[0],'.//td[@class="jd-inheritance-class-cell"]')
+            if wtf:
+                # 去除 \xa0 空白字符
+                succList = [' '.join(i.split()) for i in wtf]
+        # # # 结束 结果存入succList中 # # # 
+        classDict['Inheritance'] = succList
+        classDict['ClassName'] = succList[-1]
+
+        jsonName = succList[-1].replace('<','(')
+        jsonName = jsonName.replace('>',')')
+        jsonName = jsonName.replace('?','!')
+        fileResDictPath = os.path.join(fileResDictDir, jsonName+'.json')
+
+        functionsDict = {}
+        classDict['Functions'] = functionsDict
+
+        # mothod 代表了每个类成员的xpath元素，首先获取成员名字
+        methodFX = './/h3[@class="api-name"]/@id'
+        for methodE in methodEList:
+            eleName = methodE.xpath(methodFX)
+            if len(eleName) != 1:
+                continue
+            eleName = eleName[0]
+            # # 判断成员名是否包含两个括号 # #
+            methodRex = r'.*?\(.*?\)'
+            res = RexUtils.rexFind(methodRex,eleName)
+            if len(res) == 0:
+                continue
+            functionDict = {}
+            # 方法名提取完毕
+            methodName = eleName
+            functionsDict[methodName] = functionDict
+
+            functionDict['Description'] = ''
+            functionDict['FullName'] = ''
+            functionDict['Parameters'] = ''
+            functionDict['Returns'] = ''
+            functionDict['Throws'] = ''
+            functionDict['Permissions'] = ''
+            functionDict['AddedLevel'] = ''
+            functionDict['DeprecatedLevel'] = ''
+
+            # # 获取函数完整格式，而非仅仅函数名
+            # h4 class="jd-details-title"
+            fullName = ''
+            fullNameXpath = './/pre[@class="api-signature no-pretty-print"]'
+            fullName = getAllTextByTag(methodE,fullNameXpath)
+            if fullName:
+                # 去除 \xa0 空白字符
+                fullName = ' '.join(fullName[0].split())
+            functionDict['FullName'] = fullName
+
+            # # api等级提取 非常关键 # #
+            apiLevelXpath = '@data-version-added'
+            apiLevelRemovedXpath = '@data-version-deprecated'
+            addedLevel = methodE.xpath(apiLevelXpath)[0]
+            removedLevel = methodE.xpath(apiLevelRemovedXpath)
+            if removedLevel:
+                removedLevel = removedLevel[0]
+                # it's strange that the level sometimes equals 'REL', not too much
+                if (not CollectionUtils.is_number(addedLevel)) or (not CollectionUtils.is_number(removedLevel)):
+                    print methodName
+                    print addedLevel
+                    print removedLevel
+                    # raw_input()
+                elif int(addedLevel)>int(removedLevel):
+                    print methodName
+                    print addedLevel
+                    print removedLevel
+                    # raw_input()
+                functionDict['DeprecatedLevel'] = removedLevel
+            functionDict['AddedLevel'] = addedLevel
+
+            # # 方法描述提取 # #
+            fullNameXpath = './/pre[@class="api-signature no-pretty-print"]'
+            fullName = getAllTextByTag(methodE,fullNameXpath)
+            if fullName:
+                # 去除 \xa0 空白字符
+                fullName = ' '.join(fullName[0].split())
+            allDesc = ''
+            # .//p and //p is totally different
+            allDesc = getAllTextByTag(methodE,'.//p')
+            allDesc = ''.join(allDesc)
+            allDesc = ' '.join(allDesc.split())
+            functionDict['Description'] = allDesc
+            # # 方法描述提取完毕 # #
+
+            # 观察到函数的permission在函数描述种，并且包含链接，指向特定permission路径
+            permissionList = []
+            hrefs = methodE.xpath('.//a/@href')
+            for href in hrefs:
+                bsName = os.path.basename(href)
+                if ('Manifest.permission' in bsName) and (bsName not in permissionList):
+                    permissionList.append(bsName)
+            functionDict['Permissions'] = permissionList
+            # # 至此，潜在的permission字段被提取出来
+
+            # # 提取参数 返回 异常信息
+            tables = methodE.xpath('.//table')
+            for myTable in tables:
+                myTags = myTable.xpath('.//th/text()')
+                if len(myTags) == 0:
+                    continue
+                myTag = myTags[0]
+                allRows = getTableRows(myTable)
+                if myTag in 'Parameters':
+                    functionDict['Parameters'] = allRows
+                elif myTag in 'Returns':
+                    functionDict['Returns'] = allRows
+                elif myTag in 'Throws':
+                    functionDict['Throws'] = allRows
+                else:
+                    print 'some else'
+                    print myTag
+            # # 提取完毕 # # 
+        FileUtils.writeDict(classDict, fileResDictPath)
 
