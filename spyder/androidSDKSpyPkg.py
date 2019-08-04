@@ -122,7 +122,11 @@ if __name__ == "__main__":
     packagesUrl = 'https://developer.android.com/reference/packages'
     packagesSummaryPath = baseDir + '/reference/packages.html'
 
+    supportPkgUrl = 'https://developer.android.com/reference/android/support/packages'
+    supPkgSPath = baseDir + '/reference/android/support/packages.html'
+
     # classesData = fetchData(classSummaryPath, classesUrl)
+    # packagesData = fetchData(supPkgSPath, supportPkgUrl)
     packagesData = fetchData(packagesSummaryPath, packagesUrl)
     if not packagesData:
         print 'classes fetching failed!'
@@ -143,14 +147,29 @@ if __name__ == "__main__":
         pkgLink = pkgE.xpath('.//a/@href')[0]
         pkgUrl = baseUrl + pkgLink
         pkgLocalPath = baseDir + pkgLink
+
+        # if 'annotation' not in pkgLink:
+        #     continue
+        # print 'annotation found'
+        # print pkgLink
+        # raw_input()
         # 根据链接获得特定pkg的页面
         pkgData = fetchData(pkgLocalPath, pkgUrl)
+        pkgE = etree.HTML(pkgData)
+
+        #<table class="jd-sumtable-expando">
+        tableXpath = './/table[@class="jd-sumtable-expando"]'
+        tablesList = pkgE.xpath(tableXpath)
+        classList = []
+        for tableE in tablesList:
+            rowsList = tableE.xpath('.//tr')
+            classList += rowsList
 
         # 然后获取每个类的链接及页面
         #<tr data-version-added
-        pkgE = etree.HTML(pkgData)
-        classXpath = './/tr[@data-version-added]'
-        classList = pkgE.xpath(classXpath)
+        
+        # classXpath = './/tr[@data-version-added]'
+        # classList = pkgE.xpath(classXpath)
         idx = 0
         classLen = len(classList)
         for myClass in classList:
@@ -167,8 +186,13 @@ if __name__ == "__main__":
 
             className = myClass.xpath('.//td[@class="jd-linkcol"]/a/text()')[0]
             # print className
+            # raw_input()
 
-            classAddedLevel = myClass.xpath('@data-version-added')[0]
+            classAddedLevel = myClass.xpath('@data-version-added')
+            if classAddedLevel:
+                classAddedLevel = classAddedLevel[0]
+            else:
+                classAddedLevel = ''
             classDeprecatedLevel = myClass.xpath('@data-version-deprecated')
             if classDeprecatedLevel:
                 classDeprecatedLevel = classDeprecatedLevel[0]

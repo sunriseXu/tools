@@ -19,7 +19,7 @@ sys.path.append(ppwd)
 
 from modules import SpyderUtils
 from modules import FileUtils
-from modules import CollectionUtils,RexUtils
+from modules import CollectionUtils,RexUtils,InteractUtils
 
 def getMatchContent(description,rex,lowerFlag=False):
 	content=""
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     print len(classList)
 
     anotherList = []
-    anotherDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24\\jsonRes'
+    anotherDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24_bk\\jsonRes'
     allDictPaths = FileUtils.listDir(anotherDir)
     # print len(allDictPaths)
     for dictPath in allDictPaths:
@@ -132,4 +132,6 @@ if __name__ == "__main__":
         anotherList.append(className)
     print len(anotherList)
     print len(CollectionUtils.listIntersection(classList,anotherList))
-    print CollectionUtils.listDifference(classList,anotherList)
+    diffList =  CollectionUtils.listDifference(anotherList,classList)
+    diffList = sorted(diffList)
+    InteractUtils.showList(diffList)
