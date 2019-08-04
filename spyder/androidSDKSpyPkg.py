@@ -166,8 +166,7 @@ if __name__ == "__main__":
 
 
             className = myClass.xpath('.//td[@class="jd-linkcol"]/a/text()')[0]
-            print className
-            continue
+            # print className
 
             classAddedLevel = myClass.xpath('@data-version-added')[0]
             classDeprecatedLevel = myClass.xpath('@data-version-deprecated')
