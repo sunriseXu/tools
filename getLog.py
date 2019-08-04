@@ -162,11 +162,10 @@ if __name__ == "__main__":
 	fileName = 'antivirusOut-%s.txt' %(date)
 	antivirusOutPath = os.path.join(logsDir,fileName)
 	antiResHandle = open(antivirusOutPath, 'w')
-	filteredStr = 'Modelresult:'
-	logcmd = 'adb %s shell "logcat|grep %s"' %(selectedDevId,filteredStr)
-	logcmd = 'adb %s logcat '
-	
-	handle = subprocess.Popen(logcmd, stdout=antiResHandle,stderr=subprocess.PIPE)
+	filteredStr = 'Modelresult'
+	logcmd = 'adb %s shell logcat -s %s' %(selectedDevId,filteredStr)
+	logcmd=logcmd.strip().split()
+	p = subprocess.Popen(logcmd, stdout=antiResHandle,stderr=antiResHandle)
 	
 	
 	testedIdx=len(testedList)
@@ -235,7 +234,7 @@ if __name__ == "__main__":
 			trimLog(uid,tmplogPath,newlogPath)
 			
 			testedList.append(apkHash)
-			# antiResHandle.flush()
+			antiResHandle.flush()
 			testedIdx+=1
 			if testedIdx%5==0:
 				uninstallAllThird(selectedDevId,whiteList)
