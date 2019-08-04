@@ -126,8 +126,8 @@ if __name__ == "__main__":
     supPkgSPath = baseDir + '/reference/android/support/packages.html'
 
     # classesData = fetchData(classSummaryPath, classesUrl)
-    packagesData = fetchData(supPkgSPath, supportPkgUrl)
-    # packagesData = fetchData(packagesSummaryPath, packagesUrl)
+    # packagesData = fetchData(supPkgSPath, supportPkgUrl)
+    packagesData = fetchData(packagesSummaryPath, packagesUrl)
     if not packagesData:
         print 'classes fetching failed!'
         sys.exit()

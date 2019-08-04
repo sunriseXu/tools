@@ -13,6 +13,7 @@ import shutil
 import random
 import logging
 import sys
+import time
 from rooms.FileRoom import *
 from datetime import datetime
 logging.basicConfig()
@@ -587,47 +588,61 @@ if __name__ == "__main__":
     # FileUtils.writeList(reslist,vtPath.getCatPath('res/noruleMalAll.csv'))
     
     # 统计所有出现的权限api
-    dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24\\jsonRes'
-    pathList = FileUtils.listDir(dirname)
-    functionCount = []
-    for myPath in pathList:
-        jsonDict = FileUtils.readDict(myPath)
-        className = jsonDict['ClassName']
-        functionDict = jsonDict['Functions']
-        for key,value in functionDict.items():
-            if value['Permissions']:
-                fullName = key
-                perm = value['Permissions'][0].split('#')[1]
-                functionCount.append((className,fullName,perm))
+    # dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24\\jsonRes'
+    # pathList = FileUtils.listDir(dirname)
+    # functionCount = []
+    # for myPath in pathList:
+    #     jsonDict = FileUtils.readDict(myPath)
+    #     className = jsonDict['ClassName']
+    #     functionDict = jsonDict['Functions']
+    #     for key,value in functionDict.items():
+    #         if value['Permissions']:
+    #             fullName = key
+    #             perm = value['Permissions'][0].split('#')[1]
+    #             functionCount.append((className,fullName,perm))
 
-                # print key,value['Permissions']
-    print len(functionCount)
-    resDict = {}
-    permissionlist = []
-    classList = []
-    functionList = []
-    for function in functionCount:
-        className = function[0]
-        functionName = function[1]
-        permission = function[2]
-        if permission not in permissionlist:
-            permissionlist.append(permission)
-        if className not in classList:
-            classList.append(className)
+    #             # print key,value['Permissions']
+    # print len(functionCount)
+    # resDict = {}
+    # permissionlist = []
+    # classList = []
+    # functionList = []
+    # for function in functionCount:
+    #     className = function[0]
+    #     functionName = function[1]
+    #     permission = function[2]
+    #     if permission not in permissionlist:
+    #         permissionlist.append(permission)
+    #     if className not in classList:
+    #         classList.append(className)
 
-        if permission not in resDict:
-            subDict = {className:[functionName]}
-            resDict.update({permission:subDict})
-        elif className not in resDict[permission]:
-            subDict = {className:[functionName]}
-            resDict[permission].update(subDict)
-        else:
-            resDict[permission][className].append(functionName)
-    # FileUtils.writeDict(resDict,'./res.json')
-    print 'permission length:'
-    print len(permissionlist)
-    InteractUtils.showList(permissionlist)
+    #     if permission not in resDict:
+    #         subDict = {className:[functionName]}
+    #         resDict.update({permission:subDict})
+    #     elif className not in resDict[permission]:
+    #         subDict = {className:[functionName]}
+    #         resDict[permission].update(subDict)
+    #     else:
+    #         resDict[permission][className].append(functionName)
+    # # FileUtils.writeDict(resDict,'./res.json')
+    # print 'permission length:'
+    # print len(permissionlist)
+    # InteractUtils.showList(permissionlist)
     # print 'class length'
     # print len(classList)
+
+    antivirusOutPath = 'tmpOut2.txt'
+    antiResHandle = open(antivirusOutPath, 'w')
+    filteredStr = 'Modelresult'
+    # filteredStr = 'uid'
+    logcmd = 'adb shell logcat|grep %s' %(filteredStr)
+    print logcmd
+    # logcmd = 'adb %s logcat '
+    logcmd=logcmd.strip().split()
+    p = subprocess.Popen(logcmd, stdout=antiResHandle,stderr=antiResHandle)
+    time.sleep(3)
+    ret_code = p.wait()
+    antiResHandle.flush()
+    p.terminate()
 
     

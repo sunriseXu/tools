@@ -167,7 +167,7 @@ if __name__ == "__main__":
 	logcmd = 'adb %s logcat '
 	
 	handle = subprocess.Popen(logcmd, stdout=antiResHandle,stderr=subprocess.PIPE)
-
+	
 	
 	testedIdx=len(testedList)
 	testingFlag = False
