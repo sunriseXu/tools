@@ -127,8 +127,8 @@ if __name__ == "__main__":
     # https://developer.android.com/reference/android/support/test/packages
     # https://developer.android.com/reference/android/databinding/packages
     # 
-    packagesUrl = 'https://developer.android.com/reference/android/support/test/packages'
-    packagesSummaryPath = baseDir + '/reference/android/support/test/packages.html'
+    packagesUrl = 'https://developer.android.com/reference/android/databinding/packages'
+    packagesSummaryPath = baseDir + '/reference/android/databinding/packages.html'
 
 
 
