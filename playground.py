@@ -588,64 +588,76 @@ if __name__ == "__main__":
     # FileUtils.writeList(reslist,vtPath.getCatPath('res/noruleMalAll.csv'))
     
     # 统计所有出现的权限api
-    dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24_bk\\jsonRes'
-    pathList = FileUtils.listDir(dirname)
-    functionCount = []
-    for myPath in pathList:
-        jsonDict = FileUtils.readDict(myPath)
-        className = jsonDict['ClassName']
-        functionDict = jsonDict['Functions']
-        for key,value in functionDict.items():
-            if value['Permissions']:
-                fullName = key
-                perms = value['Permissions']
-                for perm in perms:
-                    perm = perm.split('#')[1]
-                    functionCount.append((className,fullName,perm))
+    # dirname = 'C:\\Users\\limin\\androidSdkInAll\\Desktop\\androidOnline\\sdk24'
+    # # dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24\\jsonRes'
+    # pathList = FileUtils.listDir(dirname)
+    # functionCount = []
+    # for myPath in pathList:
+    #     jsonDict = FileUtils.readDict(myPath)
+    #     className = jsonDict['ClassName']
+    #     functionDict = jsonDict['Functions']
+    #     # print myPath
+    #     for key,value in functionDict.items():
+    #         if value['Permissions']:
+    #             fullName = key
+    #             perms = value['Permissions']
+    #             for perm in perms:
+    #                 # print fullName
+    #                 # print perm
+    #                 perm = perm.split('#')
+    #                 if len(perm)==1:
+    #                     continue
+    #                 perm = perm[1]
+    #                 functionCount.append((className,fullName,perm))
 
-                # print key,value['Permissions']
-    print len(functionCount)
-    resDict = {}
-    permissionlist = []
-    classList = []
-    functionList = []
-    for function in functionCount:
-        className = function[0]
-        functionName = function[1]
-        permission = function[2]
-        if permission not in permissionlist:
-            permissionlist.append(permission)
-        if className not in classList:
-            classList.append(className)
+    #             # print key,value['Permissions']
+    # print len(functionCount)
+    # resDict = {}
+    # permissionlist = []
+    # classList = []
+    # functionList = []
+    # for function in functionCount:
+    #     className = function[0]
+    #     functionName = function[1]
+    #     permission = function[2]
+    #     if permission not in permissionlist:
+    #         permissionlist.append(permission)
+    #     if className not in classList:
+    #         classList.append(className)
 
-        if permission not in resDict:
-            subDict = {className:[functionName]}
-            resDict.update({permission:subDict})
-        elif className not in resDict[permission]:
-            subDict = {className:[functionName]}
-            resDict[permission].update(subDict)
-        else:
-            resDict[permission][className].append(functionName)
+    #     if permission not in resDict:
+    #         subDict = {className:[functionName]}
+    #         resDict.update({permission:subDict})
+    #     elif className not in resDict[permission]:
+    #         subDict = {className:[functionName]}
+    #         resDict[permission].update(subDict)
+    #     else:
+    #         resDict[permission][className].append(functionName)
     # FileUtils.writeDict(resDict,'./res.json')
-    print 'permission length:'
-    print len(permissionlist)
-    InteractUtils.showList(permissionlist)
-    FileUtils.writeList(permissionlist,'tmpOut.txt')
-    print 'class length'
-    print len(classList)
-    allDict = FileUtils.readDict('D:\\androidsdkdoc\\permission24.json')
+    # print 'permission length:'
+    # print len(permissionlist)
+    # InteractUtils.showList(permissionlist)
+    # FileUtils.writeList(permissionlist,'tmpOutO24.txt')
+    # print 'class length'
+    # print len(classList)
+    # allDict = FileUtils.readDict('D:\\androidsdkdoc\\permission24.json')
     
-    partList = FileUtils.readList('tmpOut.txt')
-    resList = []
-    for permission in partList:
-        tmp = ''
-        for key,value in allDict.items():
-            if permission in value:
-                tmp = key+'\t'+permission+'\t' #+' '.join(resDict[permission].keys())
-                resList.append(tmp)
-    resList = sorted(resList)
-    FileUtils.writeList(resList, 'tmpOut2.txt')
+    # partList = FileUtils.readList('tmpOutO24.txt')
+    # resList = []
+    # for permission in partList:
+    #     tmp = ''
+    #     for key,value in allDict.items():
+    #         if permission in value:
+    #             tmp = key+'\t'+permission +'\t' +' '.join(resDict[permission].keys())
+    #             resList.append(tmp)
+    # resList = sorted(resList)
+    # FileUtils.writeList(resList, 'tmpOutOnline24.txt')
 
+    # list1 = FileUtils.readList('tmpOut.txt')
+    # list2 = FileUtils.readList('tmpOutO24.txt')
+    # print len(CollectionUtils.listIntersection(list1,list2))
+    # res = CollectionUtils.listDifference(list2,list1)
+    # InteractUtils.showList(res)
 
     
 

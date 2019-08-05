@@ -106,13 +106,23 @@ def fetchData(localPath, onlineLink):
     return myData
 
 if __name__ == "__main__":
-    apiLevel = 24
+    apiLevel = 6
     allDictDir = 'C:\\Users\\limin\\androidSdkInAll\\classRes'
-
+    filteredDir = 'C:\\Users\\limin\\androidSdkInAll\\Desktop\\androidOnline\\sdk6'
+    FileUtils.mkdir(filteredDir)
     allDictPaths = FileUtils.listDir(allDictDir)
     classList = []
 
+
     for dictPath in allDictPaths:
+        bsname = os.path.basename(dictPath)
+        newPath = os.path.join(filteredDir, bsname)
+
+        if 'android.support.' in dictPath:
+            continue
+        if 'android.databinding' in dictPath:
+            continue
+        
         classDict = FileUtils.readDict(dictPath)
         classAddApiLevel = classDict['AddedLevel']
 
@@ -120,26 +130,43 @@ if __name__ == "__main__":
             continue
         if not classAddApiLevel:
             classList.append(classDict['ClassName'])
-            continue
-        classAddApiLevel = classAddApiLevel.split('.')[0]
-        if int(classAddApiLevel) <= apiLevel:
+        else:
+            classAddApiLevel = classAddApiLevel.split('.')[0]
+            if int(classAddApiLevel) > apiLevel:
+                continue
             classList.append(classDict['ClassName'])
-    print len(classList)
+        flag = False
+        for methodName,mDict in classDict['Functions'].items():
+            methodAddLevel = mDict['AddedLevel']
 
+            if not methodAddLevel:
+                continue
+            if 'REL' in methodAddLevel:
+                continue
+            methodAddLevel = methodAddLevel.split('.')[0]
+            if int(methodAddLevel)>apiLevel:
+                flag = True
+                classDict['Functions'].pop(methodName)
+        FileUtils.writeDict(classDict,newPath) 
+            
+            
+    print len(classList)
+    sys.exit()
+    raw_input()
     anotherList = []
     anotherDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24_bk\\jsonRes'
     allDictPaths = FileUtils.listDir(anotherDir)
     # print len(allDictPaths)
     for dictPath in allDictPaths:
+        if 'android.support.' in dictPath:
+            continue
+        if 'android.databinding' in dictPath:
+            continue
         classDict = FileUtils.readDict(dictPath)
         className = classDict['ClassName']
         anotherList.append(className)
     print len(anotherList)
     print len(CollectionUtils.listIntersection(classList,anotherList))
     diffList =  CollectionUtils.listDifference(anotherList,classList)
-    diffList = sorted(diffList)
-    InteractUtils.showList(diffList)
-
-    diffList =  CollectionUtils.listDifference(classList,anotherList)
     diffList = sorted(diffList)
     InteractUtils.showList(diffList)
