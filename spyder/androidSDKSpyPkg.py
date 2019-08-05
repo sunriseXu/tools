@@ -126,9 +126,9 @@ if __name__ == "__main__":
     supPkgSPath = baseDir + '/reference/android/support/packages.html'
     # https://developer.android.com/reference/android/support/test/packages
     # https://developer.android.com/reference/android/databinding/packages
-    # 
-    packagesUrl = 'https://developer.android.com/reference/android/databinding/packages'
-    packagesSummaryPath = baseDir + '/reference/android/databinding/packages.html'
+    # https://developer.android.com/reference/android/support/wearable/packages
+    packagesUrl = 'https://developer.android.com/reference/android/support/wearable/packages'
+    packagesSummaryPath = baseDir + '/reference/android/support/wearable/packages.html'
 
 
 
