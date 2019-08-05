@@ -119,6 +119,7 @@ if __name__ == "__main__":
         if 'REL' in classAddApiLevel:
             continue
         if not classAddApiLevel:
+            classList.append(classDict['ClassName'])
             continue
         classAddApiLevel = classAddApiLevel.split('.')[0]
         if int(classAddApiLevel) <= apiLevel:
@@ -136,5 +137,9 @@ if __name__ == "__main__":
     print len(anotherList)
     print len(CollectionUtils.listIntersection(classList,anotherList))
     diffList =  CollectionUtils.listDifference(anotherList,classList)
+    diffList = sorted(diffList)
+    InteractUtils.showList(diffList)
+
+    diffList =  CollectionUtils.listDifference(classList,anotherList)
     diffList = sorted(diffList)
     InteractUtils.showList(diffList)

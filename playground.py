@@ -630,8 +630,22 @@ if __name__ == "__main__":
     print 'permission length:'
     print len(permissionlist)
     InteractUtils.showList(permissionlist)
+    FileUtils.writeList(permissionlist,'tmpOut.txt')
     print 'class length'
     print len(classList)
+    allDict = FileUtils.readDict('D:\\androidsdkdoc\\permission24.json')
+    
+    partList = FileUtils.readList('tmpOut.txt')
+    resList = []
+    for permission in partList:
+        tmp = ''
+        for key,value in allDict.items():
+            if permission in value:
+                tmp = key+'\t'+permission+'\t' #+' '.join(resDict[permission].keys())
+                resList.append(tmp)
+    resList = sorted(resList)
+    FileUtils.writeList(resList, 'tmpOut2.txt')
+
 
     
 

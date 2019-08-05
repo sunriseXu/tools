@@ -111,4 +111,45 @@ def getElementInRawHtml(rawData, myXpath):
 
 if __name__ == "__main__":
     permissionPath = 'D:\\androidsdkdoc\\docs-24_r01\\docs\\reference\\android\\Manifest.permission.html'
-    
+    permissionDPath = 'D:\\androidsdkdoc\\permission24.json'
+    htmlData = FileUtils.readFile(permissionPath)
+    # htmlE = etree.HTML(htmlData)
+
+    # 正则匹配每一个 类成员的描述段
+    apiRex = r'<A NAME="(.*?)">.*?</A>'
+    items = RexUtils.rexSplit(apiRex, htmlData)
+
+    permissionDict = {'unknown':[]}
+    methodFX = './/h3[@class="api-name"]/text()'
+    for methodE in items:
+        methodE = etree.HTML(methodE)
+        eleName = methodE.xpath(methodFX)
+        if len(eleName) != 1:
+            continue
+        eleName = eleName[0]
+        print 'Name:'
+        print eleName
+
+        prgX = './/p/text()'
+        prgList = methodE.xpath(prgX)
+        proLevel = ''
+        for prg in prgList:
+            if 'Protection level:' in prg:
+                proLevel = prg.split('Protection level:')[1].strip()
+                break
+            if 'Not for use by third-party applications' in prg:
+                proLevel = 'no-third-party'
+        print 'level:'
+        print proLevel
+        print '\n'
+        
+        if not proLevel:
+            permissionDict['unknown'].append(eleName)
+        else:
+            if proLevel not in permissionDict:
+                permissionDict.update({proLevel:[eleName]})
+            else:
+                permissionDict[proLevel].append(eleName)
+    # print permissionDict
+    FileUtils.writeDict(permissionDict,permissionDPath)
+        # raw_input()

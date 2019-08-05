@@ -119,13 +119,18 @@ if __name__ == "__main__":
     classesUrl = 'https://developer.android.com/reference/classes'
     classSummaryPath = baseDir + '/reference/classes.html'
 
-    packagesUrl = 'https://developer.android.com/reference/packages'
-    packagesSummaryPath = baseDir + '/reference/packages.html'
+    # packagesUrl = 'https://developer.android.com/reference/packages'
+    # packagesSummaryPath = baseDir + '/reference/packages.html'
 
     supportPkgUrl = 'https://developer.android.com/reference/android/support/packages'
     supPkgSPath = baseDir + '/reference/android/support/packages.html'
+    # https://developer.android.com/reference/android/support/test/packages
+    # https://developer.android.com/reference/android/databinding/packages
+    # 
+    packagesUrl = 'https://developer.android.com/reference/android/support/test/packages'
+    packagesSummaryPath = baseDir + '/reference/android/support/test/packages.html'
 
-    
+
 
     # classesData = fetchData(classSummaryPath, classesUrl)
     # packagesData = fetchData(supPkgSPath, supportPkgUrl)
