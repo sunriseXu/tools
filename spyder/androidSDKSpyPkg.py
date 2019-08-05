@@ -152,8 +152,13 @@ if __name__ == "__main__":
     for pkgE in pkgList:
         # 获取具体链接
         pkgLink = pkgE.xpath('.//a/@href')[0]
+
         pkgUrl = baseUrl + pkgLink
         pkgLocalPath = baseDir + pkgLink
+
+        if 'http' in pkgLink:
+            pkgUrl = pkgLink
+            pkgLocalPath = baseDir + + '/reference' + pkgLink.split('/reference')[1]
 
         # if 'annotation' not in pkgLink:
         #     continue
