@@ -226,6 +226,9 @@ if __name__ == "__main__":
                 print 'classlink erro'
             classOnlineLink = baseUrl + classLink
             localPath = baseDir + classLink
+            if 'http' in classLink:
+                classOnlineLink = classLink
+                localPath = baseDir + '/reference' + classLink.split('/reference')[1]
             classHtmlData = fetchData(localPath, classOnlineLink)
             # classHtmlData = FileUtils.readFile('C:/Users/limin/androidSdkInAll/reference/android/bluetooth/BluetoothDevice.html')
             print 'No %d/%d' %(idx,classLen)
