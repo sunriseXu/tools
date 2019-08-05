@@ -158,7 +158,7 @@ if __name__ == "__main__":
 
         if 'http' in pkgLink:
             pkgUrl = pkgLink
-            pkgLocalPath = baseDir + + '/reference' + pkgLink.split('/reference')[1]
+            pkgLocalPath = baseDir + '/reference' + pkgLink.split('/reference')[1]
 
         # if 'annotation' not in pkgLink:
         #     continue
