@@ -119,13 +119,18 @@ if __name__ == "__main__":
     classesUrl = 'https://developer.android.com/reference/classes'
     classSummaryPath = baseDir + '/reference/classes.html'
 
-    packagesUrl = 'https://developer.android.com/reference/packages'
-    packagesSummaryPath = baseDir + '/reference/packages.html'
+    # packagesUrl = 'https://developer.android.com/reference/packages'
+    # packagesSummaryPath = baseDir + '/reference/packages.html'
 
     supportPkgUrl = 'https://developer.android.com/reference/android/support/packages'
     supPkgSPath = baseDir + '/reference/android/support/packages.html'
+    # https://developer.android.com/reference/android/support/test/packages
+    # https://developer.android.com/reference/android/databinding/packages
+    # https://developer.android.com/reference/android/support/wearable/packages
+    packagesUrl = 'https://developer.android.com/reference/android/support/wearable/packages'
+    packagesSummaryPath = baseDir + '/reference/android/support/wearable/packages.html'
 
-    
+
 
     # classesData = fetchData(classSummaryPath, classesUrl)
     # packagesData = fetchData(supPkgSPath, supportPkgUrl)
@@ -147,8 +152,13 @@ if __name__ == "__main__":
     for pkgE in pkgList:
         # 获取具体链接
         pkgLink = pkgE.xpath('.//a/@href')[0]
+
         pkgUrl = baseUrl + pkgLink
         pkgLocalPath = baseDir + pkgLink
+
+        if 'http' in pkgLink:
+            pkgUrl = pkgLink
+            pkgLocalPath = baseDir + '/reference' + pkgLink.split('/reference')[1]
 
         # if 'annotation' not in pkgLink:
         #     continue
@@ -216,6 +226,9 @@ if __name__ == "__main__":
                 print 'classlink erro'
             classOnlineLink = baseUrl + classLink
             localPath = baseDir + classLink
+            if 'http' in classLink:
+                classOnlineLink = classLink
+                localPath = baseDir + '/reference' + classLink.split('/reference')[1]
             classHtmlData = fetchData(localPath, classOnlineLink)
             # classHtmlData = FileUtils.readFile('C:/Users/limin/androidSdkInAll/reference/android/bluetooth/BluetoothDevice.html')
             print 'No %d/%d' %(idx,classLen)
