@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import urllib
-import urllib2
+# import urllib2
 import re
 import os
 import json
@@ -249,6 +249,6 @@ if __name__ == "__main__":
 	mylist=['niao','xxx','hello']
 	# print listDirRecur('./')
 	reslist=listDir2('./')
-	print reslist
+	# print reslist
 	# print value2keylist(mylist,mydict)
 	# print key2Valuelist(myklist,mydict)
