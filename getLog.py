@@ -164,7 +164,7 @@ if __name__ == "__main__":
 	antiResHandle = open(antivirusOutPath, 'w')
 	filteredStr = 'Modelresult'
 	logcmd = 'adb %s shell logcat -s %s' %(selectedDevId,filteredStr)
-	# logcmd=logcmd.strip().split()
+	logcmd=logcmd.strip().split()
 	p = subprocess.Popen(logcmd, stdout=antiResHandle,stderr=subprocess.PIPE)
 	
 	

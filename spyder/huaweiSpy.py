@@ -86,8 +86,11 @@ with io.open(resPath,'w') as f:
             print(len(href_list))
             for nhref in href_list:
                 url2="http://appstore.huawei.com"+nhref
-                # print('open url:'+url2)
-                data2 = opener.open(url2).read()
+                print('open url:'+url2)
+                try:
+                    data2 = opener.open(url2).read()
+                except:
+                    continue
                 s2=etree.HTML(data2)
                 # print('open url success')
                 try:
