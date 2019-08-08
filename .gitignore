@@ -12,6 +12,8 @@ dist
 build
 *.java
 *.png
+*.csv
+testing*
 nul
 
 # My configurations:
