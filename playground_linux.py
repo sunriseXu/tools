@@ -693,13 +693,22 @@ if __name__ == "__main__":
     print("v3_2200:")
     print(len(v3_2200))
 
-    v3_100_1 = random.sample(v1_nor_test, 120)
-    v3_100_2 = random.sample(v2_nor_test, 120)
-    print("v3_100_1 && v3_100_2")
-    print(len(CollectionUtils.listIntersection(v3_100_2, v3_100_1)))
-    v3_240 = v3_100_1 + v3_100_2
-    print("v3_240:")
-    print(len(v3_240))
+    v3_250_1 = random.sample(v1_nor_test, 300)
+    v3_250_2 = random.sample(v2_nor_test, 300)
+    print("v3_250_1 && v3_250_2")
+    print(len(CollectionUtils.listIntersection(v3_250_1, v3_250_2)))
+    v3_600 = v3_250_1 + v3_250_2
+    print("v3_600:")
+    print(len(v3_600))
+
+    print('v3_2200 && v3_600')
+    print(len(CollectionUtils.listIntersection(v3_2200,v3_600)))
+
+    v3Dir = EasyDir('./totest/v3')
+    v3Dict = v3Dir.getAbsPathDict()
+
+    FileUtils.writeList(v3_2200, v3Dir.getCatPath('v3_nor_train'))
+    FileUtils.writeList(v3_600, v3Dir.getCatPath('v3_nor_test'))
 
 
 
