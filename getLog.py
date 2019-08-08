@@ -74,7 +74,9 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernel
 	handle.terminate()
 	stopMonkey(selectedDevId)
 
-
+def touchFile(selectedDevId):
+	cmd = 'adb %s shell "touch /sdcard/guard"' %selectedDevId
+	os.popen(cmd)
 
 def trimLog(uid,tmplogPath,newlogPath):
 	f = open(tmplogPath,'r')
@@ -139,16 +141,8 @@ if __name__ == "__main__":
 	notInstallList=readList(notInstallPath)
 	apkInfoDict=readDict(apkInfoPath)
 
-	apkItems=listDir(dirName,appName)
-	
-	itemLen=len(apkItems)
-	if testInListFlag:
-		itemLen=len(toTestList)
-	
 	devId,devNum=chooseDevice()
-
 	selectedDevId=" "
-
 	if devNum>0:
 		l.warning("%d devices attached!",devNum)
 		l.warning("device %s selected!",devId)
@@ -157,7 +151,12 @@ if __name__ == "__main__":
 		l.warning("no device attached!")
 		sys.exit()
 	
-	whiteList=['com.zhanhong.message','com.antivirus.dbconnector']
+	apkItems=listDir(dirName,appName)
+	itemLen=len(apkItems)
+	if testInListFlag:
+		itemLen=len(toTestList)
+
+	whiteList=['com.zhanhong.message','com.antivirus.dbconnector','com.fdu.testcryptfile']
 	l.warning("uninstall thirdParty apps")
 	uninstallAllThird(selectedDevId,whiteList)
 
@@ -193,6 +192,7 @@ if __name__ == "__main__":
 			if apkHash in notInstallList:
 				continue
 			l.warning(time.strftime('%H:%M:%S',time.localtime(time.time())))
+			touchFile(selectedDevId)
 			testingFlag = True
 			# query manifest for apkInfo
 			packageName=getApkInfo(apkItem,"package: name=")
