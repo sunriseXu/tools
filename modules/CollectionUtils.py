@@ -22,6 +22,10 @@ def listUnion(a, b):
 def listDifference(a, b):
 	myDiff = list(set(a).difference(set(b)));
 	return myDiff
+
+def listAllDiff(*lists):
+	pass
+
 def listMerge(*lists):
 	'''
 	merge all list in lists:
