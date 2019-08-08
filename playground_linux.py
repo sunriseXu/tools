@@ -658,7 +658,52 @@ if __name__ == "__main__":
     # print len(CollectionUtils.listIntersection(list1,list2))
     # res = CollectionUtils.listDifference(list2,list1)
     # InteractUtils.showList(res)
+    #需要从normal中选出2000+200,从malware中选出500+50
+    #v1 normal选一半
 
-    
+    allHash = EasyDir('/home/limin/Desktop/allHashInDb')
+    hashPathD = allHash.getAbsPathDict()
+    v1_nor_train = FileUtils.readList(hashPathD['v1_train_nor_Hash.csv'])
+    print(len(v1_nor_train))
+    v1_nor_test = FileUtils.readList(hashPathD['v1_test_normal5000_201907221220.csv'])
+    v1_nor_test = [i.strip('"') for i in v1_nor_test]
+    print(len(v1_nor_test))
+    v1_mal_train = FileUtils.readList(hashPathD['v1_train_malicious2000_201907221216.csv'])
+    print(len(v1_mal_train))
+    v1_mal_test = FileUtils.readList(hashPathD['v1_test_malicious500_201907221211.csv'])
+    print(len(v1_mal_test))
+
+    v2_nor_train = FileUtils.readList(hashPathD['v2_train_normal20000_2_201907220953.csv'])
+    v2_nor_train = [i.strip('"') for i in v2_nor_train]
+    print(len(v2_nor_train))
+    v2_nor_test = FileUtils.readList(hashPathD['v2_test_normal5000_2_201907220950.csv'])
+    v2_nor_test = [i.strip('"') for i in v2_nor_test]
+    print(len(v2_nor_test))
+    v2_mal_train = FileUtils.readList(hashPathD['v2_train_malicious2000_201907220955.csv'])
+    print(len(v2_mal_train))
+    v2_mal_test = FileUtils.readList(hashPathD['v2_test_malicious500_201907220955.csv'])
+    print(len(v2_mal_test))
+
+    # 首先需要
+    v3_1000_1 = random.sample(v1_nor_train,1100)
+    v3_1000_2 = random.sample(v2_nor_train,1100)
+    print("v3_1000_1 && v3_1000_2")
+    print(len(CollectionUtils.listIntersection(v3_1000_2,v3_1000_1)))
+    v3_2200 = v3_1000_1+v3_1000_2
+    print("v3_2200:")
+    print(len(v3_2200))
+
+    v3_100_1 = random.sample(v1_nor_test, 120)
+    v3_100_2 = random.sample(v2_nor_test, 120)
+    print("v3_100_1 && v3_100_2")
+    print(len(CollectionUtils.listIntersection(v3_100_2, v3_100_1)))
+    v3_240 = v3_100_1 + v3_100_2
+    print("v3_240:")
+    print(len(v3_240))
+
+
+
+
+
 
     
