@@ -104,6 +104,7 @@ if __name__ == "__main__":
 	parser.add_argument("-k", "--keepall", help="dont uninstall after test one", action="store_true")
 	parser.add_argument("-l", "--logsdir", help="destination of logs",nargs='?', default=desktopDir)
 	parser.add_argument("-e", "--totest", help="dont uninstall after test one", action="store_true")
+	parser.add_argument("-s", "--totestPath", help="toTestPath", nargs='?', default='')
 	parser.add_argument("-x", "--kernel", help="dont uninstall after test one", action="store_true")
 	args = parser.parse_args() 
 
@@ -117,15 +118,18 @@ if __name__ == "__main__":
 	kernenflag=args.kernel
 	pureStop=True
 	testInListFlag=args.totest
+	toTestPath = args.totestPath
 	apkItems= []
 	logDir=logsDir+"/logs/traces/"
 	tmplogDir=logsDir+"/logs/tmplog/"
 	apkInfoPath=logsDir+"/logs/apkInfoDict.txt"
 	errorFilePath=logsDir+"/logs/error.txt"
-	toTestFilePath=logsDir+"/toTest.txt"
 	testedFilePath=logsDir+"/logs/lastTest.txt"
 	notInstallPath=logsDir+"/logs/notInstalled.txt"
-	
+	if not toTestPath:
+		toTestFilePath = logsDir + "/toTest.txt"
+	else:
+		toTestFilePath = toTestPath
 
 	mkdir(tmplogDir)
 	mkdir(logDir)
