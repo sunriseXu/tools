@@ -7,7 +7,7 @@ from lxml import etree
 import re
 import threading
 import csv
-from datetime import datetime
+from datetime import datetime,timedelta
 
 
 class MyThread(threading.Thread):
@@ -41,8 +41,9 @@ def downloadFile(dlink,savePath):
     return resFlag
 
 if __name__ == "__main__":
-    currTime=datetime.now()
-    currTime = currTime.strftime('%Y-%m-%d')
+    yesterday = datetime.today() + timedelta(-1)
+    currTime = yesterday.strftime('%Y-%m-%d')
+    # currTime = currTime.strftime('%Y-%m-%d')
     apkDir = '/home/xjchi/apks/huawei/todayApk-'+currTime
     mkdir(apkDir)
     resPath = 'huawei-%s.csv' %currTime

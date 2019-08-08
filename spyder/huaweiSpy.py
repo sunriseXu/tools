@@ -6,7 +6,7 @@ import os
 from lxml import etree
 import re
 import threading
-from datetime import datetime
+from datetime import datetime,timedelta
 
 
 class MyThread(threading.Thread):
@@ -38,8 +38,10 @@ def downloadFile(dlink,savePath):
     #     print('download faile')
         resFlag = False
     return resFlag
-currTime=datetime.now()
-currTime = currTime.strftime('%Y-%m-%d')
+# currTime=datetime.now()
+yesterday = datetime.today() + timedelta(-1)
+currTime = yesterday.strftime('%Y-%m-%d')
+
 resPath = 'huawei-%s.csv' %currTime
 with io.open(resPath,'w') as f:
     f.write("{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format('应用代码','应用名称','应用类型','公司名称','app大小','版本号','更新时间','评分','下载人数','应用介绍','图标','下载地址','爬取时间'))
