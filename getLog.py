@@ -75,7 +75,7 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernel
 	stopMonkey(selectedDevId)
 
 def touchFile(selectedDevId):
-	cmd = 'adb %s shell "touch /sdcard/guard"' %selectedDevId
+	cmd = 'adb %s push guard /sdcard/' %selectedDevId
 	os.popen(cmd)
 
 def trimLog(uid,tmplogPath,newlogPath):
