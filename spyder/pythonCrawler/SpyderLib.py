@@ -1,9 +1,10 @@
 #coding=utf8
-import urllib.request
-import urllib.parse
-import urllib.error
 import os
 import sys
+import urllib.error
+import urllib.parse
+import urllib.request
+
 pwd = os.path.dirname(os.path.realpath(__file__))
 pwd = os.path.dirname(pwd)
 ppwd = os.path.dirname(pwd)
@@ -16,8 +17,8 @@ class MySpyder:
         }
         #Request对象，包含请求的完整url，参数，头部等信息，建议将所以url都封装成request对象，加上头部，统一标准
         self.request = urllib.request.Request(self.url,headers=self.headers)
-        
-        
+
+
     def requestByGet(self):
         try:
             # response is a handle, after reading, the handle will close automatically，接受url字符串或者Request对象
@@ -34,7 +35,7 @@ class MySpyder:
         except urllib.error.URLError as e:
             print(e)
             return ''
-        return response  
+        return response
     def getUrl(self):
         return self.response.geturl()
     def getHeaders(self):
@@ -84,10 +85,9 @@ def genUrlParam(myDict):
     '''
     return urllib.parse.urlencode(myDict)
 
-from modules import FileUtils
 
 if __name__ == "__main__":
-    url = 'http://www.baidu.com' 
+    url = 'http://www.baidu.com'
     # spyder = MySpyder(url)
     # retCode = spyder.getUrl()
     # print(retCode)
@@ -109,7 +109,7 @@ if __name__ == "__main__":
     # print(ret)
     # print('unquote url:')
     # print(parseUrl(ret, 'unquote'))
-    
+
     # myDict = {
     #     'name':'xcz',
     #     'age':18,
@@ -119,20 +119,54 @@ if __name__ == "__main__":
     # }
     # print('generate url param:')
     # print(genUrlParam(myDict))
-    post_url = 'http://www.kfc.com.cn/kfccda/ashx/GetStoreList.ashx?op=cname'
-    form_data = {
-        'cname': '深圳',
-        'pid': '',
-        'pageIndex': '2',
-        'pageSize': '10',
-    }
-    spyder = MySpyder(post_url)
-    response = spyder.requestByPost(form_data)
-    #返回的是json格式的结果
-    spyder.writeHtml(response, 'testingKfc.json')
-    
 
-    
+
+    # post_url = 'http://www.kfc.com.cn/kfccda/ashx/GetStoreList.ashx?op=cname'
+    # form_data = {
+    #     'cname': '深圳',
+    #     'pid': '',
+    #     'pageIndex': '2',
+    #     'pageSize': '10',
+    # }
+    # spyder = MySpyder()
+    # response = spyder.requestByPost(form_data)
+    # #返回的是json格式的结果
+    # try:
+    #     spyder.writeHtml(response, 'testingKfc.json')
+    # finally:
+    #     pass
+
+
+    # 高级请求手段 handle来更加个性化制定请求行为
+    # 通常是通过
+    # urllib.request.urlopen来打开请求报文
+    # 但是可以通过
+    # urllib.request.build_opener().open(request)来打开报文
+    #handle生成,httpHandle ProxyHandle生成普通handle和代理handle
+    handler = urllib.request.HTTPHandler()
+    #通过如下方法构造匿名ip,可以从西刺网爬取可用的ip,现在就不爬了,但是可以爬一下,网上有教程,爬一下吧,也可以将结果存入数据库,找到一个很好的博客,多练
+    #西刺网 https://www.xicidaili.com/nn/
+    #国外: https://free-proxy-list.net/ 质量更高
+    #https://stackoverflow.com/questions/48426624/scraping-free-proxy-listing-website
+    #https://forum.agenty.com/t/how-to-scrape-free-proxy-list-from-internet/19
+
+    handler = urllib.request.ProxyHandler({'http':'203.77.239.18:37002'})
+    opener = urllib.request.build_opener(handler)
+
+    url = 'http://ip111.cn/'
+    #http://httpbin.org/get 更好    
+    headers = {
+        'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36",
+    }
+    spyder = MySpyder(url)
+    request = urllib.request.Request(url,headers=headers)
+    response = opener.open(request)
+    spyder.writeHtml(response,'testingIp.html')
+
+
+
+
+
 
 
 
