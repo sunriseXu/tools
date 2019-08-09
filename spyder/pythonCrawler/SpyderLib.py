@@ -1,9 +1,12 @@
 #coding=utf8
 import os
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
+
+from bs4 import BeautifulSoup
 
 pwd = os.path.dirname(os.path.realpath(__file__))
 pwd = os.path.dirname(pwd)
@@ -84,7 +87,63 @@ def genUrlParam(myDict):
     中文，空格等自动转码
     '''
     return urllib.parse.urlencode(myDict)
+def ipTest(urlForTest, ipList):
+    '''
+    测试爬取得ip是否合法
+    :param urlForTest:
+    :param ipInfo:
+    :return:
+    '''
+    for i in range(1, len(ipList)+1):
+        print('******%d*******' %i)
+        ipInfo = ipList[i]
+        proxies = {
+            'http':'http://'+ipInfo,
+            'https':'https://'+ipInfo,
+        }
+        headers = {
+            'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36",
 
+        }
+        handler = urllib.request.ProxyHandler(proxies)
+        opener = urllib.request.build_opener(handler)
+        request = urllib.request.Request(urlForTest, headers=headers)
+        try:
+            response=opener.open(request,timeout=1)
+            content = response.read().decode()
+            return ipInfo
+        except Exception as e:
+            print(e)
+            print('timeout')
+            pass
+def scrawlXiciIp(num, xiciUrl='https://www.xicidaili.com/wt/'):
+    '''
+    爬去xici网的代理ip列表
+    :param num:
+    :param xiciUrl:
+    :return:
+    '''
+    ipList = []
+    for i in range(1,num+1):
+
+        url = xiciUrl + str(i)
+        IPSpy = MySpyder(url)
+        response = IPSpy.requestByGet()
+        resultCode = response.getcode()
+        if resultCode != 200:
+            continue
+        content = response.read().decode()
+        soup = BeautifulSoup(content, 'lxml')
+        trs = soup.find_all('tr')
+
+        for i in range(1, len(trs)):
+            tr = trs[i]
+            tds = tr.find_all('td')
+            ip_item = tds[1].text + ':' + tds[2].text
+            ipList.append(ip_item)
+        time.sleep(5)
+    ipList = list(set(ipList))
+    return ipList
 
 if __name__ == "__main__":
     url = 'http://www.baidu.com'
@@ -150,18 +209,22 @@ if __name__ == "__main__":
     #https://stackoverflow.com/questions/48426624/scraping-free-proxy-listing-website
     #https://forum.agenty.com/t/how-to-scrape-free-proxy-list-from-internet/19
 
-    handler = urllib.request.ProxyHandler({'http':'203.77.239.18:37002'})
-    opener = urllib.request.build_opener(handler)
+    # handler = urllib.request.ProxyHandler({'http':'203.77.239.18:37002'})
+    # opener = urllib.request.build_opener(handler)
+    #
+    # url = 'http://ip111.cn/'
+    # #http://httpbin.org/get 更好
+    # headers = {
+    #     'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36",
+    # }
+    # spyder = MySpyder(url)
+    # request = urllib.request.Request(url,headers=headers)
+    # response = opener.open(request)
+    # spyder.writeHtml(response,'testingIp.html')
 
-    url = 'http://ip111.cn/'
-    #http://httpbin.org/get 更好    
-    headers = {
-        'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36",
-    }
-    spyder = MySpyder(url)
-    request = urllib.request.Request(url,headers=headers)
-    response = opener.open(request)
-    spyder.writeHtml(response,'testingIp.html')
+    ipList = scrawlXiciIp(1)
+    ipInfo = ipTest()
+
 
 
 
