@@ -46,7 +46,9 @@ if __name__ == "__main__":
     # currTime = currTime.strftime('%Y-%m-%d')
     apkDir = '/home/limin/Desktop/apks/huawei/todayApk-'+currTime
     mkdir(apkDir)
+    pwd = os.path.dirname(os.path.realpath(__file__))
     resPath = 'huawei-%s.csv' %currTime
+    resPath = os.path.join(pwd,resPath)
     with open(resPath, newline='') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         for row in spamreader:
