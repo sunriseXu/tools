@@ -42,7 +42,7 @@ def main():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36',
     }
-    file = open('qiutu.html', 'w')
+    file = open('testingqiutu.html', 'w')
 
     start_page = 1
     end_page = 5

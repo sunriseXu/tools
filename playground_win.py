@@ -769,31 +769,36 @@ if __name__ == "__main__":
     # 6. 将normal的train test考入目标文件夹
     # 完成
     malTrainAmount = 500
-    singleMalTrainAmount = malTrainAmount/3 + 1
+    singleMalTrainAmount = malTrainAmount / 3 + 1
     malTestAmount = 50
-    singleMalTestAmount = malTestAmount/3 + 1
+    singleMalTestAmount = malTestAmount / 3 + 1
     norTrainAmount = 2000
     norTestAmount = 500
     dbMalTrain = 'test'
-    dbMalTest ='test'
+    dbMalTest = 'test'
     dbNorTrain = 'test'
     dbNorTest = 'test'
     configDict = {
-        'norTrain':{'path':'','dbName':'','merge':False,'amount':norTrainAmount,'tag':['nor','train']},
-        'norTest':{'path':'','dbName':'','merge':False,'amount':norTestAmount,'tag':['nor','test']},
-        'malPayTrain':{'path':'','dbName':'','merge':False,'amount':singleMalTrainAmount,'tag':['mal','train','pay']},
-        'malPayTest':{'path':'','dbName':'','merge':False,'amount':singleMalTestAmount,'tag':['mal','test','pay']},
-        'malRogTrain':{'path':'','dbName':'','merge':False,'amount':singleMalTrainAmount,'tag':['mal','train','rog']},
-        'malRogTest':{'path':'','dbName':'','merge':False,'amount':singleMalTestAmount,'tag':['mal','test','rog']},
-        'malStealTrain':{'path':'','dbName':'','merge':False,'amount':singleMalTrainAmount,'tag':['mal','train','steal']},
-        'malStealTest':{'path':'','dbName':'','merge':False,'amount':singleMalTestAmount,'tag':['mal','test','steal']},
+        'norTrain': {'path': '', 'dbName': '', 'merge': False, 'amount': norTrainAmount, 'tag': ['nor', 'train']},
+        'norTest': {'path': '', 'dbName': '', 'merge': False, 'amount': norTestAmount, 'tag': ['nor', 'test']},
+        'malPayTrain': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTrainAmount,
+                        'tag': ['mal', 'train', 'pay']},
+        'malPayTest': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTestAmount,
+                       'tag': ['mal', 'test', 'pay']},
+        'malRogTrain': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTrainAmount,
+                        'tag': ['mal', 'train', 'rog']},
+        'malRogTest': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTestAmount,
+                       'tag': ['mal', 'test', 'rog']},
+        'malStealTrain': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTrainAmount,
+                          'tag': ['mal', 'train', 'steal']},
+        'malStealTest': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTestAmount,
+                         'tag': ['mal', 'test', 'steal']},
     }
-    
 
     wkDirDict = wkDir.getAbsPathDict()
     fileList = sorted(wkDirDict.keys())
     InteractUtils.showList(fileList)
-    for key,value in configDict.items():
+    for key, value in configDict.items():
         tags = value['tag']
         if 'mal' in tags and 'train' in tags:
             value['dbName'] = dbMalTrain
@@ -803,15 +808,15 @@ if __name__ == "__main__":
             value['dbName'] = dbNorTrain
         elif 'nor' in tags and 'test' in tags:
             value['dbName'] = dbNorTest
-        
+
         for dirName in fileList:
             if listInStr(tags, dirName):
                 value['path'] = wkDirDict[dirName]
-                traceDir = os.path.join(wkDirDict[dirName],'logs/traces')
+                traceDir = os.path.join(wkDirDict[dirName], 'logs/traces')
                 if not os.path.exists(traceDir):
                     value['merge'] = True
                 break
-    
+
     # deal with merging situation
     for key, value in configDict.items():
         if not value['merge']:
@@ -826,32 +831,34 @@ if __name__ == "__main__":
         for cp in childPath:
             if os.path.isfile(cp):
                 continue
-            traceDir = os.path.join(cp,'logs/traces')
+            traceDir = os.path.join(cp, 'logs/traces')
             if os.path.exists(traceDir):
                 partPathList.append(traceDir)
-        if partPathList:    
-            mergedDir = os.path.join(keyDir,'logs/traces')
+        if partPathList:
+            mergedDir = os.path.join(keyDir, 'logs/traces')
             FileUtils.mkdir(mergedDir)
             for pp in partPathList:
                 ppItems = FileUtils.listDir(pp)
                 FileUtils.listCopy2(ppItems, mergedDir)
         print('Merge %s done!', key)
-    
-    # merging is done, next is filter traces, 
+
+    # merging is done, next is filter traces,
     # 首先需要把某些东西都过一下rule，然后根据恶意与否进行筛选
     # 把正常的通过rule的样本筛出到某目录，然后把log过短和失效的样本筛掉，这里还是保持原traces目录不变，把相关的分类保存在list中
     # 把恶意的通过rule的样本筛出来就行了，分为ruled和norule的
-    filterFlag = False
-    for key,value in configDict.items():
+    filterFlag = True
+    for key, value in configDict.items():
         if not filterFlag:
             continue
         keyDir = value['path']
         dirTags = value['tag']
         dbAmount = value['amount']
+        if not keyDir:
+            continue
         ruleList = []
         noRuleList = []
-        tracesDir = os.path.join(keyDir,'logs/traces')
-        ruleDir = os.path.join(keyDir,'ruled')
+        tracesDir = os.path.join(keyDir, 'logs/traces')
+        ruleDir = os.path.join(keyDir, 'ruled')
         noruleDir = os.path.join(keyDir, 'noRule')
         shortOrInvalidDir = os.path.join(keyDir, 'shortInvalid')
         shortOrInvalidPath = os.path.join(keyDir, 'shortInvalid.txt')
@@ -862,25 +869,26 @@ if __name__ == "__main__":
         FileUtils.mkdir(noruleDir)
         FileUtils.mkdir(shortOrInvalidDir)
 
-        resultPath = os.path.join(keyDir,'filtered.txt')
-        cmd = 'java -jar %s -f %s >%s' %(filterRuleBin, tracesDir ,resultPath)
-        print('[!] Start to filter %s' %tracesDir)
+        resultPath = os.path.join(keyDir, 'filtered.txt')
+        cmd = 'java -jar %s -f %s >%s' % (filterRuleBin, tracesDir, resultPath)
+        print(cmd)
+        print('[!] Start to filter %s' % tracesDir)
         ThreadUtils.execute_command(cmd)
         print('[-] Filtering done!')
         ruleList, noRuleList = FileRoom.ruleStatistic(resultPath)
 
-        ruleListG = CollectionUtils.graftListItem(ruleList,'','.txt')
-        noRuleListG = CollectionUtils.graftListItem(noRuleList,'','.txt')
+        ruleListG = CollectionUtils.graftListItem(ruleList, '', '.txt')
+        noRuleListG = CollectionUtils.graftListItem(noRuleList, '', '.txt')
 
         FileUtils.listCopy(ruleListG, tracesDir, ruleDir)
         FileUtils.listCopy(noRuleListG, tracesDir, noruleDir)
         abandonBin = 'examples/filterLog.py'
         if noRuleList:
-            abandomCmd = 'python %s -d %s -b %s' %(abandonBin, noruleDir, shortOrInvalidPath)
+            abandomCmd = 'python %s -d %s -b %s' % (abandonBin, noruleDir, shortOrInvalidPath)
             ThreadUtils.execute_command(abandomCmd)
             shortOrInvalidList = FileUtils.readList(shortOrInvalidPath)
-            shortOrInvalidList = CollectionUtils.graftListItem(shortOrInvalidList,'','.txt')
-            FileUtils.listCopy(shortOrInvalidList,noruleDir,shortOrInvalidDir)
+            shortOrInvalidList = CollectionUtils.graftListItem(shortOrInvalidList, '', '.txt')
+            FileUtils.listCopy(shortOrInvalidList, noruleDir, shortOrInvalidDir)
         # 所有的筛选都完成了，接下来，将normal为通过rule的样本随机挑选对应的数量拷贝到特定目录上传到数据库
         selectSource = ''
         selectList = []
@@ -891,7 +899,8 @@ if __name__ == "__main__":
             selectSource = ruleDir
             selectList = ruleList
         if dbAmount > len(selectList):
-            l.error('[?] Error, there are not enough(%d) logs to upload(which is %d): %s', len(selectList),dbAmount,selectSource)
+            l.error('[?] Error, there are not enough(%d) logs to upload(which is %d): %s', len(selectList), dbAmount,
+                    selectSource)
             continue
         dbList = random.sample(selectList, dbAmount)
         dbListG = CollectionUtils.graftListItem(dbList, tailStr='.txt')
@@ -907,24 +916,26 @@ if __name__ == "__main__":
     malTestDir = FileUtils.mkdir(dbDirObj.getCatPath('malTest'))
     norTrainDir = FileUtils.mkdir(dbDirObj.getCatPath('norTrain'))
     norTestDir = FileUtils.mkdir(dbDirObj.getCatPath('norTest'))
-    doMergeFlag = False
+    doMergeFlag = True
     for key, value in configDict.items():
         if not doMergeFlag:
             continue
         tags = value['tag']
         keyDir = value['path']
+        if not keyDir:
+            continue
         dbDir = os.path.join(keyDir, 'dbToUp')
+        if not os.path.exists(dbDir):
+            continue
         if 'mal' in tags and 'train' in tags:
-            FileUtils.copytree(dbDir,malTrainDir)
+            FileUtils.copytree(dbDir, malTrainDir)
         elif 'mal' in tags and 'test' in tags:
-            FileUtils.copytree(dbDir,malTestDir)
+            FileUtils.copytree(dbDir, malTestDir)
         elif 'nor' in tags and 'train' in tags:
-            FileUtils.copytree(dbDir,norTrainDir)
+            FileUtils.copytree(dbDir, norTrainDir)
         elif 'nor' in tags and 'test' in tags:
-            FileUtils.copytree(dbDir,norTestDir)
+            FileUtils.copytree(dbDir, norTestDir)
 
-    
-    
     dbDirDict = dbDirObj.getAbsPathDict()
     for key, value in dbDirDict.items():
         tags = key.lower()

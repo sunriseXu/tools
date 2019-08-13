@@ -130,7 +130,8 @@ def main():
     # 请求
     request = urllib.request.Request(url=url, headers=headers)
     json_text = urllib.request.urlopen(request).read().decode()
-
+    # print(json_text)
+    # input()
     # 将请求到的json转为python对象
     json_obj = json.loads(json_text)
     # print(json_text)

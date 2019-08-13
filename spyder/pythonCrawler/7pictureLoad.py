@@ -77,6 +77,8 @@ def main():
         # UnicodeDecodeError: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start by
         # slove:headers有一句'Accept-Encoding': 'gzip, deflate'，删掉就好了
         content = urllib.request.urlopen(request).read().decode()
+        with open('testingLazyLoad.html','w') as f:
+            f.write(content)
         parse_content(content)
 
 

@@ -16,22 +16,47 @@ class MySpyder:
     def __init__(self, *args, **kwargs):
         self.url = args[0]
         self.headers = {
-            'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36",
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Cache-Control': 'max-age=0',
+            'Connection': 'keep-alive',
+            # 'Host': 'duanziwang.com',
+            'Upgrade-Insecure-Requests': 1,
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
         }
         #Request对象，包含请求的完整url，参数，头部等信息，建议将所以url都封装成request对象，加上头部，统一标准
         self.request = urllib.request.Request(self.url,headers=self.headers)
 
+    def createHandlerOpener(self,type='http',proxies={}):
+        '''
+        handle现在的作用是构造请求的ip,代理,cookie等信息,cookie还没加入
+        :param type:
+        :param proxies:
+        :return:
+        '''
+        self.opener = None
+        self.handler = None
+        if type in 'http':
+            self.handler = urllib.request.HTTPHandler()
+        elif type in 'proxy':
+            self.handler = urllib.request.ProxyHandler(proxies)
+        self.opener = urllib.request.build_opener(handler)
+        return self.opener
 
-    def requestByGet(self):
+    def requestByGet(self, opener=False):
         try:
+            if opener:
             # response is a handle, after reading, the handle will close automatically，接受url字符串或者Request对象
-            response = urllib.request.urlopen(url=self.request)
+                response = self.opener.open(self.request)
+            else:
+                response = urllib.request.urlopen(url=self.request)
         except urllib.error.URLError as e:
             print(e)
             return ''
         return response
 
-    def requestByPost(self, postDict):
+    def requestByPost(self, postDict, opener=False):
         try:
             postBytes = urllib.parse.urlencode(postDict).encode()
             response = urllib.request.urlopen(url=self.request, data=postBytes)
@@ -39,6 +64,7 @@ class MySpyder:
             print(e)
             return ''
         return response
+
     def getUrl(self):
         return self.response.geturl()
     def getHeaders(self):
@@ -147,27 +173,6 @@ def scrawlXiciIp(num, xiciUrl='https://www.xicidaili.com/wt/'):
 
 if __name__ == "__main__":
     url = 'http://www.baidu.com'
-    # spyder = MySpyder(url)
-    # retCode = spyder.getUrl()
-    # print(retCode)
-    # myPath = 'testingBaidu.html'
-    # spyder.writeHtml(myPath)
-    # spyder.updateResponseByUrl()
-
-    # myPath = 'testingBaidu.txt'
-    # spyder.writeBinary(myPath)
-    # picPath = 'testingPic.jpg'
-    # picUrl = 'http://s16.sinaimg.cn/orignal/003uYUOmzy7nd6dTtCfcf'
-    # downloadFile(picUrl,picPath)
-
-    # url = 'http://www.baidu/index.html?name=钢铁侠&pwd=123456'
-    # print('origin url:')
-    # print(url)
-    # print('quote url:')
-    # ret = parseUrl(url)
-    # print(ret)
-    # print('unquote url:')
-    # print(parseUrl(ret, 'unquote'))
 
     # myDict = {
     #     'name':'xcz',
@@ -222,8 +227,31 @@ if __name__ == "__main__":
     # response = opener.open(request)
     # spyder.writeHtml(response,'testingIp.html')
 
-    ipList = scrawlXiciIp(1)
-    ipInfo = ipTest()
+    # ipList = scrawlXiciIp(1)
+    # ipInfo = ipTest('http://httpbin.org/get',ipList)
+    # print(ipInfo)
+    # url = 'https://baidu.com/s?'
+    # headers = {
+    #     'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36",
+    # }
+    # data = {
+    #     'ie': 'utf-8',
+    #     'wd': 'ip',
+    # }
+    # proxies = {
+    #     'http': 'http://' + ipInfo,
+    #     'https': 'https://' + ipInfo,
+    # }
+    #
+    # handler = urllib.request.ProxyHandler(proxies)
+    # opener = urllib.request.build_opener(handler)
+    # url = url + urllib.parse.urlencode(data)
+    # request = urllib.request.Request(url, headers=headers)
+    # response = opener.open(request)
+    # with open('testingProxy.html','w') as f:
+    #     f.write(response.read().decode())
+
+
 
 
 
