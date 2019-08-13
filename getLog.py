@@ -77,7 +77,17 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernel
 def touchFile(selectedDevId):
 	cmd = 'adb %s push guard /sdcard/' %selectedDevId
 	os.popen(cmd)
-
+def checkAppAlive(selectedDevId, pkgName):
+	# alive?
+	aliveCmd = 'adb %s shell "ps|grep %s"' %(selectedDevId, pkgName)
+	res = os.popen(aliveCmd).read()
+	if pkgName not in res:
+		l.warning("start pkgName: %s",pkgName)
+		startApp(pkgName,selectedDevId)
+	l.warning('pkg: %s is running!',pkgName)
+	return 
+	
+	
 def trimLog(uid,tmplogPath,newlogPath):
 	f = open(tmplogPath,'r')
 	emptyFlag=1
@@ -156,7 +166,15 @@ if __name__ == "__main__":
 	if testInListFlag:
 		itemLen=len(toTestList)
 
-	whiteList=['com.zhanhong.message','com.antivirus.dbconnector','com.fdu.testcryptfile']
+	whiteList=[
+		'com.zhanhong.message',
+		'com.antivirus.dbconnector',
+		'com.fdu.testcryptfile',
+		'com.tencent.mm',
+		'com.tencent.mobileqq',
+		'com.eg.android.AlipayGphone',
+		'com.example.limin.sendsmsoneline',
+		]
 	l.warning("uninstall thirdParty apps")
 	uninstallAllThird(selectedDevId,whiteList)
 
@@ -194,6 +212,9 @@ if __name__ == "__main__":
 			l.warning(time.strftime('%H:%M:%S',time.localtime(time.time())))
 			touchFile(selectedDevId)
 			testingFlag = True
+
+			checkAppAlive(selectedDevId,'com.fdu.testcryptfile')
+
 			# query manifest for apkInfo
 			packageName=getApkInfo(apkItem,"package: name=")
 			launchActivity=getApkInfo(apkItem,"launchable-activity: name=")

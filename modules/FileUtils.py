@@ -24,6 +24,7 @@ class EasyDir:
 		if fileName not in self.absPathDict:
 			return ''
 		return self.absPathDict[fileName]
+	
 	def getAbsPathDict(self):
 		return self.absPathDict
 	def rexFindPath(self, myRex):
@@ -43,6 +44,7 @@ def mkdir(path):
 	folder = os.path.exists(path)
 	if not folder:
 		os.makedirs(path)
+	return path
 
 def createPDkir(fPath):
 	dirName = os.path.dirname(fPath)
@@ -185,6 +187,9 @@ def listCopy(myList,srcDir,destDir):
 	return
 
 def listCopy2(myList,destDir):
+	'''
+	myList must contain abs path list 
+	'''
 	if len(myList) == 0:
 		return
 	mkdir(destDir)
@@ -226,6 +231,16 @@ def listCut(myList,srcDir,destDir=''):
 def listCut2(listPath, srcDir, destDir):
 	myList = readList(listPath)
 	listCut(myList, srcDir, destDir)
+
+def copytree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
 
 def xorFileWithByte(src,dest,myByte):
 	'''

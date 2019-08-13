@@ -112,7 +112,8 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
             # 去除 \xa0 空白字符
             succList = [' '.join(i.split()) for i in wtf]
     # # # 结束 结果存入succList中 # # # 
-    print succList
+    # print succList
+    return succList[-1]
     
     classDict['Inheritance'] = succList
     classDict['ClassName'] = succList[-1]
@@ -241,10 +242,14 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
 
 
 if __name__ == "__main__":
-    apiLevel = 24
-    sdkRefDir = 'D:\\androidsdkdoc\\docs-%d_r01\\docs\\reference' %apiLevel
-    fileResDictDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk%d\\jsonRes' %apiLevel
+    apiLevel = 23
+    sdkRefDir = 'D:\\androidsdkdoc\\docs-%d\\docs\\reference' %apiLevel
+    # sdkRefDir = 'D:\\androidsdkdoc\\docs-%d\\offline-sdk\\reference' %apiLevel
+    # sdkRefDir = 'D:\\Android\\android-sdk\\docs\\reference' 
+    fileResDictDir = 'C:\\Users\\limin\\Desktop\\androidSdkJsonClassName\\sdk%d\\jsonRes' %apiLevel
     noFilePath = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk%d\\noFileError.txt' %apiLevel
+    noFilePath = 'C:\\Users\\limin\\Desktop\\androidSdkJsonClassName\\sdk%d\\noFileError.txt' %apiLevel
+    testedListPath = 'C:\\Users\\limin\\Desktop\\androidSdkJsonClassName\\sdk%d.txt' %apiLevel
     
     allhtmlPath = FileUtils.listDirRecur(sdkRefDir)
     testedList = []
@@ -285,7 +290,7 @@ if __name__ == "__main__":
                 
                 if classLink.startswith('/reference'):
                     classPath = dirPath.split('reference')[0]+'/'+classLink
-                print classPath
+                # print classPath
                 if not os.path.exists(classPath):
                     print 'file not exists error'
                     noFileList.append(classPath)
@@ -296,3 +301,4 @@ if __name__ == "__main__":
                 # input()
                 if classFullName:
                     testedList.append(classFullName)
+    FileUtils.writeList(testedList,testedListPath)

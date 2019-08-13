@@ -38,57 +38,59 @@ def trimLog(logPath):
 	
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="test!!")
-    parser.add_argument("-s", "--filtersize", help="filter size", action="store_true")
+    parser.add_argument("-s", "--filtersize", help="filter size",type=int, default=5)
     parser.add_argument('-a', '--action', help='app name', nargs='?', default="14001")
     parser.add_argument('-d', '--dirname', help='dir name', nargs='?')
+    parser.add_argument('-b', '--abandon', help='dir name', nargs='?')
     args = parser.parse_args() 
 
     logsDir = args.dirname
     filterSize=args.filtersize
     startActionId=args.action
+    abondonedPath=args.abandon
 
     desktopDir=os.path.join(os.path.expanduser("~"), 'Desktop')
-    abondonedPath=desktopDir+'/abandon.txt'
+    
 
-    # startActionId='14001'
     myWindow=10
     maxlen=9
     logsList=listDir(logsDir,'')
     abandonedList=readList(abondonedPath)
     for logPath in logsList:
         logName=os.path.basename(logPath)
+        logName = logName.split('.')[0]
         actionIdList=trimLog(logPath)
-        if not filterSize:                       
-            maxcount=0
-            icount=0
-            gap=0
-            flag=True
-            inGap=False
-            for actionId in actionIdList:
-            
-                if startActionId in actionId:
-                    flag=False
-                    inGap=False
-                    icount+=1
-                    gap=0
-                else:
-                    if flag and (not inGap):
-                        gap+=1
-                    flag=True
-                if gap>=myWindow-1:
-                    if icount>maxcount:
-                        maxcount=icount
-                    icount=0
-                    gap=0
-                    inGap=True
-            maxcount=icount
+                               
+        maxcount=0
+        icount=0
+        gap=0
+        flag=True
+        inGap=False
+        for actionId in actionIdList:
+        
+            if startActionId in actionId:
+                flag=False
+                inGap=False
+                icount+=1
+                gap=0
+            else:
+                if flag and (not inGap):
+                    gap+=1
+                flag=True
+            if gap>=myWindow-1:
+                if icount>maxcount:
+                    maxcount=icount
+                icount=0
+                gap=0
+                inGap=True
+        maxcount=icount
 
-            if maxcount > maxlen:
+        if maxcount > maxlen:
+            abandonedList.append(logName)
+        
+        if len(actionIdList)<filterSize:
+            if logName not in abandonedList:
                 abandonedList.append(logName)
-        else:
-            if len(actionIdList)<4:
-                abandonedList.append(logName)
-    # print abandonedList
     writeList(abandonedList,abondonedPath)
 
     

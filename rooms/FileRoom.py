@@ -15,6 +15,7 @@ sys.path.append(ppwd)
 from modules import FileUtils
 from modules import CollectionUtils
 from modules.FileUtils import EasyDir
+from modules import RexUtils
 
 
 l = logging.getLogger("FileRoom")
@@ -34,6 +35,43 @@ def randomCopy(srcDir,destDir,maxNum):
     FileUtils.mkdir(destDir)
     FileUtils.listCopy2(randomList,destDir)
     return
+
+def ruleStatistic(filteredPath, debug=False):
+    noRuleList=[]
+    ruledList=[]
+    if not os.path.exists(filteredPath):
+        l.warning('filteredPath not exists!')
+        return ruledList, noRuleList
+    resultPath = filteredPath   
+    content=FileUtils.readFile(resultPath)
+
+    rex=r'-----------------.*?.txt.*?-----------------------'
+    mylist=RexUtils.rexSplit(rex,content)
+
+    mydict={}
+    lognamerex=r'----------------- (.*?) -'
+    Rulerex=r'(Rule.*?\d+)'
+    count=0
+    for item in mylist:
+        rules= RexUtils.rexFind(Rulerex,item)
+        rules=list(set(rules))
+        logName=RexUtils.rexFind(lognamerex,item)
+        logName=logName[0]
+        logName = logName.split('.')[0]
+        if len(rules) > 0:
+            count+=1
+            ruledList.append(logName)
+            for rule in rules:
+                CollectionUtils.appendDict(mydict,rule,logName)
+        else:
+            if logName not in noRuleList:
+                noRuleList.append(logName)
+    if debug:
+        print 'pass:%d / total:%d' %(count,len(mylist))
+        mykeys=sorted(mydict.keys())
+        for key in mykeys:
+            print 'rule: ',key,'log_count: ',len(mydict[key])
+    return ruledList, noRuleList
 
 def filterFileContent(filePath, splitStr):
     '''
@@ -159,7 +197,7 @@ def splitMalware(mergedList):
     print 'steal:', len(stealList)
     print 'noMath', len(noMatch)
     # todo 可以将结果写入文件
-    return
+    return len(payList),len(rogList),len(stealList)
 
 def pkg2Hash(pkgList, pkgNameDict):
     '''
