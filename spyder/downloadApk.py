@@ -44,7 +44,7 @@ if __name__ == "__main__":
     yesterday = datetime.today() + timedelta(-1)
     currTime = yesterday.strftime('%Y-%m-%d')
     # currTime = currTime.strftime('%Y-%m-%d')
-    apkDir = '/home/xjchi/apks/huawei/todayApk-'+currTime
+    apkDir = '/home/limin/Desktop/apks/huawei/todayApk-'+currTime
     mkdir(apkDir)
     resPath = 'huawei-%s.csv' %currTime
     with open(resPath, newline='') as csvfile:

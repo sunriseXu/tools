@@ -2,15 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84cffa81-4759-4c54-b869-c267b73bed87" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/oneShot_rawTraceToDB.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BLOGS.md" beforeDir="false" afterPath="$PROJECT_DIR$/BLOGS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/FileUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/FileUtils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/ThreadUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/ThreadUtils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/playground_linux.py" beforeDir="false" afterPath="$PROJECT_DIR$/playground_linux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playground_win.py" beforeDir="false" afterPath="$PROJECT_DIR$/playground_win.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spyder/pythonCrawler/5.1正则爬取糗.py" beforeDir="false" afterPath="$PROJECT_DIR$/spyder/pythonCrawler/5.1正则爬取糗.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spyder/pythonCrawler/7pictureLoad.py" beforeDir="false" afterPath="$PROJECT_DIR$/spyder/pythonCrawler/7pictureLoad.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spyder/pythonCrawler/8jsonpath.py" beforeDir="false" afterPath="$PROJECT_DIR$/spyder/pythonCrawler/8jsonpath.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spyder/pythonCrawler/SpyderLib.py" beforeDir="false" afterPath="$PROJECT_DIR$/spyder/pythonCrawler/SpyderLib.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spyder/downloadApk.py" beforeDir="false" afterPath="$PROJECT_DIR$/spyder/downloadApk.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spyder/huawei-2019-08-05.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/spyder/huaweiSpy.py" beforeDir="false" afterPath="$PROJECT_DIR$/spyder/huaweiSpy.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +34,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../v3Test/config.ini" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">

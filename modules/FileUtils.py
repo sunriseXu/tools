@@ -24,7 +24,12 @@ class EasyDir:
 		if fileName not in self.absPathDict:
 			return ''
 		return self.absPathDict[fileName]
-	
+	def updateDir(self):
+		self.fileNameList = listDir2(self.currentDir)
+		self.absPathDict = {}
+		for fileName in self.fileNameList:
+			absPath = os.path.join(self.currentDir, fileName)
+			self.absPathDict.update({fileName: absPath})
 	def getAbsPathDict(self):
 		return self.absPathDict
 	def rexFindPath(self, myRex):
@@ -43,6 +48,14 @@ class EasyDir:
 def mkdir(path):
 	folder = os.path.exists(path)
 	if not folder:
+		os.makedirs(path)
+	return path
+def cleanAndMkdir(path):
+	folder = os.path.exists(path)
+	if not folder:
+		os.makedirs(path)
+	else:
+		shutil.rmtree(path)
 		os.makedirs(path)
 	return path
 

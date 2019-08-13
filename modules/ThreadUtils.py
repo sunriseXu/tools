@@ -42,6 +42,8 @@ def execute_command(cmdstring, timeout=None):
             break
         time.sleep(0.1)
         # print 'poll is none'
+        buff = sub.stdout.readline()
+        print(buff)
         if timeout:
             if end_time <= datetime.datetime.now():
                 try:

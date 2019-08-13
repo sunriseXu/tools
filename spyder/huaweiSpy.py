@@ -39,10 +39,12 @@ def downloadFile(dlink,savePath):
         resFlag = False
     return resFlag
 # currTime=datetime.now()
+pwd = os.path.dirname(os.path.realpath(__file__))
 yesterday = datetime.today() + timedelta(-1)
 currTime = yesterday.strftime('%Y-%m-%d')
 
 resPath = 'huawei-%s.csv' %currTime
+resPath = os.path.join(pwd,resPath)
 with io.open(resPath,'w') as f:
     f.write("{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format('应用代码','应用名称','应用类型','公司名称','app大小','版本号','更新时间','评分','下载人数','应用介绍','图标','下载地址','爬取时间'))
     

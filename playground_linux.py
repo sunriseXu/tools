@@ -17,6 +17,8 @@ import logging
 import sys
 import time
 from datetime import datetime
+from multiprocessing import Process
+from multiprocessing import Pool
 logging.basicConfig()
 l = logging.getLogger("playground")
 
@@ -735,7 +737,7 @@ if __name__ == "__main__":
 
     filterRuleBin = '/home/limin/Desktop/v3_log/FeatureEngineeringTest.jar'
     upDBbin = '/home/limin/Desktop/v3_log/logUpload.jar'
-    wkDir = EasyDir('/home/limin/Desktop/logs_v3')
+    wkDir = EasyDir('/home/limin/Desktop/v3Test')
     # 0. 列出文件夹，指定文件夹的类型，合并part的文件夹，合并后在part同级目录下面
     # 0.1. 指定目标文件夹，和 normalTrain，normaltest大小，maltrain和maltest大小
     # 1. 首先需要将相关的dir进行合并处理，因为测试的时候会有分part的情况，还是手动分配好一点，因为识别起来有点难可能
@@ -755,10 +757,10 @@ if __name__ == "__main__":
     singleMalTestAmount = malTestAmount / 3 + 1
     norTrainAmount = 2000
     norTestAmount = 500
-    dbMalTrain = 'test'
-    dbMalTest = 'test'
+    dbMalTrain = 'test3'
+    dbMalTest = 'test4'
     dbNorTrain = 'test'
-    dbNorTest = 'test'
+    dbNorTest = 'test2'
     configDict = {
         'norTrain': {'path': '', 'dbName': '', 'merge': False, 'amount': norTrainAmount, 'tag': ['nor', 'train']},
         'norTest': {'path': '', 'dbName': '', 'merge': False, 'amount': norTestAmount, 'tag': ['nor', 'test']},
@@ -885,7 +887,7 @@ if __name__ == "__main__":
             continue
         dbList = random.sample(selectList, dbAmount)
         dbListG = CollectionUtils.graftListItem(dbList, tailStr='.txt')
-        FileUtils.mkdir(dbDir)
+        FileUtils.cleanAndMkdir(dbDir)
         FileUtils.writeList(dbList, dblistPath)
         FileUtils.listCopy(dbListG, selectSource, dbDir)
 
@@ -893,11 +895,13 @@ if __name__ == "__main__":
     DBDir = wkDir.getCatPath('upDB')
     FileUtils.mkdir(DBDir)
     dbDirObj = EasyDir(DBDir)
-    malTrainDir = FileUtils.mkdir(dbDirObj.getCatPath('malTrain'))
-    malTestDir = FileUtils.mkdir(dbDirObj.getCatPath('malTest'))
-    norTrainDir = FileUtils.mkdir(dbDirObj.getCatPath('norTrain'))
-    norTestDir = FileUtils.mkdir(dbDirObj.getCatPath('norTest'))
+    malTrainDir = FileUtils.cleanAndMkdir(dbDirObj.getCatPath('malTrain'))
+    malTestDir = FileUtils.cleanAndMkdir(dbDirObj.getCatPath('malTest'))
+    norTrainDir = FileUtils.cleanAndMkdir(dbDirObj.getCatPath('norTrain'))
+    norTestDir = FileUtils.cleanAndMkdir(dbDirObj.getCatPath('norTest'))
     doMergeFlag = True
+    poolLen = len(configDict.keys())
+    myPool = Pool(poolLen)
     for key, value in configDict.items():
         if not doMergeFlag:
             continue
@@ -908,16 +912,26 @@ if __name__ == "__main__":
         dbDir = os.path.join(keyDir, 'dbToUp')
         if not os.path.exists(dbDir):
             continue
+        destDir = ''
         if 'mal' in tags and 'train' in tags:
-            FileUtils.copytree(dbDir, malTrainDir)
+            destDir = malTrainDir
         elif 'mal' in tags and 'test' in tags:
-            FileUtils.copytree(dbDir, malTestDir)
+            destDir = malTestDir
         elif 'nor' in tags and 'train' in tags:
-            FileUtils.copytree(dbDir, norTrainDir)
+            destDir = norTrainDir
         elif 'nor' in tags and 'test' in tags:
-            FileUtils.copytree(dbDir, norTestDir)
+            destDir = norTestDir
+        myPool.apply_async(FileUtils.copytree,args=(dbDir, destDir,))
+    myPool.close()
+    myPool.join()
 
+
+
+    dbDirObj.updateDir()
     dbDirDict = dbDirObj.getAbsPathDict()
+    poolLen = len(dbDirDict.keys())
+    print("debug****************%d" %poolLen)
+    myPool = Pool(poolLen)
     for key, value in dbDirDict.items():
         tags = key.lower()
         dbName = ''
@@ -929,10 +943,12 @@ if __name__ == "__main__":
             dbName = dbNorTrain
         elif 'nor' in tags and 'test' in tags:
             dbName = dbNorTest
-        # t = ThreadUtils.MyThread(uploadTracesDB,args=(value, dbName, upDBbin))
-        # t.start()
-        uploadTracesDB(value, dbName, upDBbin)
-    print('fucking done!')
+        # multiprocess
+        myPool.apply_async(uploadTracesDB, args=(value,dbName,upDBbin,))
+    print('Waiting for all subprocesses done...')
+    myPool.close()
+    myPool.join()
+    print('done!')
 
 
 
