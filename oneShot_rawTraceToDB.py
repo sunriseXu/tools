@@ -37,7 +37,7 @@ def listInStr(myList, myStr):
 def uploadTracesDB(myDir, dbName, upDBbin, debug=False):
     upCmd = 'java -jar %s -f %s -d %s' % (upDBbin, myDir, dbName)
     l.warning('uploadCmd: %s', upCmd)
-    res = ThreadUtils.execute_command(upCmd)
+    res = ThreadUtils.execute_command(upCmd,debug=True)
     print('uploading thread done ..')
     if debug:
         print(res)

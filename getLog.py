@@ -51,15 +51,15 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernel
 		# raw_input()
 	else:
 		i=0
-		while i<3:
+		while i<5:
 			getUIXml(selectedDevId)
 			i+=1
 			l.warning("pass check!")
-		if i==3:
+		if i==5:
 			clickWelcome(selectedDevId)
 		time.sleep(0.1)
 		i=0
-		while i<2:
+		while i<4:
 			getUIXml(selectedDevId)
 			i+=1
 			l.warning("pass check!")

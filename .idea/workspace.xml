@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84cffa81-4759-4c54-b869-c267b73bed87" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/oneShot_rawTraceToDB.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tasks/tmateStart.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/FileUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/FileUtils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/getLog.py" beforeDir="false" afterPath="$PROJECT_DIR$/getLog.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/ThreadUtils.py" beforeDir="false" afterPath="$PROJECT_DIR$/modules/ThreadUtils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oneShot_perday.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneShot_perday.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oneShot_rawTraceToDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneShot_rawTraceToDB.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/playground_linux.py" beforeDir="false" afterPath="$PROJECT_DIR$/playground_linux.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spyder/downloadApk.py" beforeDir="false" afterPath="$PROJECT_DIR$/spyder/downloadApk.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spyder/huawei-2019-08-05.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spyder/huaweiSpy.py" beforeDir="false" afterPath="$PROJECT_DIR$/spyder/huaweiSpy.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

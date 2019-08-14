@@ -30,7 +30,7 @@ class MyThread(threading.Thread):
         except Exception:
             return None
 
-def execute_command(cmdstring, timeout=None):
+def execute_command(cmdstring, timeout=None, debug=False):
     if timeout:
         end_time = datetime.datetime.now() + datetime.timedelta(seconds=timeout)
     try:
@@ -42,8 +42,9 @@ def execute_command(cmdstring, timeout=None):
             break
         time.sleep(0.1)
         # print 'poll is none'
-        buff = sub.stdout.readline()
-        print(buff)
+        if debug:
+            buff = sub.stdout.readline()
+            print(buff)
         if timeout:
             if end_time <= datetime.datetime.now():
                 try:
