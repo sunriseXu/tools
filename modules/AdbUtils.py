@@ -48,7 +48,7 @@ def getUid(packageName, selectedDevId):
 
 def startApp(packageName,selectedDevId):
 	startAppCmd="adb "+selectedDevId+"shell monkey -p "+packageName+" "+"-c android.intent.category.LAUNCHER 1"
-	os.popen(startAppCmd)
+	res = os.popen(startAppCmd)
 	time.sleep(2)
 
 def stopApp(packageName,selectedDevId,pureStop=True):
@@ -117,11 +117,15 @@ def chooseDevice():
 		if item not in res1:
 			res1.append(item)
 	res=res1
-	if len(res)>0:
+	if len(res)>1:
 		showList(res)
 		devi=selectListItemByIdx(res)
 		l.warning("%s selected",devi)
 		return (devi,len(res))
+	elif len(res)==1:
+		devi = res[0]
+		l.warning("%s selected", devi)
+		return (devi, len(res))
 	else:
 		return (None,0)
 

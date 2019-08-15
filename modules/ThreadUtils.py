@@ -30,11 +30,15 @@ class MyThread(threading.Thread):
         except Exception:
             return None
 
-def execute_command(cmdstring, timeout=None, debug=False):
+def execute_command(cmdstring, timeout=None,env=None, debug=False):
     if timeout:
         end_time = datetime.datetime.now() + datetime.timedelta(seconds=timeout)
     try:
-        sub=subprocess.Popen(cmdstring,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+        sub = None
+        if not env:
+            sub = subprocess.Popen(cmdstring,shell=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+        else:
+            sub = subprocess.Popen(cmdstring, shell=True,env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except OSError:
         return 'OSError'
     while True:

@@ -34,8 +34,9 @@ def listInStr(myList, myStr):
     # print('tags in %s' %(myStr))
     return True
 
-def uploadTracesDB(myDir, dbName, upDBbin, debug=False):
-    upCmd = 'java -jar %s -f %s -d %s' % (upDBbin, myDir, dbName)
+def uploadTracesDB(myDir, ipAndPort,dbName,account,passwd,tableName, upDBbin, debug=False):
+    upCmd = 'java -jar %s -f %s -i %s -d %s -u %s -s %s -t %s' \
+            % (upDBbin, myDir,ipAndPort,dbName,account,passwd,tableName)
     l.warning('uploadCmd: %s', upCmd)
     res = ThreadUtils.execute_command(upCmd,debug=True)
     print('uploading thread done ..')
@@ -57,12 +58,12 @@ def uploadTracesDB(myDir, dbName, upDBbin, debug=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="test!!")
     parser.add_argument('-c', '--config', help='config file path', nargs='?', default="")
-    parser.add_argument('-d', '--dest', help='app name', nargs='?', default="")
-    parser.add_argument('-i', '--num', help='test time', nargs='?', type=int, default=10)
+    parser.add_argument('-a', '--upall', help='upload all traces',action="store_true")
+    parser.add_argument('-t', '--time', help='test time', nargs='?', type=int, default=10)
     args = parser.parse_args()
     configPath = args.config
-    copyNum = args.num
-    destDir = args.dest
+    upallFlag = args.upall
+    # destDir = args.dest
 
     cfg = ConfigParser()
     cfg.read(configPath)
@@ -80,6 +81,11 @@ if __name__ == "__main__":
     norTestAmount = cfg.getint('amount','norTestAmount')
     singleMalTrainAmount = malTrainAmount / 3 + 1
     singleMalTestAmount = malTestAmount / 3 + 1
+
+    ipAndPort = cfg.get('database','ipAndPort')
+    dbName = cfg.get('database','dbName')
+    account = cfg.get('database','account')
+    passwd = cfg.get('database','passwd')
 
     dbMalTrain = cfg.get('database','dbMalTrain')
     dbMalTest = cfg.get('database','dbMalTest')
@@ -205,16 +211,21 @@ if __name__ == "__main__":
 
         ruleListG = CollectionUtils.graftListItem(ruleList, '', '.txt')
         noRuleListG = CollectionUtils.graftListItem(noRuleList, '', '.txt')
-
+        print('[!] Start to copy ruled and noruled %s' % tracesDir)
         FileUtils.listCopy(ruleListG, tracesDir, ruleDir)
         FileUtils.listCopy(noRuleListG, tracesDir, noruleDir)
+        print('[-] copy ruled and noruled done!')
 
         if noRuleList:
             abandomCmd = 'python %s -d %s -b %s' % (abandonBin, noruleDir, shortOrInvalidPath)
             ThreadUtils.execute_command(abandomCmd)
             shortOrInvalidList = FileUtils.readList(shortOrInvalidPath)
+            noRuleList = CollectionUtils.listDifference(noRuleList, shortOrInvalidList)
             shortOrInvalidList = CollectionUtils.graftListItem(shortOrInvalidList, tailStr='.txt')
-            FileUtils.listCopy(shortOrInvalidList, noruleDir, shortOrInvalidDir)
+            print('[!] Start to cut invalid and short traces %s' % shortOrInvalidPath)
+            FileUtils.listCut(shortOrInvalidList, noruleDir, shortOrInvalidDir)
+            print('[-] cut invalid and short done!')
+
         # 所有的筛选都完成了，接下来，将normal为通过rule的样本随机挑选对应的数量拷贝到特定目录上传到数据库
         selectSource = ''
         selectList = []
@@ -295,17 +306,17 @@ if __name__ == "__main__":
     myPool = Pool(poolLen)
     for key, value in dbDirDict.items():
         tags = key.lower()
-        dbName = ''
+        tableName = ''
         if 'mal' in tags and 'train' in tags:
-            dbName = dbMalTrain
+            tableName = dbMalTrain
         elif 'mal' in tags and 'test' in tags:
-            dbName = dbMalTest
+            tableName = dbMalTest
         elif 'nor' in tags and 'train' in tags:
-            dbName = dbNorTrain
+            tableName = dbNorTrain
         elif 'nor' in tags and 'test' in tags:
-            dbName = dbNorTest
+            tableName = dbNorTest
         # multiprocess
-        myPool.apply_async(uploadTracesDB, args=(value, dbName, upDBbin,))
+        myPool.apply_async(uploadTracesDB, args=(value,ipAndPort,dbName,account,passwd,tableName, upDBbin,))
     print('Waiting for all subprocesses done...')
     myPool.close()
     myPool.join()

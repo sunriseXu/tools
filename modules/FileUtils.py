@@ -172,7 +172,7 @@ def readFile(filePath):
 
 def writeFile(filePath,myStr):
 	createPDkir(filePath)
-	with open(filePath,'a') as f:
+	with open(filePath,'w') as f:
 		f.write(myStr)
 	return
 
@@ -193,7 +193,7 @@ def listCopy(myList,srcDir,destDir):
 		srcPath=os.path.join(srcDir,item)
 		if not os.path.exists(srcPath):
 			# print srcPath,'not exist'
-			l.warning("%s not exists",srcPath)
+			l.warning("listCopy: %s not exists",srcPath)
 			continue
 		destPath=os.path.join(destDir,item)
 		shutil.copy(srcPath,destPath)

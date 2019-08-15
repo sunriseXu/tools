@@ -41,10 +41,13 @@ def downloadFile(dlink,savePath):
     return resFlag
 
 if __name__ == "__main__":
+    debug = False
     yesterday = datetime.today() + timedelta(-1)
     currTime = yesterday.strftime('%Y-%m-%d')
     # currTime = currTime.strftime('%Y-%m-%d')
     apkDir = '/home/limin/Desktop/apks/huawei/todayApk-'+currTime
+    if debug:
+        apkDir = '/home/limin/Desktop/apks/huawei/testToday-'+currTime
     mkdir(apkDir)
     pwd = os.path.dirname(os.path.realpath(__file__))
     resPath = 'huawei-%s.csv' %currTime

@@ -6,6 +6,7 @@ import os
 from lxml import etree
 import re
 import threading
+import sys
 from datetime import datetime,timedelta
 
 
@@ -39,15 +40,18 @@ def downloadFile(dlink,savePath):
         resFlag = False
     return resFlag
 # currTime=datetime.now()
+debug = False
+testAmount=10
 pwd = os.path.dirname(os.path.realpath(__file__))
 yesterday = datetime.today() + timedelta(-1)
+
 currTime = yesterday.strftime('%Y-%m-%d')
 
 resPath = 'huawei-%s.csv' %currTime
 resPath = os.path.join(pwd,resPath)
 with io.open(resPath,'w') as f:
     f.write("{},{},{},{},{},{},{},{},{},{},{},{},{}\n".format('应用代码','应用名称','应用类型','公司名称','app大小','版本号','更新时间','评分','下载人数','应用介绍','图标','下载地址','爬取时间'))
-    
+    f.flush()
     testedList = []
     # mkdir('./todayApk')
 
@@ -115,7 +119,7 @@ with io.open(resPath,'w') as f:
                         introduct=introduct.replace(',','  ')
                     updataTime=updataTime.strip()#去掉字符串前后空格
                 
-                    if updataTime not in currTime:
+                    if updataTime not in currTime and not debug:
                         print('not today')
                         continue
                     company=company.strip()#去掉字符串前后空格
@@ -144,6 +148,10 @@ with io.open(resPath,'w') as f:
                     f.write('{},{},{},{},{},{},{},{},{},{},{},{},{}'.format(appCode,name,appType,company,size,version,updataTime,ranking,
                                                                    strNum,introduct,picture,downaddr,currTime))
                     f.write('{}'.format('\n'))
+                    f.flush()
+                    if debug and len(testedList)>testAmount:
+                        sys.exit(0)
+
 
                 except IndexError:#出现异常跳出，防止程序崩溃
                     print('indexerror')

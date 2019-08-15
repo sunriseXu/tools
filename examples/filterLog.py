@@ -55,7 +55,7 @@ if __name__ == "__main__":
     myWindow=10
     maxlen=9
     logsList=listDir(logsDir,'')
-    abandonedList=readList(abondonedPath)
+    abandonedList=[]
     for logPath in logsList:
         logName=os.path.basename(logPath)
         logName = logName.split('.')[0]

@@ -82,9 +82,9 @@ def checkAppAlive(selectedDevId, pkgName):
 	aliveCmd = 'adb %s shell "ps|grep %s"' %(selectedDevId, pkgName)
 	res = os.popen(aliveCmd).read()
 	if pkgName not in res:
+		l.warning('pkg: %s is running!', pkgName)
 		l.warning("start pkgName: %s",pkgName)
 		startApp(pkgName,selectedDevId)
-	l.warning('pkg: %s is running!',pkgName)
 	return 
 	
 	
@@ -174,6 +174,7 @@ if __name__ == "__main__":
 		'com.tencent.mobileqq',
 		'com.eg.android.AlipayGphone',
 		'com.example.limin.sendsmsoneline',
+		'com.sina.weibo',
 		]
 	l.warning("uninstall thirdParty apps")
 	uninstallAllThird(selectedDevId,whiteList)
@@ -219,6 +220,8 @@ if __name__ == "__main__":
 			packageName=getApkInfo(apkItem,"package: name=")
 			launchActivity=getApkInfo(apkItem,"launchable-activity: name=")
 			apkName=getApkInfo(apkItem,"label=")
+			if packageName in 'com.ioty_app':
+				continue
 			appendDict(apkInfoDict,apkHash,[packageName,apkName])
 			l.warning("start to install apk, Hash:%s pkgName:%s apkName:%s !",apkHash, packageName, apkName)
 			
