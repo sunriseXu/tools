@@ -165,7 +165,7 @@ if __name__ == "__main__":
 	itemLen=len(apkItems)
 	if testInListFlag:
 		itemLen=len(toTestList)
-
+	unlockPhone(selectedDevId)
 	whiteList=[
 		'com.zhanhong.message',
 		'com.antivirus.dbconnector',
@@ -199,6 +199,8 @@ if __name__ == "__main__":
 			testingFlag = False
 			writeDict(apkInfoDict,apkInfoPath)
 			writeList(testedList,testedFilePath)
+		if testedIdx%30==0:
+			writeList(testedList, '/home/limin/Documents/jianguoyun/Nutstore/tested.txt')
 		try:
 			apkHash=os.path.basename(apkItem)
 			apkHash= os.path.splitext(apkHash)[0]

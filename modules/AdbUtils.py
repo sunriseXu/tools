@@ -118,8 +118,9 @@ def chooseDevice():
 			res1.append(item)
 	res=res1
 	if len(res)>1:
-		showList(res)
-		devi=selectListItemByIdx(res)
+		# showList(res)
+		# devi=selectListItemByIdx(res)
+		devi = res[0]
 		l.warning("%s selected",devi)
 		return (devi,len(res))
 	elif len(res)==1:

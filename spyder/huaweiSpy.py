@@ -85,13 +85,16 @@ with io.open(resPath,'w') as f:
             s=etree.HTML(data)
             print(url)
             href_list = []
-            for i in range(1,40):
-                xpathReg = '/html/body/div[1]/div[5]/div[1]/div[2]/div[2]/div[%d]/div[2]/h4/a/@href' %i
-                href=s.xpath(xpathReg)
-                if len(href)>0:
-                    href_list.append(href[0])
+            # for i in range(1,40):
+                #/html/body/div[1]/div[4]/div[1]/div[2]/div[2]/div[2]/div[2]/h4/a
+                #/html/body/div[1]/div[4]/div[1]/div[2]/div[2]/div[3]/div[2]/h4/a
+            xpathReg = './/div/h4/a/@href'
+            href=s.xpath(xpathReg)
+            # if len(href)>0:
+            #     href_list.append(href[0])
             print('href_list size:')
-            print(len(href_list))
+            print(len(href))
+            href_list = href
             for nhref in href_list:
                 url2="http://appstore.huawei.com"+nhref
                 print('open url:'+url2)
@@ -103,17 +106,31 @@ with io.open(resPath,'w') as f:
                 # print('open url success')
                 try:
                     # print('get apk info:')
-                    name=s2.xpath('//*[@id="bodyonline"]/div/div[5]/div[1]/div/div/div[1]/ul[1]/li[2]/p[1]/span[1]/text()')[0]
-                    size=s2.xpath('//*[@id="bodyonline"]/div/div[5]/div[1]/div/div/div[1]/ul[2]/li[1]/span/text()')[0]
-                    updataTime=s2.xpath('//*[@id="bodyonline"]/div/div[5]/div[1]/div/div/div[1]/ul[2]/li[2]/span/text()')[0]
-                    company=s2.xpath('//*[@id="bodyonline"]/div/div[5]/div[1]/div/div/div[1]/ul[2]/li[3]/span/@title')[0]
-                    version=s2.xpath('//*[@id="bodyonline"]/div/div[5]/div[1]/div/div/div[1]/ul[2]/li[4]/span/text()')[0]
-                    downloadNum=s2.xpath('//*[@id="bodyonline"]/div/div[5]/div[1]/div/div/div[1]/ul[1]/li[2]/p[1]/span[2]/text()')[0]
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[1]/ul[1]/li[2]/p[1]/span[1]
+                    name=s2.xpath('.//div/div/div/ul/li/p/span/text()')[0]
+                    print('name:'+name)
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[1]/ul[2]/li[1]/span
+                    size=s2.xpath('.//div/div/div/ul/li/span/text()')[0]
+                    print('size:'+size)
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[1]/ul[2]/li[2]/span
+                    updataTime=s2.xpath('.//div/div/div/ul/li/span/text()')[1]
+                    print('uptime:'+updataTime)
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[1]/ul[2]/li[3]/span
+                    company=s2.xpath('.//div/div/div/ul/li/span[@title]/@title')[0]
+                    print('company:'+company)
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[1]/ul[2]/li[4]/span
+                    version=s2.xpath('.//div/div/div/ul/li/span/text()')[3]
+                    print('version:'+version)
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[1]/ul[1]/li[2]/p[1]/span[2]
+                    downloadNum=s2.xpath('.//div/div/div/ul/li/p/span/text()')[1]
                     strNum=downloadNum.lstrip('下载：')
-                    ranking = s2.xpath('//*[@id="bodyonline"]/div/div[5]/div[1]/div/div/div[1]/ul[1]/li[2]/p[2]/span/@class')[0]
+                    print('downloadNum:' + strNum)
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[1]/ul[1]/li[2]/p[2]/span
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[1]/ul[1]/li[2]/p[2]/span
+                    ranking = s2.xpath('.//div/div/div/ul/li/p/span[@class]/@class')[2]
+                    print('ranking:'+ranking)
                     introduct=s2.xpath('//*[@id="app_strdesc"]/text()')[0]
-                    # print(name)
-                    # print(updataTime)
+                    print('introduct:'+introduct)
                     # csv是用英文逗号来区分一列的，所以如果应用介绍中有英文逗号需要替换成空格，要不然应用介绍会分成好几列
                     if ',' in introduct:
                         introduct=introduct.replace(',','  ')
@@ -126,13 +143,18 @@ with io.open(resPath,'w') as f:
                     version=version.strip()#去掉字符串前后空格
                     strNum=strNum.strip()#去掉字符串前后空格
                     introduct=introduct.split()[0].strip()#去掉字符串前后空格
-                    picture=s2.xpath('//*[@id="bodyonline"]/div/div[5]/div[1]/div/div/div[1]/ul[1]/li[1]/img/@src')[0]
-                    # print(picture)
-                    infor=s2.xpath('//*[@id="bodyonline"]/div/div[5]/div[1]/div/div/div[2]/a/@onclick')[0]
+                    # print(introduct)
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[1]/ul[1]/li[1]/img
+                    picture=s2.xpath('.//div/div/div/ul/li/img/@src')[0]
+                    print('picture url:'+picture)
+                    #//*[@id="bodyonline"]/div/div[4]/div[1]/div/div/div[2]/a
+                    infor=s2.xpath('.//div/div/div/div/div/div/a/@onclick')[0]
+
                     allInfor=re.findall(r"['](.*?)[']",infor)#取出下载地址
                     appCode = allInfor[0]                                                     
                     appType = allInfor[4]
                     downaddr = allInfor[5]
+                    print('downloadUrl:'+downaddr)
 
                     dApkPath = './todayApk/%s.apk' %appCode
                     # downloadFile(downaddr, dApkPath)
@@ -153,8 +175,9 @@ with io.open(resPath,'w') as f:
                         sys.exit(0)
 
 
-                except IndexError:#出现异常跳出，防止程序崩溃
+                except IndexError as e:#出现异常跳出，防止程序崩溃
                     print('indexerror')
+                    print(e)
                     pass
             # print("{},{}".format(dev,page))
 

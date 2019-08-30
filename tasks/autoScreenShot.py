@@ -75,7 +75,9 @@ if __name__ == '__main__':
     picName = 'screenshot-{}.png'.format(currTime)
     picPath = os.path.join(picDir,picName)
     # cmd = 'shutter -f -o {} -e'.format(picPath)
-    cmd = 'gnome-screenshot -f {}'.format(picPath)
+    # cmd = 'gnome-screenshot -f {}'.format(picPath)
+    # cmd = 'xwd -root -display :0.0| xwdtopnm | pnmtopng > {}'.format(picPath)
+    cmd = 'DISPLAY=:0 scrot {} -q 40'.format(picPath)
     cmdList = [
         'screen -dmS {}'.format(sessionName),
         'screen -S {} -X stuff "{}\n"'.format(sessionName, cmd),
@@ -84,7 +86,7 @@ if __name__ == '__main__':
     res = exeCmdList(cmdList, zshEnv)
     import time
     time.sleep(1)
-    # screenKillSession(sessionName)
+    screenKillSession(sessionName)
 
 
 
