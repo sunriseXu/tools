@@ -113,7 +113,6 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
             succList = [' '.join(i.split()) for i in wtf]
     # # # 结束 结果存入succList中 # # # 
     # print succList
-    return succList[-1]
     
     classDict['Inheritance'] = succList
     classDict['ClassName'] = succList[-1]
@@ -157,7 +156,7 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
         # h4 class="jd-details-title"
         fullName = ''
         fullNameXpath = ''
-        if apiLevel == 24:
+        if apiLevel in range(24,30):
             fullNameXpath = './/pre[@class="api-signature no-pretty-print"]'
         elif apiLevel in [23,22,21,19,18,17,16,15,14]:
             fullNameXpath = './/h4[@class="jd-details-title"]'
@@ -169,7 +168,7 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
 
         # 由于观察到 函数的描述在某些特定标签下面，依api不同有所变化 所以提取此标签下面所有的文字
         allDesc = ''
-        if apiLevel == 24:
+        if apiLevel in range(24,30):
             # .//p and //p is totally different
             allDesc = getAllTextByTag(ei,'.//p')
             allDesc = ''.join(allDesc)
@@ -199,7 +198,7 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
         # # 至此，潜在的permission字段被提取出来
 
         #观察到api24中 所有参数描述，返回类型描述，异常都在表格中，所以提取出表格
-        if apiLevel == 24:
+        if apiLevel in range(24,30):
             tables = ei.xpath('//table')
             for myTable in tables:
                 myTags = myTable.xpath('.//th/text()')
@@ -242,13 +241,13 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
 
 
 if __name__ == "__main__":
-    apiLevel = 23
-    sdkRefDir = 'D:\\androidsdkdoc\\docs-%d\\docs\\reference' %apiLevel
-    # sdkRefDir = 'D:\\androidsdkdoc\\docs-%d\\offline-sdk\\reference' %apiLevel
+    apiLevel = 25
+    # sdkRefDir = 'D:\\androidsdkdoc\\docs-%d\\reference' %apiLevel
+    sdkRefDir = 'D:\\androidsdkdoc\\docs-%d\\offline-sdk\\reference' %apiLevel
     # sdkRefDir = 'D:\\Android\\android-sdk\\docs\\reference' 
-    fileResDictDir = 'C:\\Users\\limin\\Desktop\\androidSdkJsonClassName\\sdk%d\\jsonRes' %apiLevel
+    fileResDictDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk%d\\jsonRes' %apiLevel
     noFilePath = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk%d\\noFileError.txt' %apiLevel
-    noFilePath = 'C:\\Users\\limin\\Desktop\\androidSdkJsonClassName\\sdk%d\\noFileError.txt' %apiLevel
+    # noFilePath = 'C:\\Users\\limin\\Desktop\\androidSdkJsonClassName\\sdk%d\\noFileError.txt' %apiLevel
     testedListPath = 'C:\\Users\\limin\\Desktop\\androidSdkJsonClassName\\sdk%d.txt' %apiLevel
     
     allhtmlPath = FileUtils.listDirRecur(sdkRefDir)

@@ -2,44 +2,68 @@ from modules import FileUtils
 from modules import CollectionUtils
 from modules import RexUtils
 import platform
+import os
 
 
+# dictPath = 'permissionFromApiDesc.json'
+# permissionDPath = 'D:\\androidsdkdoc\\permission28.json'
 
-if __name__ == "__main__":
-    rogdir='/home/limin/Desktop/malware/rog'
-    roglist = FileUtils.listDir2(rogdir)
-    roglist = [str(i) for i in roglist]
+# myDict = FileUtils.readDict(dictPath)
+# permissionDict = FileUtils.readDict(permissionDPath)
+# dangerousPer = permissionDict['dangerous']
+# keys = sorted(myDict.keys())
+# for key in keys:
+#     if key not in dangerousPer:
+#         continue
+#     value = myDict[key]
+#     classkeys = sorted(value.keys())
 
-    tmpxxpath='./tmpxx'
-    tmplist = FileUtils.readList(tmpxxpath)
-    
-    idx = 0
-    end = len(tmplist)/4
-    findlist = []
-    showlist = []
-    for idx in range(0,end):
-        hashidx = idx*4
-        apkhash = str(tmplist[hashidx])
-        elfname = tmplist[hashidx+1].strip()
-        smaliname = tmplist[hashidx+3].strip()
-      
-        elflen = len(elfname.split(':'))
-        smalilen = len(smaliname.split())
-       
-        if elflen>1 and smalilen>1 and (apkhash in roglist):
-            findlist.append(apkhash)
-            showlist.append(apkhash)
-            showlist.append(tmplist[hashidx+1])
-            showlist.append(tmplist[hashidx+3])
-    findlistpath='/home/limin/Desktop/find.txt'
-    showlistpath='/home/limin/Desktop/show.txt'
-    FileUtils.writeList(findlist,findlistpath)
-    FileUtils.writeList(showlist,showlistpath)
+#     print(key)
+#     for classkey in classkeys:
+#         apis = value[classkey]
+#         apis = [i.split('(')[0] for i in apis]
+#         apis = sorted(list(set(apis)))
+#         for api in apis:
+#             print('\t'+classkey+'->'+api)
 
-    destdir = '/home/limin/Desktop/rogwithelf'
-    FileUtils.listCopy(findlist,rogdir,destdir)
+dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes'
+sensitiveApiList = FileUtils.readList('C:\\Users\\limin\\Desktop\\sensitive_api.txt')
+resDir = 'C:\\Users\\limin\\Desktop\\sensApi'
+FileUtils.mkdir(resDir)
+notexist=[]
+for item in sensitiveApiList:
+    className = item.split('->')[0]
+    apiName = item.split('->')[1]
+    fileName = className+'.json'
+    myPath = os.path.join(dirname,fileName)
+    if not os.path.exists(myPath):
+        print('%s not exists!' %className)
+        notexist.append(className)
+        continue
+    jsonDict = FileUtils.readDict(myPath)
+    print(myPath)
+    functionDict = jsonDict['Functions']
+    resDict = {}
+    for key, value in functionDict.items():
+        # print key
+        if apiName in key:
+            resDict[key] = value
+            # raw_input(s)
+    resfileName = className+'.'+apiName+'.json'
+    resPath = os.path.join(resDir,resfileName)
+    FileUtils.writeDict(resDict, resPath)
+    # print resDict
+    # raw_input()
+FileUtils.writeList(notexist,'C:\\Users\\limin\\Desktop\\notExistClass.txt')
+input()
 
-
-
-    
-    
+pathList = FileUtils.listDir(dirname)
+functionCount = []
+for myPath in pathList:
+    jsonDict = FileUtils.readDict(myPath)
+    className = jsonDict['ClassName']
+    functionDict = jsonDict['Functions']
+    for key,value in functionDict.items():
+        if value['Permissions']:
+            fullName = key
+            perms = value['Permissions']

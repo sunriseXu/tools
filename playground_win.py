@@ -606,69 +606,70 @@ if __name__ == "__main__":
     
     # 统计所有出现的权限api
     # dirname = 'C:\\Users\\limin\\androidSdkInAll\\Desktop\\androidOnline\\sdk24'
-    # # dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk24\\jsonRes'
-    # pathList = FileUtils.listDir(dirname)
-    # functionCount = []
-    # for myPath in pathList:
-    #     jsonDict = FileUtils.readDict(myPath)
-    #     className = jsonDict['ClassName']
-    #     functionDict = jsonDict['Functions']
-    #     # print myPath
-    #     for key,value in functionDict.items():
-    #         if value['Permissions']:
-    #             fullName = key
-    #             perms = value['Permissions']
-    #             for perm in perms:
-    #                 # print fullName
-    #                 # print perm
-    #                 perm = perm.split('#')
-    #                 if len(perm)==1:
-    #                     continue
-    #                 perm = perm[1]
-    #                 functionCount.append((className,fullName,perm))
+    dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes'
+    pathList = FileUtils.listDir(dirname)
+    functionCount = []
+    for myPath in pathList:
+        jsonDict = FileUtils.readDict(myPath)
+        className = jsonDict['ClassName']
+        functionDict = jsonDict['Functions']
+        # print myPath
+        for key,value in functionDict.items():
+            if value['Permissions']:
+                fullName = key
+                perms = value['Permissions']
+                for perm in perms:
+                    # print fullName
+                    # print perm
+                    perm = perm.split('#')
+                    if len(perm)==1:
+                        continue
+                    perm = perm[1]
+                    functionCount.append((className,fullName,perm))
 
-    #             # print key,value['Permissions']
-    # print len(functionCount)
-    # resDict = {}
-    # permissionlist = []
-    # classList = []
-    # functionList = []
-    # for function in functionCount:
-    #     className = function[0]
-    #     functionName = function[1]
-    #     permission = function[2]
-    #     if permission not in permissionlist:
-    #         permissionlist.append(permission)
-    #     if className not in classList:
-    #         classList.append(className)
+                # print key,value['Permissions']
+    print len(functionCount)
+    resDict = {}
+    permissionlist = []
+    classList = []
+    functionList = []
+    for function in functionCount:
+        className = function[0]
+        functionName = function[1]
+        permission = function[2]
+        if permission not in permissionlist:
+            permissionlist.append(permission)
+        if className not in classList:
+            classList.append(className)
 
-    #     if permission not in resDict:
-    #         subDict = {className:[functionName]}
-    #         resDict.update({permission:subDict})
-    #     elif className not in resDict[permission]:
-    #         subDict = {className:[functionName]}
-    #         resDict[permission].update(subDict)
-    #     else:
-    #         resDict[permission][className].append(functionName)
-    # FileUtils.writeDict(resDict,'./res.json')
-    # print 'permission length:'
-    # print len(permissionlist)
-    # InteractUtils.showList(permissionlist)
-    # FileUtils.writeList(permissionlist,'tmpOutO24.txt')
-    # print 'class length'
-    # print len(classList)
-    # allDict = FileUtils.readDict('D:\\androidsdkdoc\\permission24.json')
+        if permission not in resDict:
+            subDict = {className:[functionName]}
+            resDict.update({permission:subDict})
+        elif className not in resDict[permission]:
+            subDict = {className:[functionName]}
+            resDict[permission].update(subDict)
+        else:
+            resDict[permission][className].append(functionName)
+    FileUtils.writeDict(resDict,'./res.json')
+    print 'permission length:'
+    print len(permissionlist)
+    InteractUtils.showList(permissionlist)
+    FileUtils.writeList(permissionlist,'tmpOutO28.txt')
+    print 'class length'
+    print len(classList)
+    allDict = FileUtils.readDict('D:\\androidsdkdoc\\permission28.json')
     
-    # partList = FileUtils.readList('tmpOutO24.txt')
-    # resList = []
-    # for permission in partList:
-    #     tmp = ''
-    #     for key,value in allDict.items():
-    #         if permission in value:
-    #             tmp = key+'\t'+permission +'\t' +' '.join(resDict[permission].keys())
-    #             resList.append(tmp)
-    # resList = sorted(resList)
-    # FileUtils.writeList(resList, 'tmpOutOnline24.txt')
+    partList = FileUtils.readList('tmpOutO28.txt')
+    resList = []
+    for permission in partList:
+        tmp = ''
+        for key,value in allDict.items():
+            if permission in value:
+                tmp = key+'\t'+permission +'\t' +' '.join(resDict[permission].keys())
+                resList.append(tmp)
+    resList = sorted(resList)
+    FileUtils.writeList(resList, 'tmpOut28.txt')
+    FileUtils.writeDict()
 
     # list1 = FileUtils.readList('tmpOut.txt')
     # list2 = FileUtils.readList('tmpOutO24.txt')
@@ -733,238 +734,62 @@ if __name__ == "__main__":
     # FileUtils.writeList(v3_steal_test,v3Dir.getCatPath('v3_steal_test'))
 
 
-    # 每类200 => 167  一共501
-    # 每类30 =>  17
-    def listInStr(myList, myStr):
-        myStr = myStr.lower()
-        for item in myList:
-            if item not in myStr:
-                # print('%s not in %s' %(item,myStr))
-                return False
-        # print('tags in %s' %(myStr))
-        return True
-    def uploadTracesDB(myDir, dbName, upDBbin, debug=False):
+    # # 每类200 => 167  一共501
+    # # 每类30 =>  17
+    # def listInStr(myList, myStr):
+    #     myStr = myStr.lower()
+    #     for item in myList:
+    #         if item not in myStr:
+    #             # print('%s not in %s' %(item,myStr))
+    #             return False
+    #     # print('tags in %s' %(myStr))
+    #     return True
+    # def uploadTracesDB(myDir, dbName, upDBbin, debug=False):
         
-        upCmd = 'java -jar %s -f %s -d %s' %(upDBbin, myDir, dbName)
-        l.warning('uploadCmd: %s',upCmd)
-        res = ThreadUtils.execute_command(upCmd)
-        print('uploading thread done ..')
-        if debug:
-            print(res)
+    #     upCmd = 'java -jar %s -f %s -d %s' %(upDBbin, myDir, dbName)
+    #     l.warning('uploadCmd: %s',upCmd)
+    #     res = ThreadUtils.execute_command(upCmd)
+    #     print('uploading thread done ..')
+    #     if debug:
+    #         print(res)
 
-    filterRuleBin = 'C:\\Users\\limin\\Desktop\\v3_log\\FeatureEngineeringTest.jar'
-    upDBbin = 'C:\\Users\\limin\\Desktop\\v3_log\\logUpload.jar'
-    wkDir = EasyDir('C:\\Users\\limin\\Desktop\\v3_log')
-    # 0. 列出文件夹，指定文件夹的类型，合并part的文件夹，合并后在part同级目录下面
-    # 0.1. 指定目标文件夹，和 normalTrain，normaltest大小，maltrain和maltest大小
-    # 1. 首先需要将相关的dir进行合并处理，因为测试的时候会有分part的情况，还是手动分配好一点，因为识别起来有点难可能
-    # 2. 对normal文件夹下的trace进行筛选，将abandon剔除到同级目录下面，如何筛选，能够通过rule的，和size过短的，失效的
-    # 3. 剩余的normal合法trace放入保留在trace文件夹下
-    # 4. 验证3类恶意样本交集情况，train和test，保证唯一性，如何验证，首先3类训练样本和测试样本应该分开测试，
-    # 分别是pay-train steal-train rog-train pay-test steal-test rog-test 用random筛选出来，确保三类是三类
-    # 如何保证？之前写了一个脚本区分三类啊,验证3类是3类后，才能进行下一步，否者退出，手动排查。然后将train的三类合并，test的三类合并，再进行合并后的大小检查，如果合并后的大小等于三类相加，那么说明没有重合，进行下一步，否者退出检查。合并后train和test进行唯一性检查，如果有重合，打印重合list，退出检查。否者进行下一步。
-    # 开始写入
-    # 5.将合并后的train list和test list（三类分开的，与合并的写入目标文件夹，并且建立文件夹，将三类合并后的trace拷贝进入train和test文件夹
-
-    # 6. 将normal的train test考入目标文件夹
-    # 完成
-    malTrainAmount = 500
-    singleMalTrainAmount = malTrainAmount / 3 + 1
-    malTestAmount = 50
-    singleMalTestAmount = malTestAmount / 3 + 1
-    norTrainAmount = 2000
-    norTestAmount = 500
-    dbMalTrain = 'test'
-    dbMalTest = 'test'
-    dbNorTrain = 'test'
-    dbNorTest = 'test'
-    configDict = {
-        'norTrain': {'path': '', 'dbName': '', 'merge': False, 'amount': norTrainAmount, 'tag': ['nor', 'train']},
-        'norTest': {'path': '', 'dbName': '', 'merge': False, 'amount': norTestAmount, 'tag': ['nor', 'test']},
-        'malPayTrain': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTrainAmount,
-                        'tag': ['mal', 'train', 'pay']},
-        'malPayTest': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTestAmount,
-                       'tag': ['mal', 'test', 'pay']},
-        'malRogTrain': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTrainAmount,
-                        'tag': ['mal', 'train', 'rog']},
-        'malRogTest': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTestAmount,
-                       'tag': ['mal', 'test', 'rog']},
-        'malStealTrain': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTrainAmount,
-                          'tag': ['mal', 'train', 'steal']},
-        'malStealTest': {'path': '', 'dbName': '', 'merge': False, 'amount': singleMalTestAmount,
-                         'tag': ['mal', 'test', 'steal']},
-    }
-
-    wkDirDict = wkDir.getAbsPathDict()
-    fileList = sorted(wkDirDict.keys())
-    InteractUtils.showList(fileList)
-    for key, value in configDict.items():
-        tags = value['tag']
-        if 'mal' in tags and 'train' in tags:
-            value['dbName'] = dbMalTrain
-        elif 'mal' in tags and 'test' in tags:
-            value['dbName'] = dbMalTest
-        elif 'nor' in tags and 'train' in tags:
-            value['dbName'] = dbNorTrain
-        elif 'nor' in tags and 'test' in tags:
-            value['dbName'] = dbNorTest
-
-        for dirName in fileList:
-            if listInStr(tags, dirName):
-                value['path'] = wkDirDict[dirName]
-                traceDir = os.path.join(wkDirDict[dirName], 'logs/traces')
-                if not os.path.exists(traceDir):
-                    value['merge'] = True
-                break
-
-    # deal with merging situation
-    for key, value in configDict.items():
-        if not value['merge']:
-            continue
-        print('Found parts of %s, now, merging...', key)
-
-        keyDir = value['path']
-        partPathList = []
-
-        childDir = EasyDir(keyDir)
-        childPath = childDir.getAbsPathDict().values()
-        for cp in childPath:
-            if os.path.isfile(cp):
-                continue
-            traceDir = os.path.join(cp, 'logs/traces')
-            if os.path.exists(traceDir):
-                partPathList.append(traceDir)
-        if partPathList:
-            mergedDir = os.path.join(keyDir, 'logs/traces')
-            FileUtils.mkdir(mergedDir)
-            for pp in partPathList:
-                ppItems = FileUtils.listDir(pp)
-                FileUtils.listCopy2(ppItems, mergedDir)
-        print('Merge %s done!', key)
-
-    # merging is done, next is filter traces,
-    # 首先需要把某些东西都过一下rule，然后根据恶意与否进行筛选
-    # 把正常的通过rule的样本筛出到某目录，然后把log过短和失效的样本筛掉，这里还是保持原traces目录不变，把相关的分类保存在list中
-    # 把恶意的通过rule的样本筛出来就行了，分为ruled和norule的
-    filterFlag = True
-    for key, value in configDict.items():
-        if not filterFlag:
-            continue
-        keyDir = value['path']
-        dirTags = value['tag']
-        dbAmount = value['amount']
-        if not keyDir:
-            continue
-        ruleList = []
-        noRuleList = []
-        tracesDir = os.path.join(keyDir, 'logs/traces')
-        ruleDir = os.path.join(keyDir, 'ruled')
-        noruleDir = os.path.join(keyDir, 'noRule')
-        shortOrInvalidDir = os.path.join(keyDir, 'shortInvalid')
-        shortOrInvalidPath = os.path.join(keyDir, 'shortInvalid.txt')
-        dblistPath = os.path.join(keyDir, 'dbList.txt')
-        dbDir = os.path.join(keyDir, 'dbToUp')
-
-        FileUtils.mkdir(ruleDir)
-        FileUtils.mkdir(noruleDir)
-        FileUtils.mkdir(shortOrInvalidDir)
-
-        resultPath = os.path.join(keyDir, 'filtered.txt')
-        cmd = 'java -jar %s -f %s >%s' % (filterRuleBin, tracesDir, resultPath)
-        print(cmd)
-        print('[!] Start to filter %s' % tracesDir)
-        ThreadUtils.execute_command(cmd)
-        print('[-] Filtering done!')
-        ruleList, noRuleList = FileRoom.ruleStatistic(resultPath)
-
-        ruleListG = CollectionUtils.graftListItem(ruleList, '', '.txt')
-        noRuleListG = CollectionUtils.graftListItem(noRuleList, '', '.txt')
-
-        FileUtils.listCopy(ruleListG, tracesDir, ruleDir)
-        FileUtils.listCopy(noRuleListG, tracesDir, noruleDir)
-        abandonBin = 'examples/filterLog.py'
-        if noRuleList:
-            abandomCmd = 'python %s -d %s -b %s' % (abandonBin, noruleDir, shortOrInvalidPath)
-            ThreadUtils.execute_command(abandomCmd)
-            shortOrInvalidList = FileUtils.readList(shortOrInvalidPath)
-            shortOrInvalidList = CollectionUtils.graftListItem(shortOrInvalidList, '', '.txt')
-            FileUtils.listCopy(shortOrInvalidList, noruleDir, shortOrInvalidDir)
-        # 所有的筛选都完成了，接下来，将normal为通过rule的样本随机挑选对应的数量拷贝到特定目录上传到数据库
-        selectSource = ''
-        selectList = []
-        if 'nor' in dirTags:
-            selectSource = noruleDir
-            selectList = noRuleList
-        elif 'mal' in dirTags:
-            selectSource = ruleDir
-            selectList = ruleList
-        if dbAmount > len(selectList):
-            l.error('[?] Error, there are not enough(%d) logs to upload(which is %d): %s', len(selectList), dbAmount,
-                    selectSource)
-            continue
-        dbList = random.sample(selectList, dbAmount)
-        dbListG = CollectionUtils.graftListItem(dbList, tailStr='.txt')
-        FileUtils.mkdir(dbDir)
-        FileUtils.writeList(dbList, dblistPath)
-        FileUtils.listCopy(dbListG, selectSource, dbDir)
-
-    # Now, merge all dbdir to upload
-    DBDir = wkDir.getCatPath('upDB')
-    FileUtils.mkdir(DBDir)
-    dbDirObj = EasyDir(DBDir)
-    malTrainDir = FileUtils.mkdir(dbDirObj.getCatPath('malTrain'))
-    malTestDir = FileUtils.mkdir(dbDirObj.getCatPath('malTest'))
-    norTrainDir = FileUtils.mkdir(dbDirObj.getCatPath('norTrain'))
-    norTestDir = FileUtils.mkdir(dbDirObj.getCatPath('norTest'))
-    doMergeFlag = True
-    for key, value in configDict.items():
-        if not doMergeFlag:
-            continue
-        tags = value['tag']
-        keyDir = value['path']
-        if not keyDir:
-            continue
-        dbDir = os.path.join(keyDir, 'dbToUp')
-        if not os.path.exists(dbDir):
-            continue
-        if 'mal' in tags and 'train' in tags:
-            FileUtils.copytree(dbDir, malTrainDir)
-        elif 'mal' in tags and 'test' in tags:
-            FileUtils.copytree(dbDir, malTestDir)
-        elif 'nor' in tags and 'train' in tags:
-            FileUtils.copytree(dbDir, norTrainDir)
-        elif 'nor' in tags and 'test' in tags:
-            FileUtils.copytree(dbDir, norTestDir)
-
-    dbDirDict = dbDirObj.getAbsPathDict()
-    for key, value in dbDirDict.items():
-        tags = key.lower()
-        dbName = ''
-        if 'mal' in tags and 'train' in tags:
-            dbName = dbMalTrain
-        elif 'mal' in tags and 'test' in tags:
-            dbName = dbMalTest
-        elif 'nor' in tags and 'train' in tags:
-            dbName = dbNorTrain
-        elif 'nor' in tags and 'test' in tags:
-            dbName = dbNorTest
-        # t = ThreadUtils.MyThread(uploadTracesDB,args=(value, dbName, upDBbin))
-        # t.start()
-        uploadTracesDB(value, dbName, upDBbin)
-    print('fucking done!')
-
-
-
+    # filterRuleBin = 'C:\\Users\\limin\\Desktop\\v3_log\\FeatureEngineeringTest.jar'
+    # upDBbin = 'C:\\Users\\limin\\Desktop\\v3_log\\logUpload.jar'
+    # wkDir = EasyDir('C:\\Users\\limin\\Desktop\\v3_log')
     
-    
+    # # jsonDir = EasyDir('C:\\Users\\limin\\Desktop\\androidSdkJsonClassName')
+    # # jsonDict = jsonDir.getAbsPathDict()
+    # # allList = []
+    # # for key in jsonDict:
+    # #     pa = jsonDict[key]
+    # #     allList += FileUtils.readList(pa)
+    # # res = sorted(list(set(allList)))
+    # # print(len(res))
+    # # FileUtils.writeList(res, jsonDir.getCatPath('mergedClassList.txt'))
 
+    # jsonDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes'
+    # # supportList = FileUtils.readList('C:\\Users\\limin\\Desktop\\totalClassList_support.txt')
+    # # resDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\support24'
+    # # FileUtils.mkdir(resDir)
+    # jsonPaths = FileUtils.listDir(jsonDir)
+    # resPath = 'C:\\Users\\limin\\Desktop\\alldesc\\all_description.txt'
+    # with open(resPath,'a') as f:
+    #     for item in jsonPaths:
+    #         myDict = FileUtils.readDict(item)
+    #         funcDict = myDict['Functions']
+    #         tmpDesc = ''
+    #         for funcName in funcDict:
+    #             funcInfoDict = funcDict[funcName]
+    #             desc = funcInfoDict['Description'].strip()
+    #             if not desc:
+    #                 continue
+    #             f.writelines(desc.encode('utf-8').strip())
+    #             f.writelines('\n')
+    #             f.writelines('\n')
+    #         f.flush()
 
+    fileList = FileUtils.listDir('C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes')
+    for item in fileList:
+        content = FileUtils.readDict(item)
 
-
-
-
-
-
-
-
-    
+        

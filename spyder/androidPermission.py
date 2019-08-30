@@ -110,8 +110,8 @@ def getElementInRawHtml(rawData, myXpath):
 
 
 if __name__ == "__main__":
-    permissionPath = 'D:\\androidsdkdoc\\docs-24_r01\\docs\\reference\\android\\Manifest.permission.html'
-    permissionDPath = 'D:\\androidsdkdoc\\permission24.json'
+    permissionPath = 'D:/androidsdkdoc/docs-28/offline-sdk/reference/android/Manifest.permission.html'
+    permissionDPath = 'D:\\androidsdkdoc\\permission28.json'
     htmlData = FileUtils.readFile(permissionPath)
     # htmlE = etree.HTML(htmlData)
 
@@ -150,6 +150,6 @@ if __name__ == "__main__":
                 permissionDict.update({proLevel:[eleName]})
             else:
                 permissionDict[proLevel].append(eleName)
-    # print permissionDict
+    print permissionDict
     FileUtils.writeDict(permissionDict,permissionDPath)
         # raw_input()

@@ -1,0 +1,138 @@
+ACCESS_COARSE_LOCATION
+	android.bluetooth.le.BluetoothLeScanner->startScan
+	android.location.LocationManager->addProximityAlert
+	android.location.LocationManager->getLastKnownLocation
+	android.location.LocationManager->removeProximityAlert
+	android.location.LocationManager->requestLocationUpdates
+	android.location.LocationManager->requestSingleUpdate
+	android.net.wifi.WifiManager->getScanResults
+	android.net.wifi.WifiManager->startLocalOnlyHotspot
+	android.net.wifi.aware.IdentityChangedListener->onIdentityChanged
+	android.net.wifi.aware.WifiAwareManager->attach
+	android.net.wifi.aware.WifiAwareSession->publish
+	android.net.wifi.aware.WifiAwareSession->subscribe
+	android.telephony.TelephonyManager->getAllCellInfo
+	android.telephony.TelephonyManager->getCellLocation
+	android.telephony.TelephonyManager->getNeighboringCellInfo
+	android.webkit.WebSettings->setGeolocationEnabled
+ACCESS_FINE_LOCATION
+	android.bluetooth.le.BluetoothLeScanner->startScan
+	android.location.LocationManager->addGpsStatusListener
+	android.location.LocationManager->addNmeaListener
+	android.location.LocationManager->addProximityAlert
+	android.location.LocationManager->getGpsStatus
+	android.location.LocationManager->getLastKnownLocation
+	android.location.LocationManager->registerGnssMeasurementsCallback
+	android.location.LocationManager->registerGnssNavigationMessageCallback
+	android.location.LocationManager->registerGnssStatusCallback
+	android.location.LocationManager->removeProximityAlert
+	android.location.LocationManager->requestLocationUpdates
+	android.location.LocationManager->requestSingleUpdate
+	android.net.wifi.WifiManager->getScanResults
+	android.net.wifi.rtt.WifiRttManager->startRanging
+	android.telephony.TelephonyManager->getCellLocation
+	android.webkit.WebSettings->setGeolocationEnabled
+ANSWER_PHONE_CALLS
+	android.telecom.TelecomManager->acceptRingingCall
+	android.telecom.TelecomManager->endCall
+CALL_PHONE
+	android.telecom.TelecomManager->placeCall
+	android.telephony.TelephonyManager->sendUssdRequest
+CAMERA
+	android.hardware.camera2.CameraManager->openCamera
+	android.hardware.usb.UsbManager->hasPermission
+	android.hardware.usb.UsbManager->requestPermission
+GET_ACCOUNTS
+	android.accounts.AccountManager->getAccountsByType
+	android.accounts.AccountManager->getAccountsByTypeAndFeatures
+	android.accounts.AccountManager->hasFeatures
+READ_CALL_LOG
+	android.telephony.PhoneStateListener->onCallStateChanged
+READ_EXTERNAL_STORAGE
+	android.app.WallpaperManager->getFastDrawable
+	android.app.WallpaperManager->getWallpaperFile
+	android.app.WallpaperManager->peekFastDrawable
+	android.content.Context->getExternalCacheDir
+	android.content.Context->getExternalFilesDir
+	android.content.Context->getObbDir
+	android.content.ContextWrapper->getExternalCacheDir
+	android.content.ContextWrapper->getExternalFilesDir
+	android.content.ContextWrapper->getObbDir
+	android.media.RingtoneManager->getCursor
+	android.media.RingtoneManager->getValidRingtoneUri
+	android.os.Environment->getExternalStorageDirectory
+	android.os.StrictMode.VmPolicy.Builder->detectFileUriExposure
+	android.os.storage.StorageVolume->createAccessIntent
+	android.test.mock.MockContext->getExternalCacheDir
+	android.test.mock.MockContext->getExternalFilesDir
+	android.test.mock.MockContext->getObbDir
+READ_PHONE_NUMBERS
+	android.telephony.TelephonyManager->getLine1Number
+READ_PHONE_STATE
+	android.os.Build->getSerial
+	android.telecom.TelecomManager->getCallCapablePhoneAccounts
+	android.telecom.TelecomManager->getDefaultOutgoingPhoneAccount
+	android.telecom.TelecomManager->getLine1Number
+	android.telecom.TelecomManager->getSelfManagedPhoneAccounts
+	android.telecom.TelecomManager->getVoiceMailNumber
+	android.telecom.TelecomManager->isInCall
+	android.telecom.TelecomManager->isInManagedCall
+	android.telecom.TelecomManager->isVoiceMailNumber
+	android.telecom.TelecomManager->showInCallScreen
+	android.telephony.CarrierConfigManager->getConfig
+	android.telephony.CarrierConfigManager->getConfigForSubId
+	android.telephony.SubscriptionManager->getActiveSubscriptionInfo
+	android.telephony.SubscriptionManager->getActiveSubscriptionInfoCount
+	android.telephony.SubscriptionManager->getActiveSubscriptionInfoForSimSlotIndex
+	android.telephony.SubscriptionManager->getActiveSubscriptionInfoList
+	android.telephony.TelephonyManager->getCarrierConfig
+	android.telephony.TelephonyManager->getDataNetworkType
+	android.telephony.TelephonyManager->getDeviceId
+	android.telephony.TelephonyManager->getDeviceSoftwareVersion
+	android.telephony.TelephonyManager->getForbiddenPlmns
+	android.telephony.TelephonyManager->getGroupIdLevel1
+	android.telephony.TelephonyManager->getImei
+	android.telephony.TelephonyManager->getLine1Number
+	android.telephony.TelephonyManager->getMeid
+	android.telephony.TelephonyManager->getNai
+	android.telephony.TelephonyManager->getServiceState
+	android.telephony.TelephonyManager->getSimSerialNumber
+	android.telephony.TelephonyManager->getSubscriberId
+	android.telephony.TelephonyManager->getVisualVoicemailPackageName
+	android.telephony.TelephonyManager->getVoiceMailAlphaTag
+	android.telephony.TelephonyManager->getVoiceMailNumber
+	android.telephony.TelephonyManager->getVoiceNetworkType
+READ_SMS
+	android.telephony.TelephonyManager->getLine1Number
+RECORD_AUDIO
+	android.net.sip.SipAudioCall->startAudio
+SEND_SMS
+	android.telephony.SmsManager->sendDataMessage
+	android.telephony.SmsManager->sendMultipartTextMessage
+	android.telephony.SmsManager->sendTextMessage
+	android.telephony.SmsManager->sendTextMessageWithoutPersisting
+	android.telephony.TelephonyManager->sendVisualVoicemailSms
+WRITE_EXTERNAL_STORAGE
+	android.content.Context->getExternalCacheDir
+	android.content.Context->getExternalCacheDirs
+	android.content.Context->getExternalFilesDir
+	android.content.Context->getExternalFilesDirs
+	android.content.Context->getExternalMediaDirs
+	android.content.Context->getObbDir
+	android.content.Context->getObbDirs
+	android.content.ContextWrapper->getExternalCacheDir
+	android.content.ContextWrapper->getExternalCacheDirs
+	android.content.ContextWrapper->getExternalFilesDir
+	android.content.ContextWrapper->getExternalFilesDirs
+	android.content.ContextWrapper->getExternalMediaDirs
+	android.content.ContextWrapper->getObbDir
+	android.content.ContextWrapper->getObbDirs
+	android.os.Environment->getExternalStorageDirectory
+	android.os.storage.StorageVolume->createAccessIntent
+	android.test.mock.MockContext->getExternalCacheDir
+	android.test.mock.MockContext->getExternalCacheDirs
+	android.test.mock.MockContext->getExternalFilesDir
+	android.test.mock.MockContext->getExternalFilesDirs
+	android.test.mock.MockContext->getExternalMediaDirs
+	android.test.mock.MockContext->getObbDir
+	android.test.mock.MockContext->getObbDirs

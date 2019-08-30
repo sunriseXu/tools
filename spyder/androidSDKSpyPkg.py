@@ -127,8 +127,8 @@ if __name__ == "__main__":
     # https://developer.android.com/reference/android/support/test/packages
     # https://developer.android.com/reference/android/databinding/packages
     # https://developer.android.com/reference/android/support/wearable/packages
-    packagesUrl = 'https://developer.android.com/reference/android/support/wearable/packages'
-    packagesSummaryPath = baseDir + '/reference/android/support/wearable/packages.html'
+    # packagesUrl = 'https://developer.android.com/reference/android/support/wearable/packages'
+    # packagesSummaryPath = baseDir + '/reference/android/support/wearable/packages.html'
 
 
 
