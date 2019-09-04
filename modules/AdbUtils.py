@@ -61,6 +61,10 @@ def stopApp(packageName,selectedDevId,pureStop=True):
 	os.popen(stopAppCmd)
 	time.sleep(1)
 
+def AdbRoot(selectedDevId):
+	cmd = 'adb '+selectedDevId+' root'
+	print(os.popen(cmd))
+
 def listThirdInstalledApps(selectedDevId):
 	mycmd='adb '+selectedDevId+'shell pm list packages -3'
 	return os.popen(mycmd).read()
@@ -118,9 +122,9 @@ def chooseDevice():
 			res1.append(item)
 	res=res1
 	if len(res)>1:
-		# showList(res)
-		# devi=selectListItemByIdx(res)
-		devi = res[0]
+		showList(res)
+		devi=selectListItemByIdx(res)
+		# devi = res[0]
 		l.warning("%s selected",devi)
 		return (devi,len(res))
 	elif len(res)==1:
@@ -131,16 +135,17 @@ def chooseDevice():
 		return (None,0)
 
 def unlockPhone(selectedDevId):
-    checkLockedCmd='adb'+selectedDevId+' shell "dumpsys window policy|grep isStatusBarKeyguard"'
-    res = os.popen(checkLockedCmd).read()
-    if "false" in res:
-        swipeCmd="adb"+selectedDevId+" shell input swipe 500 1000 500 0"
-        os.popen(swipeCmd)
-        time.sleep(1)
-        return
-    unlockCmd="adb"+selectedDevId+" shell input keyevent 26 &ping -n 2 127.0.0.1>nul &adb"+selectedDevId+" shell input swipe 500 1000 500 0"
-    os.popen(unlockCmd)
-    time.sleep(1)
+	checkLockedCmd='adb'+selectedDevId+' shell "dumpsys window policy|grep isStatusBarKeyguard"'
+	res = os.popen(checkLockedCmd).read()
+	if "false" in res:
+		swipeCmd="adb"+selectedDevId+" shell input swipe 500 1000 500 0"
+		# os.popen(swipeCmd)
+		# time.sleep(0.5)
+		return 
+	unlockCmd="adb"+selectedDevId+" shell input keyevent 26 &ping -n 2 127.0.0.1>nul &adb"+selectedDevId+" shell input swipe 500 1000 500 0"
+	os.popen(unlockCmd)
+	print('unlocking phone!!!!!')
+	time.sleep(0.5)
 
 def startMonkey(packageName,selectedDevId):
 	useMonkeyCmd="adb"+selectedDevId+" shell monkey -v -v -v -s 123123 --throttle 800 --pct-touch 70 --pct-motion 10 --pct-appswitch 10  --pct-majornav 10  --pct-trackball 0 --ignore-crashes --ignore-timeouts --ignore-native-crashes -p %s 10000>nul" %(packageName)

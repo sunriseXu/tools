@@ -18,7 +18,7 @@ from modules.FileUtils import *
 from modules.CollectionUtils import *
 from modules.ThreadUtils import *
 from modules.AdbUtils import *
-
+from multiprocessing import Process, Manager, Pool
 
 logging.basicConfig()
 l = logging.getLogger("getLog")
@@ -36,13 +36,119 @@ def UIRandomClick(packageName,launchActivity):
 		res=pk.dump()
 		if not res:
 			return
+def UIPassCheck(selectedDevId):
+	i=0
+	while i<5:
+		res = getUIXml(selectedDevId)
+		if 2==res:
+			return
+		i+=1
+		l.warning("pass check!")
+	if i==5:
+		clickWelcome(selectedDevId)
+	time.sleep(0.1)
+	i=0
+	while i<4:
+		res = getUIXml(selectedDevId)
+		if 2== res:
+			return
+		i+=1
+		l.warning("pass check!")
+	clickWelcome(selectedDevId)
+def reshapeKlog(filename,actionStr,pkgname):
+    if 'sys_rmdir' in actionStr:
+        mid = 400
+    elif 'sys_unlink' in actionStr:
+        mid = 300
+    elif 'sys_renameat2' in actionStr:
+        mid = 200
+    elif 'sys_open' in actionStr:
+        mid = 100
+    if mid == 100:
+        if pkgname in filename:
+            mid += 0;
+        elif "/storage/emulated/0/Download" in filename or "/sdcard/Download" in filename:
+            mid += 2;
+        elif "/storage/emulated/0/Music" in filename or "/sdcard/Music" in filename:
+            mid += 3;
+        elif "/storage/emulated/0/Android" in filename or "/sdcard/Android" in filename:
+            mid += 4;
+        elif "/storage/emulated/0/DCIM" in filename or "/sdcard/DCIM" in filename:
+            mid += 5;
+        elif "/storage/emulated/0/Movies" in filename or "/sdcard/Movies" in filename:
+            mid += 6;
+        elif "/storage/emulated/0/Pictures" in filename or "/sdcard/Pictures" in filename:
+            mid += 7;
+        elif "/storage/emulated/0/Notifications" in filename or "/sdcard/Notifications" in filename:
+            mid += 8;
+        elif "/storage/emulated/0/Ringtones" in filename or "/sdcard/Ringtones" in filename:
+            mid += 9;
+        elif "/storage/emulated/0/guard" in filename or "/sdcard/guard" in filename:
+            mid += 10;
+        else:
+            mid += 1;
+    else:
+        if pkgname in filename:
+            mid += 0;
+        elif "guard" in filename:
+            mid += 2;
+        else:
+            mid += 1;
+    return mid
 
+def trimKlog(uid,pkgname,tmpklogPath,newlogPath):
+	klogList = readList(tmpklogPath)
+	klogList = list(set(klogList))
+	fres=open(newlogPath,'a')
+	for klog in klogList:
+		if not klog:
+			continue
+		tmpList = klog.split(',')
+		if len(tmpList)<5:
+			continue
+		timestamp = ''
+		actionStr = ''
+		filename = ''
+		mid = 0
+		if 'time:' in tmpList[0] and 'uid:' in tmpList[1] and \
+			'action:' in tmpList[2] and 'sys_' in tmpList[3] and \
+				'filename:' in tmpList[4]:
+			timestamp = tmpList[0].split('time:')[1].strip()
+			uidtmp = tmpList[1].split('uid:')[1].strip()
+			if uid not in uidtmp:
+				continue
+			actionStr = tmpList[3].strip()
+			filename = tmpList[4].strip()
+			mid = reshapeKlog(filename,actionStr,pkgname)
+			ktmp = 'time: %s, uid: %s, method_id: %s %s' %(timestamp,uidtmp,str(mid),filename)
+			fres.write(ktmp+'\n')
+		else:
+			print(tmpklogPath)
+			print('str: %s not valid' %klog)
+	fres.close()
 
-def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernelFlag):
+def getKlog(uid,selectedDevId):
+	logcmd='adb %s shell "dmesg |grep K_AntiVirusService|grep %s"' %(selectedDevId,uid)
+	handle = subprocess.Popen(logcmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+	res = handle.stdout.read()
+	handle.terminate()
+	return res
+def loopGetKlog(uid, selectedDevId,testtime, resDict):
+    currenttime = 0
+    totalres = ''
+    while True:
+        res = getKlog(uid,selectedDevId)
+        totalres+=res
+        time.sleep(10)
+        currenttime+=10
+        print currenttime
+        if currenttime>=testtime:
+            resDict['ret'] = totalres
+            return
+
+def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag):
 	logcat_file = open(filePath, 'w')
 	logcmd="adb"+selectedDevId+" logcat -e "+uid
-	if kernelFlag:
-		logcmd='adb %s shell "dmesg |grep %s"' %(selectedDevId,uid)
 	logcmd=logcmd.strip().split()
 	handle = subprocess.Popen(logcmd,stdout=logcat_file,stderr=subprocess.PIPE)
 	if interactFlag:
@@ -50,29 +156,23 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag,kernel
 		time.sleep(testTime)
 		# raw_input()
 	else:
-		i=0
-		while i<5:
-			getUIXml(selectedDevId)
-			i+=1
-			l.warning("pass check!")
-		if i==5:
-			clickWelcome(selectedDevId)
-		time.sleep(0.1)
-		i=0
-		while i<4:
-			getUIXml(selectedDevId)
-			i+=1
-			l.warning("pass check!")
-		clickWelcome(selectedDevId)
-		# clickWelcome(selectedDevId)
+		l.warning("start UIPassCheck!")
+		UIPassCheck(selectedDevId)
+		l.warning("stop UIPassCheck!")
+		l.warning("start MonkeyTest...")
 		stopMonkey(selectedDevId)
-		p = multiprocessing.Process(target=startMonkey, args=(packageName,selectedDevId,))
-		p.start()
-		p.join(testTime)
-		l.warning("waiting,loging...")
-		# time.sleep(testTime)
+		startTime = time.clock()
+		# p = multiprocessing.Process(target=startMonkey, args=(packageName,selectedDevId,))
+		t = MyThread(startMonkey, args=(packageName,selectedDevId,))
+		t.start()
+		t.join(testTime)
+		endTime = time.clock()
+		l.warning('MonkeyTesting time: %d', endTime-startTime)
+	logcat_file.flush()
+	l.warning("stop MonkeyTest...")
 	handle.terminate()
 	stopMonkey(selectedDevId)
+
 
 def touchFile(selectedDevId):
 	cmd = 'adb %s push guard /sdcard/' %selectedDevId
@@ -82,24 +182,27 @@ def checkAppAlive(selectedDevId, pkgName):
 	aliveCmd = 'adb %s shell "ps|grep %s"' %(selectedDevId, pkgName)
 	res = os.popen(aliveCmd).read()
 	if pkgName not in res:
-		l.warning('pkg: %s is running!', pkgName)
+		l.warning('pkg: %s is not running!', pkgName)
 		l.warning("start pkgName: %s",pkgName)
 		startApp(pkgName,selectedDevId)
 	return 
 	
 	
-def trimLog(uid,tmplogPath,newlogPath):
-	f = open(tmplogPath,'r')
+def trimLog(uid,tmplogPath,tmpKlogPath,newlogPath):
+	f = open(tmplogPath,'rb')
 	emptyFlag=1
 	fres=open(newlogPath,'w')
 	line = f.readline()
 	while line:
+		line = str(line).strip()
 		myFilter="uid: "+uid
-		if myFilter in line: 
+		myFilter2 = 'AntiVirusService: time:'
+		myFileter3 = 'Message from kernel'
+		if myFilter in line and myFilter2 in line and myFileter3 not in line: 
 			line_list=line.split("AntiVirusService: ")
-			if line_list:
+			if line_list and line_list[1].startswith('time:'):
 				emptyFlag=0
-				fres.write(line_list[1])          
+				fres.write(line_list[1]+'\n')          
 		line = f.readline()
 	fres.close()
 	if emptyFlag:
@@ -127,13 +230,14 @@ if __name__ == "__main__":
 	interactFlag=args.interact
 	keepAll=args.keepall
 	logsDir=args.logsdir
-	kernenflag=args.kernel
+	kernelflag=args.kernel
 	pureStop=True
 	testInListFlag=args.totest
 	toTestPath = args.totestPath
 	apkItems= []
 	logDir=logsDir+"/logs/traces/"
 	tmplogDir=logsDir+"/logs/tmplog/"
+	klogDir = logsDir+'/logs/tmpKlog/'
 	apkInfoPath=logsDir+"/logs/apkInfoDict.txt"
 	errorFilePath=logsDir+"/logs/error.txt"
 	testedFilePath=logsDir+"/logs/lastTest.txt"
@@ -145,6 +249,7 @@ if __name__ == "__main__":
 
 	mkdir(tmplogDir)
 	mkdir(logDir)
+	mkdir(klogDir)
 
 	toTestList=readList(toTestFilePath)
 	testedList=readList(testedFilePath)
@@ -199,8 +304,8 @@ if __name__ == "__main__":
 			testingFlag = False
 			writeDict(apkInfoDict,apkInfoPath)
 			writeList(testedList,testedFilePath)
-		if testedIdx%30==0:
-			writeList(testedList, '/home/limin/Documents/jianguoyun/Nutstore/tested.txt')
+		# if testedIdx%30==0:
+		# 	writeList(testedList, '/home/limin/Documents/jianguoyun/Nutstore/tested.txt')
 		try:
 			apkHash=os.path.basename(apkItem)
 			apkHash= os.path.splitext(apkHash)[0]
@@ -215,8 +320,10 @@ if __name__ == "__main__":
 			l.warning(time.strftime('%H:%M:%S',time.localtime(time.time())))
 			touchFile(selectedDevId)
 			testingFlag = True
-
-			checkAppAlive(selectedDevId,'com.fdu.testcryptfile')
+			AdbRoot(selectedDevId)
+			unlockPhone(selectedDevId)
+			# checkAppAlive(selectedDevId,'com.fdu.testcryptfile')
+			
 
 			# query manifest for apkInfo
 			packageName=getApkInfo(apkItem,"package: name=")
@@ -240,7 +347,7 @@ if __name__ == "__main__":
 				continue
 			
 			#if app is running, stop it
-			stopApp(packageName,selectedDevId,pureStop)
+			# stopApp(packageName,selectedDevId,pureStop)
 			#clean logcat cache:adb logcat -c -b main  https://blog.csdn.net/u013166958/article/details/79096221
 			cleanLog(selectedDevId)
 			# start app: https://blog.csdn.net/ahaitongxue/article/details/80369325
@@ -251,8 +358,17 @@ if __name__ == "__main__":
 
 			#start to logcat, https://blog.csdn.net/feixueyinjiayue/article/details/49229029
 			tmplogPath = tmplogDir+"/"+apkHash+".txt"
-			log2file(tmplogPath,uid,packageName,selectedDevId,testTime,interactFlag,kernenflag)
-
+			tmpklogPath = klogDir+"/"+apkHash+".txt"
+			
+			manager = Manager()
+			resDict = manager.dict()
+			myPool = Pool(2)
+			myPool.apply_async(log2file,args=(tmplogPath,uid,packageName,selectedDevId,testTime,interactFlag,))
+			myPool.apply_async(loopGetKlog,args=(uid,selectedDevId,testTime+10,resDict,))
+			myPool.close()
+			myPool.join()
+			writeFile(tmpklogPath,resDict['ret'])
+			
 			#uninstall/stop
 			if not keepAll:
 				uninstallApp(packageName,selectedDevId)
@@ -261,12 +377,12 @@ if __name__ == "__main__":
 
 			#filter antivirus log
 			newlogPath=logDir+'/'+apkHash+'.txt'
-			trimLog(uid,tmplogPath,newlogPath)
-			
+			trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
+			trimKlog(uid,packageName,tmpklogPath, newlogPath)
 			testedList.append(apkHash)
 			antiResHandle.flush()
 			testedIdx+=1
-			if testedIdx%5==0:
+			if testedIdx%10==0:
 				uninstallAllThird(selectedDevId,whiteList)
 		except IOError:
 			errorStr="IOError dealing with: %s\n" %(apkHash)

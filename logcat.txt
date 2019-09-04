@@ -1,0 +1,876 @@
+--------- beginning of main
+--------- beginning of system
+09-03 23:28:27.108   845  2536 D installd: Applied hard quotas for 10097
+09-03 23:28:32.054  1174  3289 D AntiVirusService: time: 1567524512054, uid: 10097, method_id: 14001 Action_startProcessLocked
+09-03 23:28:32.066  1174  3289 D AntiVirusService: time: 1567524512066, uid: 10097, method_id: 14001 Action_startProcessLocked
+09-03 23:28:32.113  1174 11770 D AntiVirusService: time: 1567524512113, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_10: android.net.wifi.supplicant.STATE_CHANGE, IntentFilter-action_11: android.net.wifi.RSSI_CHANGED, IntentFilter-action_12: android.net.wifi.CONFIGURED_NETWORKS_CHANGE, IntentFilter-action_13: android.intent.action.HEADSET_PLUG, IntentFilter-action_14: android.intent.action.CONFIGURATION_CHANGED, IntentFilter-action_1: android.net.conn.CONNECTIVITY_CHANGE, IntentFilter-action_2: android.intent.action.SCREEN_OFF, IntentFilter-action_3: android.intent.action.SCREEN_ON, IntentFilter-action_4: android.intent.action.USER_PRESENT, IntentFilter-action_5: android.intent.action.BATTERY_CHANGED, IntentFilter-action_6: android.intent.action.CLOSE_SYSTEM_DIALOGS, IntentFilter-action_7: android.net.wifi.WIFI_STATE_CHANGED, IntentFilter-action_8: android.net.wifi.STATE_CHANGE, IntentFilter-action_9: android.net.wifi.SCAN_RESULTS
+09-03 23:28:32.114  1174  3289 D AntiVirusService: time: 1567524512114, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.intent.action.PACKAGE_ADDED, IntentFilter-action_2: android.intent.action.PACKAGE_INSTALL, IntentFilter-action_3: android.intent.action.PACKAGE_REMOVED, IntentFilter-action_4: android.intent.action.MEDIA_UNMOUNTED, IntentFilter-action_5: android.intent.action.MEDIA_EJECT, IntentFilter-action_6: android.intent.action.MEDIA_REMOVED, IntentFilter-action_7: android.intent.action.MEDIA_BAD_REMOVAL, IntentFilter-action_8: android.intent.action.MEDIA_MOUNTED
+09-03 23:28:32.115  1174  3289 D AntiVirusService: time: 1567524512114, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: com.tencent.QQBrowser.action.qqbrowser.uppay, IntentFilter-action_2: com.tencent.mtt.action.jump_result_ok, IntentFilter-action_3: com.tencent.mtt.action.jump_result_cancel, IntentFilter-action_4: com.tencent.QQBrowser.action.weather.REFRESH, IntentFilter-action_5: com.tencent.QQBrowser.action.weather.REFRESH.FAIL, IntentFilter-action_6: com.tencent.mtt.action.siwtch_skin, IntentFilter-action_7: com.tencent.mtt.wifi.BRAND_INFO, IntentFilter-action_8: com.tencent.mtt.browser.homepage.SPLASH, IntentFilter-action_9: common.internal.apdl.notification
+09-03 23:28:32.115  1174  3289 D AntiVirusService: time: 1567524512115, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.intent.action.PHONE_STATE
+09-03 23:28:32.138  1174 11770 D AntiVirusService: time: 1567524512138, uid: 10097, method_id: 1001 Action_startActivity Param: , intent: Intent { cmp=com.tencent.FileManager/com.tencent.mtt.MainActivity bnds=[854,1104][1123,1516] }
+09-03 23:28:32.139  1174 11770 D AntiVirusService: time: 1567524512139, uid: 10097, method_id: 8004 Action_startActivityMayWait
+09-03 23:28:32.139  1174 11770 I ActivityManager: START u0 {cmp=com.tencent.FileManager/com.tencent.mtt.MainActivity bnds=[854,1104][1123,1516]} from uid 10097
+09-03 23:28:32.153  1174 11770 D AntiVirusService: time: 1567524512153, uid: 10097, method_id: 7005 Action_addWindow Param: , LayoutParams: WM.LayoutParams{(0,0)(fillxfill) sim=#122 ty=1 fl=#1810100 pfl=0x20000 fmt=-2 needsMenuKey=2 colorMode=0}
+09-03 23:28:32.171  1174  3289 D AntiVirusService: time: 1567524512171, uid: 10097, method_id: 1001 Action_startActivity Param: , intent: Intent { act=com.tencent.QQBrowser.action.BDTIPS flg=0x10000000 pkg=com.tencent.FileManager (has extras) }
+09-03 23:28:32.171  1174  3289 D AntiVirusService: time: 1567524512171, uid: 10097, method_id: 8004 Action_startActivityMayWait
+09-03 23:28:32.172  1174  3289 I ActivityManager: START u0 {act=com.tencent.QQBrowser.action.BDTIPS flg=0x10000000 pkg=com.tencent.FileManager cmp=com.tencent.FileManager/com.tencent.mtt.BlockActivity (has extras)} from uid 10097
+09-03 23:28:32.175  1174  3289 D AntiVirusService: time: 1567524512175, uid: 10097, method_id: 1005 Action_finishActivity
+09-03 23:28:32.196  1174  3289 D AntiVirusService: time: 1567524512196, uid: 10097, method_id: 14001 Action_startProcessLocked
+09-03 23:28:32.207  1174  3289 D AntiVirusService: time: 1567524512207, uid: 10097, method_id: 14001 Action_startProcessLocked
+09-03 23:28:32.223  1174  3289 D AntiVirusService: time: 1567524512223, uid: 10097, method_id: 1005 Action_finishActivity
+09-03 23:28:32.276  1174 11770 D AntiVirusService: time: 1567524512276, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.net.conn.CONNECTIVITY_CHANGE, IntentFilter-action_2: com.tencent.mtt.tencentsim.UPDATE_CACHED_ORDER_STATUS, IntentFilter-action_3: android.intent.action.TIMEZONE_CHANGED
+09-03 23:28:32.276  1174  1211 W BroadcastQueue: Permission Denial: broadcasting Intent { act=android.net.conn.CONNECTIVITY_CHANGE flg=0x4000010 (has extras) } from null (pid=-1, uid=-1) requires com.tencent.mtt.broadcast due to registered receiver BroadcastFilter{82e48fe u0 ReceiverList{7499cb9 29485 com.tencent.FileManager:block/10097/u0 remote:f114e80}}
+09-03 23:28:32.277  1174  3289 I WifiService: getConfiguredNetworks uid=10097
+09-03 23:28:32.278  1174  3289 D AntiVirusService: time: 1567524512278, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.283  1174 11770 D AntiVirusService: time: 1567524512283, uid: 10097, method_id: 1002 Action_bindService
+09-03 23:28:32.363  1174  3289 D AntiVirusService: time: 1567524512363, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.364  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.365  1174  3289 D AntiVirusService: time: 1567524512365, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.370  1174  3289 D AntiVirusService: time: 1567524512370, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.net.conn.CONNECTIVITY_CHANGE
+09-03 23:28:32.371  1174  7917 D AntiVirusService: time: 1567524512371, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.371  1174  7917 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.372  1174  7917 D AntiVirusService: time: 1567524512372, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.376  1174  7917 D AntiVirusService: time: 1567524512376, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.377  1174  7917 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.378  1174  3289 D AntiVirusService: time: 1567524512378, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.378  1174 11770 D AntiVirusService: time: 1567524512378, uid: 10097, method_id: 7005 Action_addWindow Param: , LayoutParams: WM.LayoutParams{(0,0)(fillxfill) sim=#100 ty=1 fl=#81810500 pfl=0x20000 fmt=-3 needsMenuKey=2 colorMode=0}
+09-03 23:28:32.380  1174  3289 D AntiVirusService: time: 1567524512380, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.380  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.381  1174 11770 D AntiVirusService: time: 1567524512381, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.383  1174  3289 D AntiVirusService: time: 1567524512383, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.383  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.384  1174  3289 D AntiVirusService: time: 1567524512384, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.390  1174  3289 D AntiVirusService: time: 1567524512390, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.403 29485 29485 I chatty  : uid=10097 com.tencent.FileManager:block identical 1 line
+09-03 23:28:32.417  1174 11770 D AntiVirusService: time: 1567524512417, uid: 10097, method_id: 16002 Action_setCanceledOnTouchOutside Param: , cancelable: false
+09-03 23:28:32.417  1174 11770 D AntiVirusService: time: 1567524512417, uid: 10097, method_id: 16001 Action_setCancelable Param: , cancelable: false
+09-03 23:28:32.427  1174 11770 D AntiVirusService: time: 1567524512427, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.428  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.428  1174 11770 D AntiVirusService: time: 1567524512428, uid: 10097, method_id: 7005 Action_addWindow Param: , LayoutParams: WM.LayoutParams{(0,0)(980xwrap) gr=#11 sim=#120 ty=2 fl=#1800002 fmt=-2 wanim=0x7f0a0030 needsMenuKey=2 colorMode=0}
+09-03 23:28:32.429  1174  3289 D AntiVirusService: time: 1567524512429, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.433  1174 11770 D AntiVirusService: time: 1567524512433, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: com.tencent.mtt.operation.res.OPERATION_BROADCAST_ACTION
+09-03 23:28:32.434  1174  3289 D AntiVirusService: time: 1567524512433, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.434  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.435  1174 11770 D AntiVirusService: time: 1567524512435, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.435  1174 11770 D AntiVirusService: time: 1567524512435, uid: 10097, method_id: 15010 Action_ContentResolverquery Param: , uri: content://com.tencent.FileManager.operation_data/operation
+09-03 23:28:32.468  1174 11770 D AntiVirusService: time: 1567524512468, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.469  1174 11770 D AntiVirusService: time: 1567524512469, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.470  1174 11770 D AntiVirusService: time: 1567524512470, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.473  1174 11770 D AntiVirusService: time: 1567524512473, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.476  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.477  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.478  1174 11770 D AntiVirusService: time: 1567524512478, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.478  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.479  1174 11770 D AntiVirusService: time: 1567524512479, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.489  1174  3289 D AntiVirusService: time: 1567524512488, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.489  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.490  1174  3289 D AntiVirusService: time: 1567524512490, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.534  1174 11770 D AntiVirusService: time: 1567524512534, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.534  1174 11770 D AntiVirusService: time: 1567524512534, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.629  1174 11770 D AntiVirusService: time: 1567524512629, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.635  1174 11770 D AntiVirusService: time: 1567524512635, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.636  1174 11770 D AntiVirusService: time: 1567524512636, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.636  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.636  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.662  1174  3289 D AntiVirusService: time: 1567524512662, uid: 10097, method_id: 15003 Action_getSubscriberIdForSubscriber
+09-03 23:28:32.667  1174  3289 D AntiVirusService: time: 1567524512667, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.net.conn.CONNECTIVITY_CHANGE
+09-03 23:28:32.714  1174  3289 D AntiVirusService: time: 1567524512714, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.715  1174  3289 D AntiVirusService: time: 1567524512715, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.716  1174  3289 D AntiVirusService: time: 1567524512716, uid: 10097, method_id: 15003 Action_getSubscriberIdForSubscriber
+09-03 23:28:32.718  1174  3289 D AntiVirusService: time: 1567524512718, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.721  1174  3289 D AntiVirusService: time: 1567524512721, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.724  1174  3289 D AntiVirusService: time: 1567524512724, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.724  1174  3289 D AntiVirusService: time: 1567524512724, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.734  1174  3289 D AntiVirusService: time: 1567524512734, uid: 10097, method_id: 6004 Action_getNetworkInfo
+09-03 23:28:32.734  1174  3289 D AntiVirusService: time: 1567524512734, uid: 10097, method_id: 6004 Action_getNetworkInfo
+09-03 23:28:32.889  1174  3289 D AntiVirusService: time: 1567524512889, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:32.891  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:32.892  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:33.137  1174  3289 D AntiVirusService: time: 1567524513137, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.151  1174  3289 D AntiVirusService: time: 1567524513151, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.152  1174 11770 D AntiVirusService: time: 1567524513152, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.152  1174  3289 D AntiVirusService: time: 1567524513152, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.153  1174  3289 D AntiVirusService: time: 1567524513153, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.155  1174  3289 D AntiVirusService: time: 1567524513155, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.157  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:33.157  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:33.155  1174  3289 D AntiVirusService: time: 1567524513155, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.158  1174  3289 D AntiVirusService: time: 1567524513158, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.161  1174  3289 D AntiVirusService: time: 1567524513161, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.161  1174  3289 D AntiVirusService: time: 1567524513161, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.162  1174  3289 D AntiVirusService: time: 1567524513162, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.392  1174  3289 D AntiVirusService: time: 1567524513392, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.393  1174  3289 D AntiVirusService: time: 1567524513393, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.393  1174  3289 D AntiVirusService: time: 1567524513393, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.404  1174  3289 D AntiVirusService: time: 1567524513404, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.408  1174  3289 D AntiVirusService: time: 1567524513408, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.412  1174  3289 D AntiVirusService: time: 1567524513412, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.412  1174  3289 D AntiVirusService: time: 1567524513412, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.413  1174  3289 D AntiVirusService: time: 1567524513413, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.415  1174  3289 D AntiVirusService: time: 1567524513415, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.415  1174  3289 D AntiVirusService: time: 1567524513415, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.434  1174 11770 D AntiVirusService: time: 1567524513434, uid: 10097, method_id: 1001 Action_startActivity Param: , intent: Intent { act=android.content.pm.action.REQUEST_PERMISSIONS pkg=com.android.packageinstaller (has extras) }
+09-03 23:28:33.434  1174 11770 D AntiVirusService: time: 1567524513434, uid: 10097, method_id: 8004 Action_startActivityMayWait
+09-03 23:28:33.435  1174 11770 I ActivityManager: START u0 {act=android.content.pm.action.REQUEST_PERMISSIONS pkg=com.android.packageinstaller cmp=com.android.packageinstaller/.permission.ui.GrantPermissionsActivity (has extras)} from uid 10097
+09-03 23:28:33.444  1174  3289 D AntiVirusService: time: 1567524513444, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:33.463  1174  3289 D AntiVirusService: time: 1567524513463, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.182  1174  3289 D VoldConnector: SND -> {103 volume remount_uid 10097 read}
+09-03 23:28:34.183   663   673 D vold    : Remounting 10097 as mode read
+09-03 23:28:34.205  1174  3289 D VoldConnector: SND -> {104 volume remount_uid 10097 write}
+09-03 23:28:34.206   663   673 D vold    : Remounting 10097 as mode write
+09-03 23:28:34.243  1174 11770 D AntiVirusService: time: 1567524514243, uid: 10097, method_id: 1001 Action_startActivity Param: , intent: Intent { flg=0x10000000 cmp=com.tencent.FileManager/com.tencent.mtt.MainActivity bnds=[854,1104][1123,1516] (has extras) }
+09-03 23:28:34.243  1174 11770 D AntiVirusService: time: 1567524514243, uid: 10097, method_id: 8004 Action_startActivityMayWait
+09-03 23:28:34.270  1174 11770 I ActivityManager: START u0 {flg=0x10000000 cmp=com.tencent.FileManager/com.tencent.mtt.MainActivity bnds=[854,1104][1123,1516] (has extras)} from uid 10097
+09-03 23:28:34.352  1174  7917 D AntiVirusService: time: 1567524514352, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: com.tencent.mtt.wifi.FST_FREE_WIFI_CHECK_DONE
+09-03 23:28:34.396  1174  7917 D AntiVirusService: time: 1567524514396, uid: 10097, method_id: 1012 Action_setRequestedOrientation
+09-03 23:28:34.406  1174  7917 D AntiVirusService: time: 1567524514406, uid: 10097, method_id: 7005 Action_addWindow Param: , LayoutParams: WM.LayoutParams{(0,0)(fillxfill) sim=#122 ty=1 fl=#81810100 pfl=0x20000 fmt=-3 vsysui=0x2400 needsMenuKey=2 colorMode=0}
+09-03 23:28:34.410  1174  7917 D AntiVirusService: time: 1567524514410, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.411  1174  7917 D AntiVirusService: time: 1567524514411, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.411  1174  7917 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.412  1174  7917 D AntiVirusService: time: 1567524514412, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.421  1174 11770 D AntiVirusService: time: 1567524514421, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.intent.action.MEDIA_UNMOUNTED, IntentFilter-action_2: android.intent.action.MEDIA_EJECT, IntentFilter-action_3: android.intent.action.MEDIA_REMOVED, IntentFilter-action_4: android.intent.action.MEDIA_BAD_REMOVAL, IntentFilter-action_5: android.intent.action.MEDIA_MOUNTED
+09-03 23:28:34.437  1174  7865 D AntiVirusService: time: 1567524514437, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.438  1174  7865 D AntiVirusService: time: 1567524514438, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.438  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.441  1174  7865 D AntiVirusService: time: 1567524514441, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.442  1174  7917 D AntiVirusService: time: 1567524514442, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.443  1174  7917 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.444  1174  7917 D AntiVirusService: time: 1567524514443, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.454  1174  7917 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.457  1174  7865 D AntiVirusService: time: 1567524514457, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.457  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.458  1174  7865 D AntiVirusService: time: 1567524514458, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.461  1174  7865 D AntiVirusService: time: 1567524514461, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.461  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.462  1174  7865 D AntiVirusService: time: 1567524514462, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.467  1174  7865 D AntiVirusService: time: 1567524514467, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.468  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.469  1174  7865 D AntiVirusService: time: 1567524514469, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.472  1174  7865 D AntiVirusService: time: 1567524514472, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.475  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.480  1174  7865 D AntiVirusService: time: 1567524514480, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.intent.action.MEDIA_UNMOUNTED, IntentFilter-action_2: android.intent.action.MEDIA_EJECT, IntentFilter-action_3: android.intent.action.MEDIA_REMOVED, IntentFilter-action_4: android.intent.action.MEDIA_BAD_REMOVAL, IntentFilter-action_5: android.intent.action.MEDIA_MOUNTED
+09-03 23:28:34.507  1174  7865 D AntiVirusService: time: 1567524514507, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.516  1174  7865 D AntiVirusService: time: 1567524514516, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.518  1174  7865 D AntiVirusService: time: 1567524514518, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.519  1174  7865 D AntiVirusService: time: 1567524514519, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.519  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.520  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.541  1174  7865 D AntiVirusService: time: 1567524514541, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.541  1174  7865 D AntiVirusService: time: 1567524514541, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.563  1174  7865 D AntiVirusService: time: 1567524514563, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.563  1174  7917 D AntiVirusService: time: 1567524514563, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.564  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.566  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.570  1174  7917 D AntiVirusService: time: 1567524514570, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.571  1174  7917 D AntiVirusService: time: 1567524514571, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.573  1174  7917 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.629  1174 11770 D AntiVirusService: time: 1567524514629, uid: 10097, method_id: 12001 Action_getInstalledPackages
+09-03 23:28:34.629  1174  7865 D AntiVirusService: time: 1567524514629, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.633  1174  7865 D AntiVirusService: time: 1567524514633, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.638  1174  2690 D AntiVirusService: time: 1567524514638, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.641  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.647  1174  7865 D AntiVirusService: time: 1567524514647, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.649  1174 11770 D AntiVirusService: time: 1567524514649, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.651  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.675  1174  7865 D AntiVirusService: time: 1567524514675, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: com.tencent.QQBrowser.action.freewifi.connected
+09-03 23:28:34.675  1174  7865 D AntiVirusService: time: 1567524514675, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.678  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.684  1174  7865 D AntiVirusService: time: 1567524514684, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.net.conn.CONNECTIVITY_CHANGE, IntentFilter-action_2: com.tencent.mtt.tencentsim.UPDATE_CACHED_ORDER_STATUS, IntentFilter-action_3: android.intent.action.TIMEZONE_CHANGED
+09-03 23:28:34.684  1174  1211 W BroadcastQueue: Permission Denial: broadcasting Intent { act=android.net.conn.CONNECTIVITY_CHANGE flg=0x4000010 (has extras) } from null (pid=-1, uid=-1) requires com.tencent.mtt.broadcast due to registered receiver BroadcastFilter{269e721 u0 ReceiverList{c442188 29458 com.tencent.FileManager/10097/u0 remote:968b92b}}
+09-03 23:28:34.699  1174  7865 D AntiVirusService: time: 1567524514699, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.699  1174 11770 D AntiVirusService: time: 1567524514699, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.net.conn.CONNECTIVITY_CHANGE
+09-03 23:28:34.700  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.700  1174 11770 D AntiVirusService: time: 1567524514700, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.intent.action.USER_PRESENT, IntentFilter-action_2: android.intent.action.SCREEN_OFF
+09-03 23:28:34.701  1174  7865 D AntiVirusService: time: 1567524514701, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.713  1174 11770 D AntiVirusService: time: 1567524514713, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.713  1174  2690 D AntiVirusService: time: 1567524514713, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.716  1174  2690 D AntiVirusService: time: 1567524514715, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.716  1174  2690 D AntiVirusService: time: 1567524514716, uid: 10097, method_id: 15003 Action_getSubscriberIdForSubscriber
+09-03 23:28:34.716  1174  2690 D AntiVirusService: time: 1567524514716, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.719  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.748 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:28:34.765  1174 11770 D AntiVirusService: time: 1567524514765, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.769  1174 11770 D AntiVirusService: time: 1567524514769, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.770  1174 11770 D AntiVirusService: time: 1567524514770, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.771  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.773  1174 11770 D AntiVirusService: time: 1567524514773, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.774  1174  2690 I WifiService: getWifiEnabledState uid=10097
+09-03 23:28:34.776  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.786  1174  2690 D AntiVirusService: time: 1567524514786, uid: 10097, method_id: 15003 Action_getSubscriberIdForSubscriber
+09-03 23:28:34.797  1174 11770 D AntiVirusService: time: 1567524514797, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.798  1174 11770 D AntiVirusService: time: 1567524514798, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.798  1174  2690 D AntiVirusService: time: 1567524514798, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.799  1174  2690 D AntiVirusService: time: 1567524514799, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.808  1174 11770 D AntiVirusService: time: 1567524514808, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.808  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.808  1174 11770 D AntiVirusService: time: 1567524514808, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.813  1174 11770 D AntiVirusService: time: 1567524514813, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.817  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.819  1174  2690 D AntiVirusService: time: 1567524514819, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.830  1174  2690 D AntiVirusService: time: 1567524514830, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.831  1174  2690 D AntiVirusService: time: 1567524514831, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.834 29458 29559 I chatty  : uid=10097(com.tencent.FileManager) TP-Network-2 identical 2 lines
+09-03 23:28:34.831  1174  2690 D AntiVirusService: time: 1567524514831, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.985  1174 11770 D AntiVirusService: time: 1567524514985, uid: 10097, method_id: 15003 Action_getSubscriberIdForSubscriber
+09-03 23:28:34.991  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:34.994  1174 11770 D AntiVirusService: time: 1567524514994, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:34.997  1174  2690 D AntiVirusService: time: 1567524514997, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.011  1174  7865 D AntiVirusService: time: 1567524515011, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.012  1174  7865 D AntiVirusService: time: 1567524515012, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.014 29458 29515 I chatty  : uid=10097(com.tencent.FileManager) TP-Network-1 identical 2 lines
+09-03 23:28:35.012  1174  7865 D AntiVirusService: time: 1567524515012, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.038  1174  7865 D AntiVirusService: time: 1567524515038, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=com.tencent.QQBrowser.action.residentnotification.REFRESH }
+09-03 23:28:35.039  1174  7865 D AntiVirusService: time: 1567524515039, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=com.tencent.QQBrowser.action.guidchanged pkg=com.tencent.FileManager }
+09-03 23:28:35.041  1174  7865 D AntiVirusService: time: 1567524515041, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.042  1174  7865 D AntiVirusService: time: 1567524515042, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.044 29458 29559 I chatty  : uid=10097(com.tencent.FileManager) TP-Network-2 identical 2 lines
+09-03 23:28:35.042  1174  7865 D AntiVirusService: time: 1567524515042, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.051  1174  7865 D AntiVirusService: time: 1567524515051, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=com.tencent.mtt.ResidentNotification.dataChange (has extras) }
+09-03 23:28:35.116  1174 11770 D AntiVirusService: time: 1567524515116, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.118  1174 11770 D AntiVirusService: time: 1567524515118, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.119  1174 11770 D AntiVirusService: time: 1567524515119, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.119  1174 11770 D AntiVirusService: time: 1567524515119, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.120  1174 11770 D AntiVirusService: time: 1567524515120, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.122  1174 11770 D AntiVirusService: time: 1567524515122, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.123  1174 11770 D AntiVirusService: time: 1567524515123, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.123  1174 11770 D AntiVirusService: time: 1567524515123, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.124  1174 11770 D AntiVirusService: time: 1567524515124, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.124  1174 11770 D AntiVirusService: time: 1567524515124, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.125  1174 11770 D AntiVirusService: time: 1567524515125, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.125  1174 11770 D AntiVirusService: time: 1567524515125, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.126  1174 11770 D AntiVirusService: time: 1567524515126, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.125 29458 29528 I chatty  : uid=10097(com.tencent.FileManager) identical 8 lines
+09-03 23:28:35.128  1174  7865 D AntiVirusService: time: 1567524515128, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.129  1174  7865 D AntiVirusService: time: 1567524515129, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.129  1174  7865 D AntiVirusService: time: 1567524515129, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.130  1174  7865 D AntiVirusService: time: 1567524515130, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.130  1174  7865 D AntiVirusService: time: 1567524515130, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.131  1174  7865 D AntiVirusService: time: 1567524515131, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.130 29458 29528 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:28:35.132  1174  7865 D AntiVirusService: time: 1567524515132, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.138  1174  7865 D AntiVirusService: time: 1567524515138, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.139  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:35.139  1174  7865 D AntiVirusService: time: 1567524515139, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.142  1174  7865 D AntiVirusService: time: 1567524515142, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.143  1174  7865 D AntiVirusService: time: 1567524515143, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.145  1174  7865 D AntiVirusService: time: 1567524515145, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.149 29458 29515 I chatty  : uid=10097(com.tencent.FileManager) TP-Network-1 identical 2 lines
+09-03 23:28:35.528  1174  7865 D AntiVirusService: time: 1567524515528, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.530  1174 11770 D AntiVirusService: time: 1567524515530, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.531  1174 11770 D AntiVirusService: time: 1567524515531, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.531  1174 11770 D AntiVirusService: time: 1567524515531, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.532  1174 11770 D AntiVirusService: time: 1567524515532, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.533  1174 11770 D AntiVirusService: time: 1567524515532, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.533  1174 11770 D AntiVirusService: time: 1567524515533, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.533  1174 11770 D AntiVirusService: time: 1567524515533, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.534  1174 11770 D AntiVirusService: time: 1567524515534, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.534  1174 11770 D AntiVirusService: time: 1567524515534, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.535  1174 11770 D AntiVirusService: time: 1567524515535, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.535  1174 11770 D AntiVirusService: time: 1567524515535, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.536  1174 11770 D AntiVirusService: time: 1567524515536, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.536  1174 11770 D AntiVirusService: time: 1567524515536, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.537  1174 11770 D AntiVirusService: time: 1567524515537, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.538  1174 11770 D AntiVirusService: time: 1567524515537, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.581  1174 11770 D AntiVirusService: time: 1567524515581, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///storage/emulated/0/TencentFileMgr/plugins/com.tencent.qb.plugin.butteraugli/com.tencent.qb.plugin.butteraugli1.zip }
+09-03 23:28:35.676  1174 11770 D AntiVirusService: time: 1567524515676, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.677  1174 11770 D AntiVirusService: time: 1567524515677, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.683  1174 11770 D AntiVirusService: time: 1567524515683, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.685  1174 11770 D AntiVirusService: time: 1567524515685, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.686  1174 11770 D AntiVirusService: time: 1567524515686, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.726  1174 11770 D AntiVirusService: time: 1567524515726, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.690 29458 29573 I chatty  : uid=10097(com.tencent.FileManager) identical 2 lines
+09-03 23:28:35.727  1174 11770 D AntiVirusService: time: 1567524515727, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.727  1174  7865 D AntiVirusService: time: 1567524515727, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:35.727  1174 11770 D AntiVirusService: time: 1567524515727, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.176 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 3 lines
+09-03 23:28:36.283  1174  7865 D AntiVirusService: time: 1567524516283, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.286  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.287  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.287  1174 11770 D AntiVirusService: time: 1567524516287, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.288  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.288  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.289  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.290  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.290  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.291  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.308  1174  2690 D AntiVirusService: time: 1567524516308, uid: 10097, method_id: 1005 Action_finishActivity
+09-03 23:28:36.316  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.317  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.317  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.318  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.318  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.319  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.319  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.320  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.320  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.321  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.322  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.322  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.322  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.323  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.323  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.323  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.323  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.324  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.324  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.324  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.325  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.325  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.325  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.326  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.326  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.326  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.326  1174  2690 D AntiVirusService: time: 1567524516326, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.327  1174  2690 D AntiVirusService: time: 1567524516327, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.327  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.327  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.328  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.329  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.330  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.330  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.331  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.327  1174  2690 D AntiVirusService: time: 1567524516327, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.331  1174 11770 D AntiVirusService: time: 1567524516331, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.intent.action.APPLICATION_RESTRICTIONS_CHANGED
+09-03 23:28:36.332  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.333  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.333  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.334  1174  2690 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.335  1174 11770 D AntiVirusService: time: 1567524516335, uid: 10097, method_id: 1002 Action_bindService
+09-03 23:28:36.335  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.336  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.337  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.338  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.339  1174  7865 D AntiVirusService: time: 1567524516339, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.339  1174  7917 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.340  1174  7917 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.340  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.339  1174  7865 D AntiVirusService: time: 1567524516339, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.346  1174  1213 I zygote64: Successfully killed process cgroup uid 10097 pid 29485 in 0ms
+09-03 23:28:36.347  1174  7865 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.347  1174 11770 D AntiVirusService: time: 1567524516347, uid: 10097, method_id: 1002 Action_bindService
+09-03 23:28:36.348  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.349  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.349  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.349  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.350  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.350  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.350  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.354  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.355  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.361  1174  2850 D AntiVirusService: time: 1567524516361, uid: 10097, method_id: 8005 Action_getApplicationRestrictions
+09-03 23:28:36.363  1174 11770 D AntiVirusService: time: 1567524516363, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.intent.action.PROXY_CHANGE
+09-03 23:28:36.365  1174 11770 D AntiVirusService: time: 1567524516365, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.net.conn.CONNECTIVITY_CHANGE
+09-03 23:28:36.365  1174  1211 W BroadcastQueue: Permission Denial: broadcasting Intent { act=android.net.conn.CONNECTIVITY_CHANGE flg=0x4000010 (has extras) } from null (pid=-1, uid=-1) requires com.tencent.FileManager.logsdk_broadcast due to registered receiver BroadcastFilter{391f0da u0 ReceiverList{6adca85 29458 com.tencent.FileManager/10097/u0 remote:80da3fc}}
+09-03 23:28:36.374  1174 11770 D AntiVirusService: time: 1567524516374, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.375  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.378  1174  2850 D AntiVirusService: time: 1567524516378, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.379  1174  2850 D AntiVirusService: time: 1567524516379, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.net.conn.CONNECTIVITY_CHANGE
+09-03 23:28:36.427  1174 11770 D AntiVirusService: time: 1567524516427, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.428  1174 11770 D AntiVirusService: time: 1567524516427, uid: 10097, method_id: 1017 Action_registerReceiver Param: , IntentFilter-action_1: android.net.conn.CONNECTIVITY_CHANGE
+09-03 23:28:36.431  1174  2850 D AntiVirusService: time: 1567524516431, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.457  1174  2850 D AntiVirusService: time: 1567524516457, uid: 10097, method_id: 1003007 Action_broadcastIntent_installshortcut Param: , intent: Intent { act=com.android.launcher.action.INSTALL_SHORTCUT (has extras) }
+09-03 23:28:36.462  1174 11770 D AntiVirusService: time: 1567524516462, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.464  1174 11770 D AntiVirusService: time: 1567524516464, uid: 10097, method_id: 15005 Action_getIccSerialNumberForSubscriber
+09-03 23:28:36.510  1174 11770 D AntiVirusService: time: 1567524516509, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.513  1174 11770 D AntiVirusService: time: 1567524516513, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.514  1174 11770 D AntiVirusService: time: 1567524516514, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.514  1174  2850 D AntiVirusService: time: 1567524516514, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.514  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.515  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.520  1174 11770 D AntiVirusService: time: 1567524516520, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.528  1174  2850 D AntiVirusService: time: 1567524516528, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=com.tencent.QQBrowser.action.weather.REFRESH (has extras) }
+09-03 23:28:36.529  1174  1211 W BroadcastQueue: Permission Denial: broadcasting Intent { act=com.tencent.QQBrowser.action.weather.REFRESH flg=0x10 (has extras) } from com.tencent.FileManager (pid=29458, uid=10097) requires com.tencent.mtt.broadcast due to registered receiver BroadcastFilter{e37b602 u0 ReceiverList{ff84b4d 29458 com.tencent.FileManager/10097/u0 remote:7320ae4}}
+09-03 23:28:36.530  1174  2850 D AntiVirusService: time: 1567524516530, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.531  1174  2850 D AntiVirusService: time: 1567524516531, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.532  1174  2850 D AntiVirusService: time: 1567524516532, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.532  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.533  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.539  1174 11770 D AntiVirusService: time: 1567524516539, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.599  1174 11770 D AntiVirusService: time: 1567524516599, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.600  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.600  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.599  1174 11770 D AntiVirusService: time: 1567524516599, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.618  1174 11770 D AntiVirusService: time: 1567524516618, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=/storage/emulated/0/TencentFileMgr/plugins/com.tencent.ipai.tensorflow.FileManager/com.tencent.ipai.tensorflow.FileManager2.zip }
+09-03 23:28:36.621  1174 11770 D AntiVirusService: time: 1567524516621, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.624  1174 11770 D AntiVirusService: time: 1567524516624, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.625  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.626  1174  2850 D AntiVirusService: time: 1567524516625, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///storage/emulated/0/TencentFileMgr/plugins/com.tencent.ipai.tensorflow.FileManager/com.tencent.ipai.tensorflow.FileManager2.zip }
+09-03 23:28:36.798  1174 11770 D AntiVirusService: time: 1567524516798, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.806  1174 11770 D AntiVirusService: time: 1567524516806, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.810  1174 11770 D AntiVirusService: time: 1567524516810, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.805 29458 29672 I chatty  : uid=10097(com.tencent.FileManager) identical 2 lines
+09-03 23:28:36.811  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.812  1174 11770 D AntiVirusService: time: 1567524516812, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.813  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.812  1174 11770 D AntiVirusService: time: 1567524516812, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.845  1174 11770 D AntiVirusService: time: 1567524516845, uid: 10097, method_id: 1015 Action_unregisterReceiver
+09-03 23:28:36.918  1174  3289 D AntiVirusService: time: 1567524516918, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.919  1174  3289 D AntiVirusService: time: 1567524516919, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:36.921  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.923  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:36.919  1174  3289 D AntiVirusService: time: 1567524516919, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.699  1174 11770 D AntiVirusService: time: 1567524517699, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.707  1174 11770 D AntiVirusService: time: 1567524517706, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.712  1174 11770 D AntiVirusService: time: 1567524517712, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.717  1174 11770 D AntiVirusService: time: 1567524517717, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.721  1174 11770 D AntiVirusService: time: 1567524517721, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.723  1174 11770 D AntiVirusService: time: 1567524517723, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.725  1174 11770 D AntiVirusService: time: 1567524517725, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.727  1174 11770 D AntiVirusService: time: 1567524517727, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.728  1174 11770 D AntiVirusService: time: 1567524517728, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.729  1174 11770 D AntiVirusService: time: 1567524517729, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.731  1174 11770 D AntiVirusService: time: 1567524517731, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.732  1174 11770 D AntiVirusService: time: 1567524517732, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.733  1174 11770 D AntiVirusService: time: 1567524517733, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.735  1174 11770 D AntiVirusService: time: 1567524517735, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.736  1174 11770 D AntiVirusService: time: 1567524517736, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.737  1174 11770 D AntiVirusService: time: 1567524517737, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.738  1174 11770 D AntiVirusService: time: 1567524517738, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.739  1174 11770 D AntiVirusService: time: 1567524517739, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.741  1174 11770 D AntiVirusService: time: 1567524517741, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.742  1174 11770 D AntiVirusService: time: 1567524517742, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.743  1174 11770 D AntiVirusService: time: 1567524517743, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.744  1174 11770 D AntiVirusService: time: 1567524517744, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.745  1174 11770 D AntiVirusService: time: 1567524517745, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.746  1174 11770 D AntiVirusService: time: 1567524517746, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.747  1174 11770 D AntiVirusService: time: 1567524517747, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.749  1174 11770 D AntiVirusService: time: 1567524517749, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.750  1174 11770 D AntiVirusService: time: 1567524517750, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.751  1174 11770 D AntiVirusService: time: 1567524517751, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.752  1174 11770 D AntiVirusService: time: 1567524517752, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.753  1174 11770 D AntiVirusService: time: 1567524517753, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.754  1174 11770 D AntiVirusService: time: 1567524517754, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.755  1174 11770 D AntiVirusService: time: 1567524517755, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.755  1174 11770 D AntiVirusService: time: 1567524517755, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.756  1174 11770 D AntiVirusService: time: 1567524517756, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.756  1174  3289 D AntiVirusService: time: 1567524517756, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.757  1174  3289 D AntiVirusService: time: 1567524517757, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.757  1174  3289 D AntiVirusService: time: 1567524517757, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.758  1174  3289 D AntiVirusService: time: 1567524517758, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.758  1174  3289 D AntiVirusService: time: 1567524517758, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.758  1174 11770 D AntiVirusService: time: 1567524517758, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.759  1174 11770 D AntiVirusService: time: 1567524517759, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.760  1174 11770 D AntiVirusService: time: 1567524517760, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.761  1174 11770 D AntiVirusService: time: 1567524517761, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.762  1174 11770 D AntiVirusService: time: 1567524517762, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.763  1174 11770 D AntiVirusService: time: 1567524517763, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.763  1174 11770 D AntiVirusService: time: 1567524517763, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.764  1174 11770 D AntiVirusService: time: 1567524517764, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.764  1174 11770 D AntiVirusService: time: 1567524517764, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.766  1174 11770 D AntiVirusService: time: 1567524517765, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.766  1174 11770 D AntiVirusService: time: 1567524517766, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.767  1174 11770 D AntiVirusService: time: 1567524517767, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.768  1174 11770 D AntiVirusService: time: 1567524517768, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.770  1174 11770 D AntiVirusService: time: 1567524517769, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.771  1174 11770 D AntiVirusService: time: 1567524517771, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.772  1174 11770 D AntiVirusService: time: 1567524517772, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.773  1174 11770 D AntiVirusService: time: 1567524517772, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.773  1174 11770 D AntiVirusService: time: 1567524517773, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.774  1174 11770 D AntiVirusService: time: 1567524517774, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.774  1174 11770 D AntiVirusService: time: 1567524517774, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.775  1174 11770 D AntiVirusService: time: 1567524517775, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.775  1174 11770 D AntiVirusService: time: 1567524517775, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.776  1174 11770 D AntiVirusService: time: 1567524517776, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.777  1174 11770 D AntiVirusService: time: 1567524517777, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.778  1174 11770 D AntiVirusService: time: 1567524517778, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.778  1174 11770 D AntiVirusService: time: 1567524517778, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.779  1174 11770 D AntiVirusService: time: 1567524517779, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.780  1174 11770 D AntiVirusService: time: 1567524517780, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.780  1174  3289 D AntiVirusService: time: 1567524517780, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.781  1174  3289 D AntiVirusService: time: 1567524517781, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.782  1174  3289 D AntiVirusService: time: 1567524517782, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.783  1174 11770 D AntiVirusService: time: 1567524517783, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.784  1174 11770 D AntiVirusService: time: 1567524517784, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.785  1174 11770 D AntiVirusService: time: 1567524517785, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.786  1174 11770 D AntiVirusService: time: 1567524517786, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.787  1174 11770 D AntiVirusService: time: 1567524517787, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.789  1174 11770 D AntiVirusService: time: 1567524517789, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.790  1174 11770 D AntiVirusService: time: 1567524517790, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.791  1174 11770 D AntiVirusService: time: 1567524517791, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.792  1174 11770 D AntiVirusService: time: 1567524517792, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.792  1174 11770 D AntiVirusService: time: 1567524517792, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.793  1174 11770 D AntiVirusService: time: 1567524517793, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.794  1174 11770 D AntiVirusService: time: 1567524517794, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.796  1174 11770 D AntiVirusService: time: 1567524517796, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.797  1174 11770 D AntiVirusService: time: 1567524517797, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.798  1174 11770 D AntiVirusService: time: 1567524517798, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.799  1174 11770 D AntiVirusService: time: 1567524517799, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.800  1174 11770 D AntiVirusService: time: 1567524517800, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.801  1174 11770 D AntiVirusService: time: 1567524517801, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.802  1174 11770 D AntiVirusService: time: 1567524517802, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.803  1174 11770 D AntiVirusService: time: 1567524517803, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.805  1174 11770 D AntiVirusService: time: 1567524517805, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.807  1174 11770 D AntiVirusService: time: 1567524517807, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.809  1174 11770 D AntiVirusService: time: 1567524517809, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.810  1174 11770 D AntiVirusService: time: 1567524517810, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.812  1174 11770 D AntiVirusService: time: 1567524517812, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.813  1174 11770 D AntiVirusService: time: 1567524517813, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.814  1174 11770 D AntiVirusService: time: 1567524517814, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.815  1174 11770 D AntiVirusService: time: 1567524517815, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.816  1174 11770 D AntiVirusService: time: 1567524517816, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.817  1174 11770 D AntiVirusService: time: 1567524517817, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.817  1174 11770 D AntiVirusService: time: 1567524517817, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.818  1174 11770 D AntiVirusService: time: 1567524517818, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.819  1174 11770 D AntiVirusService: time: 1567524517819, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.820  1174 11770 D AntiVirusService: time: 1567524517820, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.821  1174 11770 D AntiVirusService: time: 1567524517821, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.822  1174 11770 D AntiVirusService: time: 1567524517822, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.823  1174 11770 D AntiVirusService: time: 1567524517823, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.824  1174 11770 D AntiVirusService: time: 1567524517824, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.825  1174 11770 D AntiVirusService: time: 1567524517825, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.825  1174 11770 D AntiVirusService: time: 1567524517825, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.826  1174 11770 D AntiVirusService: time: 1567524517826, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.827  1174 11770 D AntiVirusService: time: 1567524517827, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.828  1174 11770 D AntiVirusService: time: 1567524517828, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.829  1174 11770 D AntiVirusService: time: 1567524517829, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.830  1174 11770 D AntiVirusService: time: 1567524517830, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.831  1174 11770 D AntiVirusService: time: 1567524517831, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.829 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 3 lines
+09-03 23:28:37.831  1174 11770 D AntiVirusService: time: 1567524517831, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.832  1174 11770 D AntiVirusService: time: 1567524517832, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.833  1174 11770 D AntiVirusService: time: 1567524517833, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.834  1174 11770 D AntiVirusService: time: 1567524517834, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.835  1174 11770 D AntiVirusService: time: 1567524517835, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.835  1174 11770 D AntiVirusService: time: 1567524517835, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.836  1174 11770 D AntiVirusService: time: 1567524517836, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.837  1174 11770 D AntiVirusService: time: 1567524517837, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.837  1174 11770 D AntiVirusService: time: 1567524517837, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.838  1174 11770 D AntiVirusService: time: 1567524517838, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.838  1174 11770 D AntiVirusService: time: 1567524517838, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.839  1174 11770 D AntiVirusService: time: 1567524517839, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.839  1174 11770 D AntiVirusService: time: 1567524517839, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.840  1174 11770 D AntiVirusService: time: 1567524517840, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.841  1174 11770 D AntiVirusService: time: 1567524517841, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.841  1174 11770 D AntiVirusService: time: 1567524517841, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.842  1174 11770 D AntiVirusService: time: 1567524517842, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.842  1174 11770 D AntiVirusService: time: 1567524517842, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.843  1174 11770 D AntiVirusService: time: 1567524517843, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.843  1174 11770 D AntiVirusService: time: 1567524517843, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.844  1174 11770 D AntiVirusService: time: 1567524517844, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.844  1174 11770 D AntiVirusService: time: 1567524517844, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.845  1174 11770 D AntiVirusService: time: 1567524517845, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.845  1174 11770 D AntiVirusService: time: 1567524517845, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.846  1174 11770 D AntiVirusService: time: 1567524517846, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.846  1174 11770 D AntiVirusService: time: 1567524517846, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.847  1174 11770 D AntiVirusService: time: 1567524517847, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.848  1174 11770 D AntiVirusService: time: 1567524517848, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.848  1174 11770 D AntiVirusService: time: 1567524517848, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.849  1174 11770 D AntiVirusService: time: 1567524517849, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.849  1174 11770 D AntiVirusService: time: 1567524517849, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.850  1174 11770 D AntiVirusService: time: 1567524517850, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.850  1174 11770 D AntiVirusService: time: 1567524517850, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.851  1174 11770 D AntiVirusService: time: 1567524517851, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.851  1174 11770 D AntiVirusService: time: 1567524517851, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.852  1174 11770 D AntiVirusService: time: 1567524517852, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.852  1174 11770 D AntiVirusService: time: 1567524517852, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.853  1174 11770 D AntiVirusService: time: 1567524517853, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.853  1174 11770 D AntiVirusService: time: 1567524517853, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.854  1174 11770 D AntiVirusService: time: 1567524517854, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.854  1174 11770 D AntiVirusService: time: 1567524517854, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.855  1174 11770 D AntiVirusService: time: 1567524517855, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.855  1174 11770 D AntiVirusService: time: 1567524517855, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.856  1174 11770 D AntiVirusService: time: 1567524517856, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.856  1174 11770 D AntiVirusService: time: 1567524517856, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:37.857  1174 11770 D AntiVirusService: time: 1567524517857, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:38.799  1174  3289 D AntiVirusService: time: 1567524518799, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=/storage/emulated/0/TencentFileMgr/plugins/com.tencent.qb.plugin.youtu/com.tencent.qb.plugin.youtu500001.zip }
+09-03 23:28:38.799  1174 11770 D AntiVirusService: time: 1567524518799, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:38.805  1174  3289 D AntiVirusService: time: 1567524518805, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:38.806  1174  3289 D AntiVirusService: time: 1567524518806, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:38.807  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:38.808  1174 11770 D AntiVirusService: time: 1567524518808, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///storage/emulated/0/TencentFileMgr/plugins/com.tencent.qb.plugin.youtu/com.tencent.qb.plugin.youtu500001.zip }
+09-03 23:28:38.810  1174 11770 D AntiVirusService: time: 1567524518810, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:38.939  1174 11770 D AntiVirusService: time: 1567524518939, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.026  1174 11770 D AntiVirusService: time: 1567524519026, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.028  1174 11770 D AntiVirusService: time: 1567524519028, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.368  1174 11770 D AntiVirusService: time: 1567524519368, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.368 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:28:39.435  1174 11770 D AntiVirusService: time: 1567524519435, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.436  1174 11770 D AntiVirusService: time: 1567524519436, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.437  1174 11770 D AntiVirusService: time: 1567524519437, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.438  1174 11770 D AntiVirusService: time: 1567524519438, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.438  1174 11770 D AntiVirusService: time: 1567524519438, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.447  1174 11770 D AntiVirusService: time: 1567524519447, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.447  1174 11770 D AntiVirusService: time: 1567524519447, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.488  1174 11770 D AntiVirusService: time: 1567524519488, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:39.511  1174 11770 D AntiVirusService: time: 1567524519511, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:41.522  1174 11770 D AntiVirusService: time: 1567524521521, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=com.tencent.mtt.operation.res.OPERATION_BROADCAST_ACTION (has extras) }
+09-03 23:28:48.170  1174 11770 D AntiVirusService: time: 1567524528170, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:48.197  1174  2850 D AntiVirusService: time: 1567524528197, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:48.268  1174  2850 D AntiVirusService: time: 1567524528268, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:48.270  1174  2850 I WifiService: getConnectionInfo uid=10097
+09-03 23:28:48.441  1174  3289 D AntiVirusService: time: 1567524528441, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:54.725  1174  3289 D AntiVirusService: time: 1567524534725, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:54.733  1174  3289 D AntiVirusService: time: 1567524534733, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:54.744  1174  3289 D AntiVirusService: time: 1567524534744, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:54.746  1174  3289 D AntiVirusService: time: 1567524534746, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:54.747  1174  3289 D AntiVirusService: time: 1567524534747, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:54.779  1174  3289 D AntiVirusService: time: 1567524534779, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:54.782  1174  3289 D AntiVirusService: time: 1567524534782, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:54.838  1174  3289 D AntiVirusService: time: 1567524534838, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:58.742 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:28:59.007 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:28:59.605  1174 11770 D AntiVirusService: time: 1567524539605, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:59.607  1174 11770 D AntiVirusService: time: 1567524539607, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:59.607  1174 11770 D AntiVirusService: time: 1567524539607, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:59.608  1174 11770 D AntiVirusService: time: 1567524539608, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:59.613  1174 11770 D AntiVirusService: time: 1567524539613, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:59.614  1174  3289 D AntiVirusService: time: 1567524539614, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:28:59.640 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 3 lines
+09-03 23:28:59.654  1174 11770 D AntiVirusService: time: 1567524539654, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:02.159  1174 11770 D AntiVirusService: time: 1567524542159, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:23.473  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:29:23.482  1174  3289 D AntiVirusService: time: 1567524563482, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:23.562  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:29:23.596  1174  3289 D AntiVirusService: time: 1567524563596, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:36.647  1174  3289 D AntiVirusService: time: 1567524576647, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:39.103  1174  3289 D AntiVirusService: time: 1567524579102, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:39.108  1174  3289 D AntiVirusService: time: 1567524579108, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:39.115  1174  3289 D AntiVirusService: time: 1567524579115, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:39.117  1174  3289 D AntiVirusService: time: 1567524579117, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:39.120  1174  3289 D AntiVirusService: time: 1567524579120, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:39.151  1174  3289 D AntiVirusService: time: 1567524579151, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:39.152  1174  3289 D AntiVirusService: time: 1567524579152, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:39.205  1174  3289 D AntiVirusService: time: 1567524579205, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:59.650  1174  3289 D AntiVirusService: time: 1567524599650, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:59.656  1174  3289 D AntiVirusService: time: 1567524599656, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:59.658  1174  3289 D AntiVirusService: time: 1567524599658, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:59.666  1174  3289 D AntiVirusService: time: 1567524599666, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:59.668  1174  3289 D AntiVirusService: time: 1567524599668, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:29:59.741  1174  3289 D AntiVirusService: time: 1567524599741, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:14.249  1174  3289 D AntiVirusService: time: 1567524914249, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:14.265  1174  3289 D AntiVirusService: time: 1567524914265, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:14.503  1174 11770 D AntiVirusService: time: 1567524914503, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:14.505  1174 11770 D AntiVirusService: time: 1567524914505, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:14.506  1174 11770 D AntiVirusService: time: 1567524914506, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:14.506  1174 11770 D AntiVirusService: time: 1567524914506, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:14.511  1174  3289 D AntiVirusService: time: 1567524914511, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:14.512  1174  3289 D AntiVirusService: time: 1567524914512, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:14.926  1174  3289 D AntiVirusService: time: 1567524914926, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:15.615  1174  3289 D AntiVirusService: time: 1567524915615, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:15.616  1174  3289 D AntiVirusService: time: 1567524915616, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:15.617  1174  3289 D AntiVirusService: time: 1567524915617, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:15.617  1174  3289 D AntiVirusService: time: 1567524915617, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:15.619  1174  3289 D AntiVirusService: time: 1567524915619, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:15.650 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:35:15.619  1174  3289 D AntiVirusService: time: 1567524915619, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:15.659  1174  3289 D AntiVirusService: time: 1567524915659, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.156  1174 11770 D AntiVirusService: time: 1567524916156, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.202  1174 11770 D AntiVirusService: time: 1567524916202, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.442  1174  3289 D AntiVirusService: time: 1567524916442, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.444  1174  3289 D AntiVirusService: time: 1567524916444, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.445  1174  3289 D AntiVirusService: time: 1567524916445, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.445  1174  3289 D AntiVirusService: time: 1567524916445, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.447  1174  3289 D AntiVirusService: time: 1567524916447, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.448  1174  3289 D AntiVirusService: time: 1567524916448, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.487  1174 11770 D AntiVirusService: time: 1567524916487, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:16.458 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:35:17.100  1174  3289 D AntiVirusService: time: 1567524917100, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.102  1174  3289 D AntiVirusService: time: 1567524917102, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.102  1174  3289 D AntiVirusService: time: 1567524917102, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.103  1174  3289 D AntiVirusService: time: 1567524917103, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.104  1174  3289 D AntiVirusService: time: 1567524917104, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.105  1174  3289 D AntiVirusService: time: 1567524917105, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.135 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:35:17.149  1174 11770 D AntiVirusService: time: 1567524917149, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.658  1174  3289 D AntiVirusService: time: 1567524917658, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.689  1174  3289 D AntiVirusService: time: 1567524917689, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.927  1174 11770 D AntiVirusService: time: 1567524917927, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.928  1174 11770 D AntiVirusService: time: 1567524917928, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.931  1174  3289 D AntiVirusService: time: 1567524917931, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.932  1174  3289 D AntiVirusService: time: 1567524917932, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.933  1174  3289 D AntiVirusService: time: 1567524917933, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.934  1174  3289 D AntiVirusService: time: 1567524917934, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:17.970  1174 11770 D AntiVirusService: time: 1567524917970, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:18.522  1174  3289 D AntiVirusService: time: 1567524918522, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=com.tencent.mtt.ResidentNotification.dataChange (has extras) }
+09-03 23:35:18.546  1174  3289 D AntiVirusService: time: 1567524918546, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:18.547  1174  3289 I WifiService: getConnectionInfo uid=10097
+09-03 23:35:18.602 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:35:18.640  1174  3289 D AntiVirusService: time: 1567524918639, uid: 10097, method_id: 16002 Action_setCanceledOnTouchOutside Param: , cancelable: false
+09-03 23:35:18.641  1174  3289 D AntiVirusService: time: 1567524918641, uid: 10097, method_id: 16001 Action_setCancelable Param: , cancelable: false
+09-03 23:35:18.657  1174  3289 D AntiVirusService: time: 1567524918657, uid: 10097, method_id: 7005 Action_addWindow Param: , LayoutParams: WM.LayoutParams{(0,0)(980xwrap) gr=#11 sim=#120 ty=2 fl=#1800002 fmt=-2 wanim=0x7f0a0030 needsMenuKey=2 colorMode=0}
+09-03 23:35:18.837 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 10 lines
+09-03 23:35:20.711  1174  3289 D AntiVirusService: time: 1567524920711, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:20.712  1174  3289 D AntiVirusService: time: 1567524920712, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:20.713  1174  3289 D AntiVirusService: time: 1567524920713, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:20.714  1174  3289 D AntiVirusService: time: 1567524920713, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:20.716  1174  3289 D AntiVirusService: time: 1567524920716, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:20.717  1174  3289 D AntiVirusService: time: 1567524920717, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:20.746 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:35:20.757  1174  3289 D AntiVirusService: time: 1567524920757, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:20.775  1174  3289 D AntiVirusService: time: 1567524920774, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:25.029  1174 11770 D AntiVirusService: time: 1567524925029, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:25.048  1174 11770 D AntiVirusService: time: 1567524925048, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:25.300  1174 11770 D AntiVirusService: time: 1567524925300, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:25.302  1174 11770 D AntiVirusService: time: 1567524925302, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:25.305  1174  3289 D AntiVirusService: time: 1567524925305, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:25.306  1174  3289 D AntiVirusService: time: 1567524925306, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:25.312  1174 11770 D AntiVirusService: time: 1567524925312, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:25.313  1174 11770 D AntiVirusService: time: 1567524925313, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:25.351  1174 11770 D AntiVirusService: time: 1567524925351, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:26.395 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 8 lines
+09-03 23:35:26.765 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:35:26.934 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 8 lines
+09-03 23:35:27.272 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:35:27.441 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 8 lines
+09-03 23:35:27.744 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:35:27.913 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 8 lines
+09-03 23:35:28.470 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 8 lines
+09-03 23:35:28.740 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:35:28.892 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 8 lines
+09-03 23:35:29.871 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:35:33.075 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:35:33.328 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:35:39.105  1174 11770 D AntiVirusService: time: 1567524939105, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:39.115  1174 11770 D AntiVirusService: time: 1567524939115, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:39.121  1174 11770 D AntiVirusService: time: 1567524939121, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:39.123  1174 11770 D AntiVirusService: time: 1567524939123, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:39.125  1174 11770 D AntiVirusService: time: 1567524939124, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:39.153  1174 11770 D AntiVirusService: time: 1567524939153, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:39.153  1174 11770 D AntiVirusService: time: 1567524939153, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:35:39.214  1174 11770 D AntiVirusService: time: 1567524939214, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:44.532  1174 11770 D AntiVirusService: time: 1567525004532, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:44.535  1174 11770 D AntiVirusService: time: 1567525004535, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:44.537  1174 11770 D AntiVirusService: time: 1567525004537, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:44.538  1174 11770 D AntiVirusService: time: 1567525004538, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:44.541  1174 11770 D AntiVirusService: time: 1567525004541, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:44.542  1174 11770 D AntiVirusService: time: 1567525004542, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:44.582 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:36:45.745  1174 11770 D AntiVirusService: time: 1567525005745, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:45.749  1174 11770 D AntiVirusService: time: 1567525005749, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:45.767  1174  3289 D AntiVirusService: time: 1567525005767, uid: 10097, method_id: 7005 Action_addWindow Param: , LayoutParams: WM.LayoutParams{(0,0)(fillxfill) gr=#50 sim=#100 ty=2 fl=#81810100 pfl=0x20000 fmt=-2 vsysui=0x500 needsMenuKey=2 colorMode=0}
+09-03 23:36:45.774  1174 11770 D AntiVirusService: time: 1567525005774, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:45.780  1174 11770 D AntiVirusService: time: 1567525005779, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:45.781  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:36:45.781  1174  7865 D AntiVirusService: time: 1567525005781, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:45.782  1174 11770 I WifiService: getConnectionInfo uid=10097
+09-03 23:36:46.016  1174  2850 D AntiVirusService: time: 1567525006015, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:46.017  1174  2850 D AntiVirusService: time: 1567525006017, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:46.018  1174  2850 D AntiVirusService: time: 1567525006018, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:46.018  1174  3289 D AntiVirusService: time: 1567525006018, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:46.020  1174  3289 D AntiVirusService: time: 1567525006020, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:46.020  1174  3289 D AntiVirusService: time: 1567525006020, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:46.334  1174  3289 D AntiVirusService: time: 1567525006334, uid: 10097, method_id: 12001 Action_getInstalledPackages
+09-03 23:36:46.369  1174  2850 D AntiVirusService: time: 1567525006369, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:46.658  1174  3289 D AntiVirusService: time: 1567525006658, uid: 10097, method_id: 1003 Action_broadcastIntent Param: , intent: Intent { act=com.tencent.mtt.ResidentNotification.dataChange (has extras) }
+09-03 23:36:46.975 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 20 lines
+09-03 23:36:48.293  1174  2850 D AntiVirusService: time: 1567525008293, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:48.295  1174  2850 D AntiVirusService: time: 1567525008295, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:48.296  1174  2850 D AntiVirusService: time: 1567525008296, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:48.298  1174  2850 D AntiVirusService: time: 1567525008298, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:48.301  1174  2850 D AntiVirusService: time: 1567525008301, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:48.302  1174  2850 D AntiVirusService: time: 1567525008302, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:48.327 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:36:48.612  1174  3289 D AntiVirusService: time: 1567525008612, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:49.609  1174  2850 D AntiVirusService: time: 1567525009609, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:49.624  1174  2850 D AntiVirusService: time: 1567525009624, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:49.879  1174  2850 D AntiVirusService: time: 1567525009879, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:49.883  1174  3289 D AntiVirusService: time: 1567525009883, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:49.884  1174  3289 D AntiVirusService: time: 1567525009884, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:49.884  1174  3289 D AntiVirusService: time: 1567525009884, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:49.886  1174  2850 D AntiVirusService: time: 1567525009886, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:49.886  1174  2850 D AntiVirusService: time: 1567525009886, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:49.922  1174  2850 D AntiVirusService: time: 1567525009922, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:36:55.142 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 6 lines
+09-03 23:36:56.778 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:37:39.090  1174  3289 D AntiVirusService: time: 1567525059090, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:37:39.096  1174  3289 D AntiVirusService: time: 1567525059096, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:37:39.103  1174  3289 D AntiVirusService: time: 1567525059102, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:37:39.105  1174  3289 D AntiVirusService: time: 1567525059105, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:37:39.108  1174  3289 D AntiVirusService: time: 1567525059108, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:37:39.138  1174  3289 D AntiVirusService: time: 1567525059138, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:37:39.141  1174  3289 D AntiVirusService: time: 1567525059140, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:37:39.199  1174  3289 D AntiVirusService: time: 1567525059199, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:30.904 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 6 lines
+09-03 23:38:31.224 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:38:32.710 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:38:34.009  1174  3289 D AntiVirusService: time: 1567525114009, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:34.012  1174  3289 D AntiVirusService: time: 1567525114012, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:34.014  1174  3289 D AntiVirusService: time: 1567525114014, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:34.015  1174  3289 D AntiVirusService: time: 1567525114015, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:34.018  1174  3289 D AntiVirusService: time: 1567525114018, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:34.019  1174  3289 D AntiVirusService: time: 1567525114019, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:34.042 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:38:34.060  1174  3289 D AntiVirusService: time: 1567525114060, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:35.763  1174  3289 D AntiVirusService: time: 1567525115763, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:35.778  1174  8046 D AntiVirusService: time: 1567525115778, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.017  1174  3289 D AntiVirusService: time: 1567525116017, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.019  1174  3289 D AntiVirusService: time: 1567525116019, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.021  1174  3289 D AntiVirusService: time: 1567525116021, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.022  1174  8046 D AntiVirusService: time: 1567525116022, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.024  1174  8046 D AntiVirusService: time: 1567525116024, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.025  1174  8046 D AntiVirusService: time: 1567525116025, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.061  1174  8046 D AntiVirusService: time: 1567525116061, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.607  1174  3289 D AntiVirusService: time: 1567525116607, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.608  1174  3289 D AntiVirusService: time: 1567525116608, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.609  1174  3289 D AntiVirusService: time: 1567525116609, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.610  1174  3289 D AntiVirusService: time: 1567525116609, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.611  1174  3289 D AntiVirusService: time: 1567525116611, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.612  1174  3289 D AntiVirusService: time: 1567525116612, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.640 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:38:36.649  1174  3289 D AntiVirusService: time: 1567525116649, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:36.665  1174  3289 D AntiVirusService: time: 1567525116665, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.569  1174  8046 D AntiVirusService: time: 1567525117569, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.590  1174  2850 D AntiVirusService: time: 1567525117590, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.839  1174  2850 D AntiVirusService: time: 1567525117839, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.843  1174  3289 D AntiVirusService: time: 1567525117843, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.845  1174  3289 D AntiVirusService: time: 1567525117845, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.846  1174  3289 D AntiVirusService: time: 1567525117846, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.850  1174  2850 D AntiVirusService: time: 1567525117850, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.851  1174  2850 D AntiVirusService: time: 1567525117851, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.898  1174  2850 D AntiVirusService: time: 1567525117898, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:39.090  1174  2850 D AntiVirusService: time: 1567525119090, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:39.095  1174  2850 D AntiVirusService: time: 1567525119095, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:39.100  1174  2850 D AntiVirusService: time: 1567525119099, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:39.101  1174  2850 D AntiVirusService: time: 1567525119101, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:39.102  1174  2850 D AntiVirusService: time: 1567525119102, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:39.127  1174  2850 D AntiVirusService: time: 1567525119127, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:39.128  1174  2850 D AntiVirusService: time: 1567525119128, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:39.169  1174  2850 D AntiVirusService: time: 1567525119169, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:38:37.889 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:39:10.340  1174  3289 D AntiVirusService: time: 1567525150340, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:10.343  1174  3289 D AntiVirusService: time: 1567525150343, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:10.345  1174  2850 D AntiVirusService: time: 1567525150345, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:10.347  1174  2850 D AntiVirusService: time: 1567525150347, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:10.350  1174  2850 D AntiVirusService: time: 1567525150350, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:10.352  1174  2850 D AntiVirusService: time: 1567525150352, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:10.374 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:39:10.411  1174  2850 D AntiVirusService: time: 1567525150411, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:10.897  1174  3289 D AntiVirusService: time: 1567525150896, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:10.921  1174  2850 D AntiVirusService: time: 1567525150921, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:11.167  1174  3289 D AntiVirusService: time: 1567525151167, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:11.169  1174  2850 D AntiVirusService: time: 1567525151169, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:11.170  1174  2850 D AntiVirusService: time: 1567525151170, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:11.170  1174  2850 D AntiVirusService: time: 1567525151170, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:11.172  1174  2850 D AntiVirusService: time: 1567525151172, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:11.173  1174  2850 D AntiVirusService: time: 1567525151173, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:11.210  1174  3289 D AntiVirusService: time: 1567525151210, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:11.233 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 5 lines
+09-03 23:39:12.145  1174  3289 D AntiVirusService: time: 1567525152145, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:12.147  1174  3289 D AntiVirusService: time: 1567525152147, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:12.148  1174  3289 D AntiVirusService: time: 1567525152148, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:12.148  1174  3289 D AntiVirusService: time: 1567525152148, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:12.150  1174  3289 D AntiVirusService: time: 1567525152150, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:12.151  1174  3289 D AntiVirusService: time: 1567525152151, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:12.179 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:39:12.217  1174  8046 D AntiVirusService: time: 1567525152217, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:13.006  1174  3289 D AntiVirusService: time: 1567525153006, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:13.020  1174  2850 D AntiVirusService: time: 1567525153020, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:13.259  1174  8046 D AntiVirusService: time: 1567525153259, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:13.261  1174  2850 D AntiVirusService: time: 1567525153261, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:13.262  1174  2850 D AntiVirusService: time: 1567525153262, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:13.262  1174  2850 D AntiVirusService: time: 1567525153262, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:13.264  1174  2850 D AntiVirusService: time: 1567525153264, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:13.264  1174  2850 D AntiVirusService: time: 1567525153264, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:13.307  1174  8046 D AntiVirusService: time: 1567525153307, uid: 10097, method_id: 6001 Action_getActiveNetworkInfo
+09-03 23:39:14.894 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:39:16.397 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 6 lines
+09-03 23:39:18.084 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 6 lines
+09-03 23:39:19.248 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:39:21.206 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 6 lines
+09-03 23:39:21.880 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:39:22.538 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 3 lines
+09-03 23:39:22.588 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 1 line
+09-03 23:39:23.973 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 6 lines
+09-03 23:39:24.716 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines
+09-03 23:39:27.028 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 6 lines
+09-03 23:39:27.703 29458 29458 I chatty  : uid=10097(com.tencent.FileManager) identical 4 lines

@@ -788,8 +788,8 @@ if __name__ == "__main__":
     #             f.writelines('\n')
     #         f.flush()
 
-    fileList = FileUtils.listDir('C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes')
-    for item in fileList:
-        content = FileUtils.readDict(item)
-
+    # fileList = FileUtils.listDir('C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes')
+    # for item in fileList:
+    #     content = FileUtils.readDict(item)
+    
         

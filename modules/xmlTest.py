@@ -9,9 +9,10 @@ import logging
 import Levenshtein
 import random
 import re
+import datetime
 from modules.ThreadUtils import execute_command
-logging.basicConfig()
-l=logging.getLogger("xmlTest")
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+l = logging.getLogger(__name__)
 
 
 class Package:
@@ -301,19 +302,25 @@ def clickBound(element,selectedDevId):
 
 def getUIXml(selectedDevId):
     UICmd='adb'+selectedDevId+' shell "uiautomator dump --compressed /sdcard/window_dump.xml >/dev/null && cat /sdcard/window_dump.xml"'
-    # uixml=os.popen(UICmd).read()
+    startTime = time.clock()
     uixml = execute_command(UICmd, 10)
-    # print uixml
+    endTime = time.clock()
+    l.warning('time comsuming-dump_xmlFile: %d',endTime-startTime)
+    if endTime-startTime>=10:
+        return 2
     if (not uixml) or (uixml in 'TIME_OUT'):
-        return False
+        return 0
+    
+    startTime = time.clock()
+    
     domres = ''
     try:
         domres=xmldom.parseString(uixml)
     except:
-        return False
+        return 0
     elementobj = domres.documentElement
     subElementObj = elementobj.getElementsByTagName("node")
-    resFlag=False
+    resFlag=0
     for element in subElementObj:
         resId=element.getAttribute("resource-id")
         text=element.getAttribute("text")
@@ -323,16 +330,18 @@ def getUIXml(selectedDevId):
         # print 'checking...'
         if ("permission_allow_button" in resId) and ("ALLOW" in text):
             # print "permission found!"
-            resFlag=True
+            resFlag=1
             clickBound(element,selectedDevId)
             break
         elif ("ViewPager" in className) and ("true" in scrollable):
-            resFlag=True
+            resFlag=1
             # print "viewpaper found!"
             lswipeCmd='adb'+selectedDevId+' shell input swipe 1000 1500 200 1500'
             print os.popen(lswipeCmd)
             break	
-    time.sleep(0.2)		
+    time.sleep(0.2)	
+    endTime = time.clock()
+    l.warning('time comsuming-parse_xmlFileAndClick: %d',endTime-startTime)
     return resFlag
 
 def clickWelcome(selectedDevId):
