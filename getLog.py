@@ -371,6 +371,7 @@ if __name__ == "__main__":
 			
 			#uninstall/stop
 			if not keepAll:
+				l.warning("uninstall app!!!")
 				uninstallApp(packageName,selectedDevId)
 			else:
 				stopApp(packageName,selectedDevId,pureStop)

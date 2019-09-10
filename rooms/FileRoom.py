@@ -197,7 +197,7 @@ def splitMalware(mergedList):
     print 'steal:', len(stealList)
     print 'noMath', len(noMatch)
     # todo 可以将结果写入文件
-    return len(payList),len(rogList),len(stealList)
+    return payList,rogList,stealList,noMatch
 
 def pkg2Hash(pkgList, pkgNameDict):
     '''
