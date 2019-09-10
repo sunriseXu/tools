@@ -606,70 +606,70 @@ if __name__ == "__main__":
     
     # 统计所有出现的权限api
     # dirname = 'C:\\Users\\limin\\androidSdkInAll\\Desktop\\androidOnline\\sdk24'
-    # dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes'
-    # pathList = FileUtils.listDir(dirname)
-    # functionCount = []
-    # for myPath in pathList:
-    #     jsonDict = FileUtils.readDict(myPath)
-    #     className = jsonDict['ClassName']
-    #     functionDict = jsonDict['Functions']
-    #     # print myPath
-    #     for key,value in functionDict.items():
-    #         if value['Permissions']:
-    #             fullName = key
-    #             perms = value['Permissions']
-    #             for perm in perms:
-    #                 # print fullName
-    #                 # print perm
-    #                 perm = perm.split('#')
-    #                 if len(perm)==1:
-    #                     continue
-    #                 perm = perm[1]
-    #                 functionCount.append((className,fullName,perm))
+    dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes'
+    pathList = FileUtils.listDir(dirname)
+    functionCount = []
+    for myPath in pathList:
+        jsonDict = FileUtils.readDict(myPath)
+        className = jsonDict['ClassName']
+        functionDict = jsonDict['Functions']
+        # print myPath
+        for key,value in functionDict.items():
+            if value['Permissions']:
+                fullName = key
+                perms = value['Permissions']
+                for perm in perms:
+                    # print fullName
+                    # print perm
+                    perm = perm.split('#')
+                    if len(perm)==1:
+                        continue
+                    perm = perm[1]
+                    functionCount.append((className,fullName,perm))
 
-    #             # print key,value['Permissions']
-    # print len(functionCount)
-    # resDict = {}
-    # permissionlist = []
-    # classList = []
-    # functionList = []
-    # for function in functionCount:
-    #     className = function[0]
-    #     functionName = function[1]
-    #     permission = function[2]
-    #     if permission not in permissionlist:
-    #         permissionlist.append(permission)
-    #     if className not in classList:
-    #         classList.append(className)
+                # print key,value['Permissions']
+    print len(functionCount)
+    resDict = {}
+    permissionlist = []
+    classList = []
+    functionList = []
+    for function in functionCount:
+        className = function[0]
+        functionName = function[1]
+        permission = function[2]
+        if permission not in permissionlist:
+            permissionlist.append(permission)
+        if className not in classList:
+            classList.append(className)
 
-    #     if permission not in resDict:
-    #         subDict = {className:[functionName]}
-    #         resDict.update({permission:subDict})
-    #     elif className not in resDict[permission]:
-    #         subDict = {className:[functionName]}
-    #         resDict[permission].update(subDict)
-    #     else:
-    #         resDict[permission][className].append(functionName)
-    # FileUtils.writeDict(resDict,'./res.json')
-    # print 'permission length:'
-    # print len(permissionlist)
-    # InteractUtils.showList(permissionlist)
-    # FileUtils.writeList(permissionlist,'tmpOutO28.txt')
-    # print 'class length'
-    # print len(classList)
-    # allDict = FileUtils.readDict('D:\\androidsdkdoc\\permission28.json')
+        if permission not in resDict:
+            subDict = {className:[functionName]}
+            resDict.update({permission:subDict})
+        elif className not in resDict[permission]:
+            subDict = {className:[functionName]}
+            resDict[permission].update(subDict)
+        else:
+            resDict[permission][className].append(functionName)
+    FileUtils.writeDict(resDict,'./res.json')
+    print 'permission length:'
+    print len(permissionlist)
+    InteractUtils.showList(permissionlist)
+    FileUtils.writeList(permissionlist,'tmpOutO28.txt')
+    print 'class length'
+    print len(classList)
+    allDict = FileUtils.readDict('D:\\androidsdkdoc\\permission28.json')
     
-    # partList = FileUtils.readList('tmpOutO28.txt')
-    # resList = []
-    # for permission in partList:
-    #     tmp = ''
-    #     for key,value in allDict.items():
-    #         if permission in value:
-    #             tmp = key+'\t'+permission +'\t' +' '.join(resDict[permission].keys())
-    #             resList.append(tmp)
-    # resList = sorted(resList)
-    # FileUtils.writeList(resList, 'tmpOut28.txt')
-    # FileUtils.writeDict()
+    partList = FileUtils.readList('tmpOutO28.txt')
+    resList = []
+    for permission in partList:
+        tmp = ''
+        for key,value in allDict.items():
+            if permission in value:
+                tmp = key+'\t'+permission +'\t' +' '.join(resDict[permission].keys())
+                resList.append(tmp)
+    resList = sorted(resList)
+    FileUtils.writeList(resList, 'tmpOut28.txt')
+    FileUtils.writeDict()
 
     # list1 = FileUtils.readList('tmpOut.txt')
     # list2 = FileUtils.readList('tmpOutO24.txt')
@@ -792,39 +792,4 @@ if __name__ == "__main__":
     # for item in fileList:
     #     content = FileUtils.readDict(item)
     
-    allHash = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg\\aa')
-    allDict = allHash.getAbsPathDict()
-    v1MalTrain = FileUtils.readList(allDict['v1MalTrain2000.txt'])
-    v1MalTest = FileUtils.readList(allDict['v1MalTest500.txt'])
-    v1NorTrain = FileUtils.readList(allDict['v1NorTrain20000.txt'])
-    v1NorTest = FileUtils.readList(allDict['v1NorTest5000.txt'])
-
-    v2MalTrain = FileUtils.readList(allDict['v2MalTrain2000.txt'])
-    v2MalTest = FileUtils.readList(allDict['v2MalTest500.txt'])
-    v2NorTrain = FileUtils.readList(allDict['v2NorTrain20000.txt'])
-    v2NorTest = FileUtils.readList(allDict['v2NorTest5000.txt'])
-
-    
-
-    splitRes = EasyDir('C:\\Users\\limin\\Desktop\\v1pkg\\aa\\split3')
-    
-    payList,rogList,stealList,noMatch = FileRoom.splitMalware(v1MalTrain)
-    FileUtils.writeList(payList, splitRes.getCatPath('v1PayTrain.txt'))
-    FileUtils.writeList(rogList, splitRes.getCatPath('v1RogTrain.txt'))
-    FileUtils.writeList(stealList, splitRes.getCatPath('v1StealTrain.txt'))
-    FileUtils.writeList(noMatch, splitRes.getCatPath('v1StealTrain_VsTotal.txt'))
-
-    payList,rogList,stealList,noMatch = FileRoom.splitMalware(v1MalTest)
-    FileUtils.writeList(payList, splitRes.getCatPath('v1PayTest.txt'))
-    FileUtils.writeList(rogList, splitRes.getCatPath('v1RogTest.txt'))
-    FileUtils.writeList(stealList, splitRes.getCatPath('v1StealTest.txt'))
-
-    payList,rogList,stealList,noMatch = FileRoom.splitMalware(v2MalTrain)
-    FileUtils.writeList(payList, splitRes.getCatPath('v2PayTrain.txt'))
-    FileUtils.writeList(rogList, splitRes.getCatPath('v2RogTrain.txt'))
-    FileUtils.writeList(stealList, splitRes.getCatPath('v2StealTrain.txt'))
-
-    payList,rogList,stealList,noMatch = FileRoom.splitMalware(v2MalTest)
-    FileUtils.writeList(payList, splitRes.getCatPath('v2PayTest.txt'))
-    FileUtils.writeList(rogList, splitRes.getCatPath('v2RogTest.txt'))
-    FileUtils.writeList(stealList, splitRes.getCatPath('v2StealTest.txt'))
+        
