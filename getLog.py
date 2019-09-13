@@ -278,6 +278,7 @@ if __name__ == "__main__":
 	testedList=readList(testedFilePath)
 	notInstallList=readList(notInstallPath)
 	apkInfoDict=readDict(apkInfoPath)
+	indexErrorList = readList(errorFilePath)
 
 	devId,devNum=chooseDevice()
 	selectedDevId=" "
@@ -339,6 +340,8 @@ if __name__ == "__main__":
 			if apkHash in testedList:
 				continue
 			if apkHash in notInstallList:
+				continue
+			if apkHash in indexErrorList:
 				continue
 
 			# todo check device is attached, otherwise, fastboot -s dev reboot
@@ -414,16 +417,18 @@ if __name__ == "__main__":
 		except IOError:
 			errorStr="IOError dealing with: %s\n" %(apkHash)
 			l.warning(errorStr)
-			writeFile(errorFilePath,errorStr)	
+			# writeFile(errorFilePath,errorStr)
 		except RuntimeError:
 			errorStr="RuntimeError dealing with: %s\n" %(apkHash)
 			l.warning(errorStr)
-			writeFile(errorFilePath,errorStr)
+			# writeFile(errorFilePath,errorStr)
 		except IndexError,e:
-			errorStr="IndexError dealing with: %s\n" %(apkHash)
-			l.warning(errorStr)
+			indexErrorList.append(apkHash)
+			# errorStr="IndexError dealing with: %s\n" %(apkHash)
+			# l.warning(errorStr)
 			l.warning(traceback.print_exc())
-			writeFile(errorFilePath,errorStr)
+			writeList(indexErrorList,errorFilePath)
+			# writeFile(errorFilePath,errorStr)
 	writeDict(apkInfoDict,apkInfoPath)
 	writeList(testedList,testedFilePath)
 	l.warning("all done!")
