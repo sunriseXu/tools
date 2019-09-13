@@ -9,6 +9,7 @@ ppwd = os.path.dirname(pwd)
 sys.path.append(ppwd)
 from datetime import datetime
 from modules import ThreadUtils
+from modules import InteractUtils
 from datetime import datetime,timedelta
 from configparser import ConfigParser
 from modules import FileUtils
@@ -66,8 +67,31 @@ def screenKillSession(sessionName):
             ]
             exeCmdList(cmdList, zshEnv)
             print('kill old session done!')
+def screenListSession():
+    cmdList = [
+        'screen -ls',
+    ]
+    res = exeCmdList(cmdList, zshEnv)
+    res = res[0]
+    resList = res.split()
+    sessionNameRex = r'\d+\.'
+    sessionDict = {}
+    for item in resList:
+        rexRes = RexUtils.rexFind(sessionNameRex, item)
+        if rexRes:
+            sessionDict[item.split('.')[0]] = item.split('.')[1]
+    return sessionDict
 if __name__ == '__main__':
     yesterday = datetime.today() + timedelta(-1)
     currTime = yesterday.strftime('%Y-%m-%d')
     sessionName = 'testApk-{}'.format(currTime)
     screenKillSession(sessionName)
+    sessionDict = screenListSession()
+
+    for key in sessionDict:
+        sessionName = sessionDict[key]
+        cmdList = [
+            'screen -X -S {} quit'.format(key),
+        ]
+        if InteractUtils.YesOrNo('delete {} y/n?'.format(sessionName)):
+            exeCmdList(cmdList, zshEnv)

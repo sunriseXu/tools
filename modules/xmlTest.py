@@ -296,8 +296,9 @@ def clickBound(element,selectedDevId):
     midy=int((int(ltop[1])+int(rbot[1]))/2)
     
     clickCmd='adb'+selectedDevId+' shell input tap %s %s' %(str(midx),str(midy))
-    res=os.popen(clickCmd)
-    print res
+    # res=os.popen(clickCmd)
+    # print res
+    execute_command(clickCmd,2)
 
 
 def getUIXml(selectedDevId):
@@ -337,7 +338,8 @@ def getUIXml(selectedDevId):
             resFlag=1
             # print "viewpaper found!"
             lswipeCmd='adb'+selectedDevId+' shell input swipe 1000 1500 200 1500'
-            print os.popen(lswipeCmd)
+            # print os.popen(lswipeCmd)
+            execute_command(lswipeCmd,2)
             break	
     time.sleep(0.2)	
     endTime = time.clock()
@@ -346,7 +348,7 @@ def getUIXml(selectedDevId):
 
 def clickWelcome(selectedDevId):
 	UICmd='adb'+selectedDevId+' shell "uiautomator dump --compressed /sdcard/window_dump.xml >/dev/null && cat /sdcard/window_dump.xml"'
-	uixml=os.popen(UICmd).read()
+	uixml=execute_command(UICmd, 10)
 	if not uixml:
 		return False
 	domres=xmldom.parseString(uixml)

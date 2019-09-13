@@ -176,7 +176,30 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag):
 
 def touchFile(selectedDevId):
 	cmd = 'adb %s push guard /sdcard/' %selectedDevId
-	os.popen(cmd)
+	return os.popen(cmd).read()
+
+def checkDeviceOn(selectedDevId):
+	idx = 0
+	devId = selectedDevId.split('-s')[1].strip()
+	rebootCmd = 'fastboot {} reboot'.format(selectedDevId)
+	while(True):
+		idx += 1
+		res = touchFile(selectedDevId)
+		print("check device on : push file res- {}".format(res))
+		# device shutdown
+
+		if devId in res and 'not found' in res:
+			print("device shut down, try to reboot, timeId: {}".format(idx))
+			os.popen(rebootCmd).read()
+			time.sleep(30)
+		elif 'file pushed' in res:
+			print("device is running!")
+			break
+		if idx > 5:
+			print("try to reboot device 5 times, but not work! check manually")
+			break
+
+
 def checkAppAlive(selectedDevId, pkgName):
 	# alive?
 	aliveCmd = 'adb %s shell "ps|grep %s"' %(selectedDevId, pkgName)
@@ -317,12 +340,16 @@ if __name__ == "__main__":
 				continue
 			if apkHash in notInstallList:
 				continue
+
+			# todo check device is attached, otherwise, fastboot -s dev reboot
+			checkDeviceOn(selectedDevId)
+
 			l.warning(time.strftime('%H:%M:%S',time.localtime(time.time())))
 			touchFile(selectedDevId)
 			testingFlag = True
 			AdbRoot(selectedDevId)
 			unlockPhone(selectedDevId)
-			# checkAppAlive(selectedDevId,'com.fdu.testcryptfile')
+			checkAppAlive(selectedDevId,'com.fdu.testcryptfile')
 			
 
 			# query manifest for apkInfo
@@ -364,10 +391,10 @@ if __name__ == "__main__":
 			resDict = manager.dict()
 			myPool = Pool(2)
 			myPool.apply_async(log2file,args=(tmplogPath,uid,packageName,selectedDevId,testTime,interactFlag,))
-			myPool.apply_async(loopGetKlog,args=(uid,selectedDevId,testTime+10,resDict,))
+			# myPool.apply_async(loopGetKlog,args=(uid,selectedDevId,testTime+10,resDict,))
 			myPool.close()
 			myPool.join()
-			writeFile(tmpklogPath,resDict['ret'])
+			# writeFile(tmpklogPath,resDict['ret'])
 			
 			#uninstall/stop
 			if not keepAll:
@@ -378,7 +405,7 @@ if __name__ == "__main__":
 			#filter antivirus log
 			newlogPath=logDir+'/'+apkHash+'.txt'
 			trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
-			trimKlog(uid,packageName,tmpklogPath, newlogPath)
+			# trimKlog(uid,packageName,tmpklogPath, newlogPath)
 			testedList.append(apkHash)
 			antiResHandle.flush()
 			testedIdx+=1

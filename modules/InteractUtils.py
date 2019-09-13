@@ -41,3 +41,10 @@ def contDigit(myStr):
 		return True
 	else:
 		return False
+def YesOrNo(prompt='y/n?'):
+    print(prompt)
+    res=sys.stdin.readline().strip()
+    if 'y' in res or 'Y' in res:
+        return True
+    else:
+        return False

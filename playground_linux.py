@@ -5,6 +5,7 @@ from modules import CollectionUtils
 from modules import RexUtils
 from modules import AdbUtils
 from modules import ApkUtils
+from modules import FileUtils
 from modules.FileUtils import EasyDir
 from modules import SpyderUtils
 from modules import InteractUtils
@@ -715,6 +716,49 @@ if __name__ == "__main__":
 
     # 每类200 => 167  一共501
     # 每类30 =>  17
+    # res = AdbUtils.getApkPermission('/home/limin/Desktop/malware/cou-qqpiliang.apk','uses-permission: name=')
+    # print(res)
+
+
+    def getPermissionList(myDir):
+        haveList = []
+        noList = []
+        pathList = FileUtils.listDir(myDir)
+        idx = 0
+        for apkPath in pathList:
+            idx+=1
+            # if idx>1000:
+            #     break
+            apkHash = FileUtils.getFileName(apkPath)
+            res = AdbUtils.getApkPermission(apkPath, 'uses-permission: name=')
+            if not res:
+                print('%s dont have permission' %apkPath)
+                continue
+            if 'android.permission.INTERNET' in res:
+                haveList.append(apkHash)
+            elif 'ERROR_DUMP' in res:
+                print('%s dumpError!' %apkPath)
+            else:
+                noList.append(apkHash)
+        return haveList,noList
+    def getPermissionListLen(myDir):
+        haveList, noList = getPermissionList(myDir)
+        haveLen = len(haveList)
+        noLen = len(noList)
+        return haveLen,noLen
+    # print('haveList length: %d' %len(haveList))
+    # print('noList length: %d' %len(noList))
+
+    myDir = '/home/limin/Desktop/apks/huawei/todayApk-2019-08-15'
+    haveLen, noLen = getPermissionListLen(myDir)
+    print('haveList length: %d' %haveLen)
+    print('noList length: %d' %noLen)
+
+    DirList = [
+        '',
+        '',
+
+    ]
 
 
 

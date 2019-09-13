@@ -24,7 +24,24 @@ def getApkInfo(apkPath,param):
 				break
 		line=res.readline()
 	return paramValue
-
+def getApkPermission(apkPath,param):
+	paramValue=""
+	if not param:
+		return paramValue
+	aaptCom="aapt d badging "+apkPath
+	permissionList = []
+	res =execute_command(aaptCom)
+	res = res.split('\n')
+	for line in res:
+		if 'ERROR: dump failed' in line:
+			return ['ERROR_DUMP']
+		if param in line:
+			startIdx=line.find(param)
+			paramValue = line[startIdx:].split("'")[1]
+			if paramValue:
+				permissionList.append(paramValue)
+		# line=res.readline()
+	return permissionList
 def getHashPkgDict(myDir):
     allApkPathList = listDir(myDir)
     hashPkgDict = {}
@@ -40,16 +57,18 @@ def getHashPkgDict(myDir):
     return hashPkgDict
 
 def getUid(packageName, selectedDevId):
-	getUidCom='adb'+selectedDevId+' shell "dumpsys package %s | grep userId="' %(packageName)
-	uid=os.popen(getUidCom).read()
-	uid=uid.strip().split("\n")[0]
-	uid=uid.split('=')[1]
-	return uid
+    getUidCom='adb'+selectedDevId+' shell "dumpsys package %s | grep userId="' %(packageName)
+    # uid=os.popen(getUidCom).read()
+    uid = execute_command(getUidCom,3)
+    uid=uid.strip().split("\n")[0]
+    uid=uid.split('=')[1]
+    return uid
 
 def startApp(packageName,selectedDevId):
-	startAppCmd="adb "+selectedDevId+"shell monkey -p "+packageName+" "+"-c android.intent.category.LAUNCHER 1"
-	res = os.popen(startAppCmd)
-	time.sleep(2)
+    startAppCmd="adb "+selectedDevId+"shell monkey -p "+packageName+" "+"-c android.intent.category.LAUNCHER 1"
+    # res = os.popen(startAppCmd)
+    execute_command(startAppCmd,3)
+    time.sleep(1)
 
 def stopApp(packageName,selectedDevId,pureStop=True):
 	stopAppCmd=""
@@ -58,12 +77,13 @@ def stopApp(packageName,selectedDevId,pureStop=True):
 		stopAppCmd="adb"+selectedDevId+" shell pm clear "+packageName
 	else:
 		stopAppCmd="adb "+selectedDevId+" shell am force-stop "+packageName
-	os.popen(stopAppCmd)
+	execute_command(stopAppCmd,3)
 	time.sleep(1)
 
 def AdbRoot(selectedDevId):
-	cmd = 'adb '+selectedDevId+' root'
-	print(os.popen(cmd))
+    cmd = 'adb '+selectedDevId+' root'
+    # print(os.popen(cmd))
+    execute_command(cmd)
 
 def listThirdInstalledApps(selectedDevId):
 	mycmd='adb '+selectedDevId+'shell pm list packages -3'
@@ -76,9 +96,10 @@ def getThirdApps(selectedDevId):
 	return thirdPartyList
 
 def uninstallApp(packageName,selectedDevId):
-	uninsCmd="adb "+selectedDevId+"uninstall "+packageName
-	os.popen(uninsCmd)
-	time.sleep(1)
+    uninsCmd="adb "+selectedDevId+"uninstall "+packageName
+    # os.popen(uninsCmd)
+    execute_command(uninsCmd,3)
+    time.sleep(1)
 
 def uninstallAllThird(selectedDevId, whiteList):
 	thirdPartyList=getThirdApps(selectedDevId)
@@ -107,9 +128,9 @@ def installApp(apkPath,selectedDevId):
     return True
 
 def cleanLog(selectedDevId):
-	logcmd="adb"+selectedDevId+" logcat -c"
-	os.popen(logcmd)
-
+    logcmd="adb"+selectedDevId+" logcat -c"
+    # os.popen(logcmd)
+    execute_command(logcmd,1)
 def chooseDevice():
 	adbCmd="adb devices"
 	res =os.popen(adbCmd).read()
@@ -174,4 +195,6 @@ if __name__ == "__main__":
 	# print devId
 	srcPath = '/sdcard/newdex'
 	destPath = 'C:\\Users\\limin\\Desktop\\tmp2'
-	pullFile(devId,srcPath,destPath,5)
+	# pullFile(devId,srcPath,destPath,5)
+	res = getApkInfo('/home/limin/Desktop/malware/cou-qqpiliang.apk','uses-permission: name=')
+	print(res)
