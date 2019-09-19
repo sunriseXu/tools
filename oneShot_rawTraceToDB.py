@@ -141,6 +141,8 @@ if __name__ == "__main__":
         [!] 多进程:当循环内部是计算密集型,那么多进程更好
         [!] 多线程:由于循环内部是IO密集型操作,所以多线程更加适合
     '''
+    poolLen = len(configDict.keys())
+    myPool = Pool(poolLen)
     for key, value in configDict.items():
         if not value['merge']:
             continue
@@ -236,9 +238,10 @@ if __name__ == "__main__":
             selectSource = ruleDir
             selectList = ruleList
         if dbAmount > len(selectList):
-            l.error('[?] Error, there are not enough(%d) logs to upload(which is %d): %s', len(selectList), dbAmount,
+            l.warning('[?] Error, there are not enough(%d) logs to upload(which is %d): %s', len(selectList), dbAmount,
                     selectSource)
-            continue
+            # continue
+            dbAmount = len(selectList)
         dbList = random.sample(selectList, dbAmount)
         dbListG = CollectionUtils.graftListItem(dbList, tailStr='.txt')
         FileUtils.cleanAndMkdir(dbDir)

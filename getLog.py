@@ -230,6 +230,8 @@ def trimLog(uid,tmplogPath,tmpKlogPath,newlogPath):
 	fres.close()
 	if emptyFlag:
 		os.remove(newlogPath)
+		return False
+	return True
 
 if __name__ == "__main__":
 	desktopDir=os.path.join(os.path.expanduser("~"), 'Desktop')
@@ -365,7 +367,7 @@ if __name__ == "__main__":
 			l.warning("start to install apk, Hash:%s pkgName:%s apkName:%s !",apkHash, packageName, apkName)
 			
 			# start to install apkFile, set delayTime
-			delayTime = 50
+			delayTime = 100
 			t=MyThread(installApp,args=(apkItem,selectedDevId))
 			t.start()
 			t.join(delayTime)
@@ -407,9 +409,10 @@ if __name__ == "__main__":
 
 			#filter antivirus log
 			newlogPath=logDir+'/'+apkHash+'.txt'
-			trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
+			writenFlag = trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
 			# trimKlog(uid,packageName,tmpklogPath, newlogPath)
-			testedList.append(apkHash)
+			if writenFlag:
+				testedList.append(apkHash)
 			antiResHandle.flush()
 			testedIdx+=1
 			if testedIdx%10==0:
