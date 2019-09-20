@@ -190,7 +190,7 @@ def checkDeviceOn(selectedDevId):
 
 		if devId in res and 'not found' in res:
 			print("device shut down, try to reboot, timeId: {}".format(idx))
-			os.popen(rebootCmd).read()
+			execute_command(rebootCmd,2)
 			time.sleep(30)
 		elif 'file pushed' in res:
 			print("device is running!")
@@ -396,10 +396,10 @@ if __name__ == "__main__":
 			resDict = manager.dict()
 			myPool = Pool(2)
 			myPool.apply_async(log2file,args=(tmplogPath,uid,packageName,selectedDevId,testTime,interactFlag,))
-			# myPool.apply_async(loopGetKlog,args=(uid,selectedDevId,testTime+10,resDict,))
+			myPool.apply_async(loopGetKlog,args=(uid,selectedDevId,testTime+10,resDict,))
 			myPool.close()
 			myPool.join()
-			# writeFile(tmpklogPath,resDict['ret'])
+			writeFile(tmpklogPath,resDict['ret'])
 			
 			#uninstall/stop
 			if not keepAll:
@@ -409,10 +409,16 @@ if __name__ == "__main__":
 
 			#filter antivirus log
 			newlogPath=logDir+'/'+apkHash+'.txt'
+<<<<<<< Updated upstream
 			writenFlag = trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
 			# trimKlog(uid,packageName,tmpklogPath, newlogPath)
 			if writenFlag:
 				testedList.append(apkHash)
+=======
+			trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
+			trimKlog(uid,packageName,tmpklogPath, newlogPath)
+			testedList.append(apkHash)
+>>>>>>> Stashed changes
 			antiResHandle.flush()
 			testedIdx+=1
 			if testedIdx%10==0:

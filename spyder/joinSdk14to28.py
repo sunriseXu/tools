@@ -24,6 +24,7 @@ from modules import CollectionUtils,RexUtils
 
 
 destDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk_merged\\jsonRes'
+FileUtils.mkdir(destDir)
 # mergedFileName=[]
 mergedFileDict = {}
 
@@ -48,8 +49,9 @@ for i in range(0,15):
     #处理交集
     #检查其中的api是否有增加的
     for item in intersecName:
+        print(os.path.join(dirPath,item))
         lowerDict = FileUtils.readDict(os.path.join(dirPath,item))
-        # print(os.path.join(dirPath,item))
+        
         currentDict = mergedFileDict[item]
         currentFunctionDict = currentDict['Functions']
         lowerFunctionDict = lowerDict['Functions']

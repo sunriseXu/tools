@@ -8,7 +8,10 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import lxml
 from lxml import etree
+import uuid
+reload(sys)
 
+sys.setdefaultencoding('utf-8')
 
 
 pwd = os.path.dirname(os.path.realpath(__file__))
@@ -18,7 +21,8 @@ sys.path.append(ppwd)
 from modules import SpyderUtils
 from modules import FileUtils
 from modules import CollectionUtils,RexUtils, InteractUtils
-
+def create_uid():
+    return str(uuid.uuid1())
 def getMatchContent(description,rex,lowerFlag=False):
 	content=""
 	if lowerFlag:
@@ -34,6 +38,47 @@ def getAllTextByTag(ehtml,xRef):
     allDesc = []
     for hi in h:
         allDesc.append(hi.xpath('string(.)').strip())
+    return allDesc
+
+def getAllTextByTagDesc(ehtml,xRef):
+    h = ehtml.xpath(xRef)
+    allDesc = []
+    hrefs = []
+    if len(h) == 0:
+        return ''
+    for hi in h:
+        text = hi.xpath('string(.)').strip()
+        allDesc.append(text)
+        hreftmp = hi.xpath('.//a')
+        if len(hreftmp)>0:
+            hrefs = hrefs+hreftmp
+    allDesc = ''.join(allDesc)
+    # [' '.join(i.split()) for i in allDesc]
+    allDesc = ' '.join(allDesc.split())
+    # print allDesc
+    textWithHref = []
+    idx = 0
+    # print len(hrefs)
+    for href in hrefs:
+        idx += 1
+        links = href.xpath('@href')
+        subtexts = href.xpath('text()')
+        if len(links)==0 or len(subtexts)==0:
+            continue
+        link = links[0].strip()
+        subtext = subtexts[0].strip()
+        subtext = ' '.join(subtext.split()).strip()
+        if not subtext or '/reference/' not in link:
+            continue
+        textWithHref.append((subtext,link,create_uid()))
+    textWithHref = sorted(textWithHref,key = lambda i:len(i[0]),reverse=True)
+    # print textWithHref
+    for subtext,href,myTag in textWithHref:
+        # print 'replace {} to {}'.format(subtext, myTag)
+        allDesc = allDesc.replace(subtext,myTag)
+    for subtext,href,myTag in textWithHref:
+        # print 'replace {} to {}'.format(myTag, subtext)
+        allDesc = allDesc.replace(myTag,'[{}]({})'.format(subtext,href))
     return allDesc
 
 def getTableRows(myTable):
@@ -87,16 +132,48 @@ def getTableRowsLinks(myTable):
         if oneRow:
             allRows.append(oneRow[0])
     return allRows
-
-
+def getSeeAlso(ec):
+    seeAlsoList = []
+    seealso = ec.xpath('.//div')
+    for sc in seealso:
+        tmp = sc.xpath('.//p/b/text()')
+        if 'See also:' in ' '.join(tmp):
+            lis = sc.xpath('.//ul/li')
+            for li in lis:
+                hrefs = li.xpath('.//a/@href')
+                texts = li.xpath('string(.)').strip()
+                href = ''
+                if len(hrefs)>0:
+                    href = hrefs[0]
+                seeAlsoList.append([texts, href])
+            return seeAlsoList
+    return seeAlsoList
+def getSeeAlso2(ec):
+    seeAlsoList = []
+    seealso = ec.xpath('.//div[@class="jd-tagdata"]')
+    for sc in seealso:
+        tmp = sc.xpath('.//h5/text()')
+        if 'See Also' in ' '.join(tmp):
+            lis = sc.xpath('.//ul/li')
+            for li in lis:
+                hrefs = li.xpath('.//a/@href')
+                texts = li.xpath('string(.)').strip()
+                href = ''
+                if len(hrefs)>0:
+                    href = hrefs[0]
+                seeAlsoList.append([texts, href])
+            return seeAlsoList
+    return seeAlsoList
 
 
 def main(filePath, fileResDictDir, testedList, apiLevel):
+    print filePath
     htmlContent = FileUtils.readFile(filePath)
     # # # 类名：{继承关系：[], 方法：{方法名：{描述：str，参数：{param1:desc,param2:desc},返回：{类型：str，描述：str}}}}
     classDict = {}
 
     classDict['Inheritance'] = None
+    classDict['ClassDesc'] = ''
     classDict['Functions'] = {}
 
 
@@ -123,6 +200,18 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
     jsonName = jsonName.replace('>',')')
     jsonName = jsonName.replace('?','!')
     fileResDictPath = os.path.join(fileResDictDir, jsonName+'.json')
+
+    # 匹配类描述
+    if apiLevel in range(24,30):
+        classDescX = '//*[@id="jd-content"]/p[2]'
+        classDesc = getAllTextByTagDesc(se,classDescX)
+        classDict['ClassDesc'] = classDesc
+    else:
+        # //*[@id="jd-content"]/div[1]
+        classDescX = '//*[@id="jd-content"]/div[1]'
+        classDesc = getAllTextByTagDesc(se,classDescX)
+        classDict['ClassDesc'] = classDesc
+
 
     # 正则匹配每一个 类成员的描述段
     apiRex = r'<A NAME="(.*?)">.*?</A>'
@@ -170,14 +259,14 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
         allDesc = ''
         if apiLevel in range(24,30):
             # .//p and //p is totally different
-            allDesc = getAllTextByTag(ei,'.//p')
-            allDesc = ''.join(allDesc)
-            allDesc = ' '.join(allDesc.split())
+            allDesc = getAllTextByTagDesc(ei,'.//p')
+            # allDesc = ''.join(allDesc)
+            # allDesc = ' '.join(allDesc.split())
         elif apiLevel in [23,22,21,19,18,17,16,15,14]:
             #div class="jd-tagdata jd-tagdescr"
-            allDesc = getAllTextByTag(ei,'.//div[@class="jd-tagdata jd-tagdescr"]')
-            allDesc = ''.join(allDesc)
-            allDesc = ' '.join(allDesc.split())
+            allDesc = getAllTextByTagDesc(ei,'.//div[@class="jd-tagdata jd-tagdescr"]')
+            # allDesc = ''.join(allDesc)
+            # allDesc = ' '.join(allDesc.split())
         # # 至此 allDesc 字符串 包含所有描述
         
         functionDict['Description'] = allDesc
@@ -186,6 +275,7 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
         functionDict['Returns'] = ''
         functionDict['Throws'] = ''
         functionDict['Permissions'] = ''
+        functionDict['SeeAlso'] = ''
 
         # 观察到函数的permission在函数描述种，并且包含链接，指向特定permission路径
         permissionList = []
@@ -215,6 +305,8 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
                 else:
                     print 'some else'
                     print myTag
+            seeAlsoList = getSeeAlso(ei)
+            functionDict['SeeAlso'] = seeAlsoList
         elif apiLevel in [23,22,21,19,18,17,16,15,14]:
             # div class="jd-tagdata">
             tables = ei.xpath('//div[@class="jd-tagdata"]')
@@ -233,17 +325,26 @@ def main(filePath, fileResDictDir, testedList, apiLevel):
                     functionDict['Throws'] = allRows
                 else:
                     print 'some else'
+            seeAlsoList = getSeeAlso2(ei)
+            functionDict['SeeAlso'] = seeAlsoList
         # #至此，表格信息提取完毕
     # 将结果写入字典
     FileUtils.writeDict(classDict, fileResDictPath)
     return succList[-1]
 
 
-
+import argparse 
+import sys
 if __name__ == "__main__":
-    apiLevel = 25
+    parser = argparse.ArgumentParser(description="test!!")
+    parser.add_argument('-e', '--level', help='test time', nargs='?',type=int, default=25)
+    args = parser.parse_args() 
+    apiLevel = args.level
     # sdkRefDir = 'D:\\androidsdkdoc\\docs-%d\\reference' %apiLevel
     sdkRefDir = 'D:\\androidsdkdoc\\docs-%d\\offline-sdk\\reference' %apiLevel
+    if not os.path.exists(sdkRefDir):
+        print 'dir not exists!'
+        sys.exit()
     # sdkRefDir = 'D:\\Android\\android-sdk\\docs\\reference' 
     fileResDictDir = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk%d\\jsonRes' %apiLevel
     noFilePath = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk%d\\noFileError.txt' %apiLevel
@@ -263,20 +364,6 @@ if __name__ == "__main__":
         dirPath = os.path.dirname(oneHtmlPath)
         htmlContent = FileUtils.readFile(oneHtmlPath)
 
-        # tableSplitRex = r'<h2>.*?</h2>'
-        # segMents = RexUtils.rexSplit(tableSplitRex,htmlContent)
-        # classHtml = ''
-        # tables = ''
-        # for seg in segMents:
-        #     segName = RexUtils.rexFind(r'<h2>(.*?)</h2>',seg)
-        #     if segName:
-        #         segName = segName[0]
-        #     if 'Classes' in segName:
-        #         classHtml = seg
-        #         se = etree.HTML(classHtml)
-        #         tables = se.xpath('.//table')
-        #         if len(tables) == 0:
-        #             continue
         se = etree.HTML(htmlContent)
         tables = se.xpath('.//table')
 
