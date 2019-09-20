@@ -169,7 +169,7 @@ def unlockPhone(selectedDevId):
 	time.sleep(0.5)
 
 def startMonkey(packageName,selectedDevId):
-	useMonkeyCmd="adb"+selectedDevId+" shell monkey -v -v -v -s 123123 --throttle 800 --pct-touch 70 --pct-motion 10 --pct-appswitch 10  --pct-majornav 10  --pct-trackball 0 --ignore-crashes --ignore-timeouts --ignore-native-crashes -p %s 10000>nul" %(packageName)
+	useMonkeyCmd="adb"+selectedDevId+" shell monkey -v -v -v -s 123123 --throttle 500 --pct-touch 70 --pct-motion 10 --pct-appswitch 10  --pct-majornav 10  --pct-trackball 0 --ignore-crashes --ignore-timeouts --ignore-native-crashes -p %s 10000>nul" %(packageName)
 	os.popen(useMonkeyCmd).read()
 
 def stopMonkey(selectedDevId):

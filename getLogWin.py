@@ -176,30 +176,7 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag):
 
 def touchFile(selectedDevId):
 	cmd = 'adb %s push guard /sdcard/' %selectedDevId
-	return os.popen(cmd).read()
-
-def checkDeviceOn(selectedDevId):
-	idx = 0
-	devId = selectedDevId.split('-s')[1].strip()
-	rebootCmd = 'fastboot {} reboot'.format(selectedDevId)
-	while(True):
-		idx += 1
-		res = touchFile(selectedDevId)
-		print("check device on : push file res- {}".format(res))
-		# device shutdown
-
-		if devId in res and 'not found' in res:
-			print("device shut down, try to reboot, timeId: {}".format(idx))
-			execute_command(rebootCmd,2)
-			time.sleep(30)
-		elif 'file pushed' in res:
-			print("device is running!")
-			break
-		if idx > 5:
-			print("try to reboot device 5 times, but not work! check manually")
-			break
-
-
+	os.popen(cmd)
 def checkAppAlive(selectedDevId, pkgName):
 	# alive?
 	aliveCmd = 'adb %s shell "ps|grep %s"' %(selectedDevId, pkgName)
@@ -230,8 +207,6 @@ def trimLog(uid,tmplogPath,tmpKlogPath,newlogPath):
 	fres.close()
 	if emptyFlag:
 		os.remove(newlogPath)
-		return False
-	return True
 
 if __name__ == "__main__":
 	desktopDir=os.path.join(os.path.expanduser("~"), 'Desktop')
@@ -280,7 +255,6 @@ if __name__ == "__main__":
 	testedList=readList(testedFilePath)
 	notInstallList=readList(notInstallPath)
 	apkInfoDict=readDict(apkInfoPath)
-	indexErrorList = readList(errorFilePath)
 
 	devId,devNum=chooseDevice()
 	selectedDevId=" "
@@ -343,18 +317,12 @@ if __name__ == "__main__":
 				continue
 			if apkHash in notInstallList:
 				continue
-			if apkHash in indexErrorList:
-				continue
-
-			# todo check device is attached, otherwise, fastboot -s dev reboot
-			checkDeviceOn(selectedDevId)
-
 			l.warning(time.strftime('%H:%M:%S',time.localtime(time.time())))
 			touchFile(selectedDevId)
 			testingFlag = True
 			AdbRoot(selectedDevId)
 			unlockPhone(selectedDevId)
-			checkAppAlive(selectedDevId,'com.fdu.testcryptfile')
+			# checkAppAlive(selectedDevId,'com.fdu.testcryptfile')
 			
 
 			# query manifest for apkInfo
@@ -367,7 +335,7 @@ if __name__ == "__main__":
 			l.warning("start to install apk, Hash:%s pkgName:%s apkName:%s !",apkHash, packageName, apkName)
 			
 			# start to install apkFile, set delayTime
-			delayTime = 100
+			delayTime = 50
 			t=MyThread(installApp,args=(apkItem,selectedDevId))
 			t.start()
 			t.join(delayTime)
@@ -403,16 +371,16 @@ if __name__ == "__main__":
 			
 			#uninstall/stop
 			if not keepAll:
+				l.warning("uninstall app!!!")
 				uninstallApp(packageName,selectedDevId)
 			else:
 				stopApp(packageName,selectedDevId,pureStop)
 
 			#filter antivirus log
 			newlogPath=logDir+'/'+apkHash+'.txt'
-			writenFlag = trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
-			# trimKlog(uid,packageName,tmpklogPath, newlogPath)
-			if writenFlag:
-				testedList.append(apkHash)
+			trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
+			trimKlog(uid,packageName,tmpklogPath, newlogPath)
+			testedList.append(apkHash)
 			antiResHandle.flush()
 			testedIdx+=1
 			if testedIdx%10==0:
@@ -420,18 +388,16 @@ if __name__ == "__main__":
 		except IOError:
 			errorStr="IOError dealing with: %s\n" %(apkHash)
 			l.warning(errorStr)
-			# writeFile(errorFilePath,errorStr)
+			writeFile(errorFilePath,errorStr)	
 		except RuntimeError:
 			errorStr="RuntimeError dealing with: %s\n" %(apkHash)
 			l.warning(errorStr)
-			# writeFile(errorFilePath,errorStr)
+			writeFile(errorFilePath,errorStr)
 		except IndexError,e:
-			indexErrorList.append(apkHash)
-			# errorStr="IndexError dealing with: %s\n" %(apkHash)
-			# l.warning(errorStr)
+			errorStr="IndexError dealing with: %s\n" %(apkHash)
+			l.warning(errorStr)
 			l.warning(traceback.print_exc())
-			writeList(indexErrorList,errorFilePath)
-			# writeFile(errorFilePath,errorStr)
+			writeFile(errorFilePath,errorStr)
 	writeDict(apkInfoDict,apkInfoPath)
 	writeList(testedList,testedFilePath)
 	l.warning("all done!")
