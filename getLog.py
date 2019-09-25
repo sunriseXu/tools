@@ -396,10 +396,10 @@ if __name__ == "__main__":
 			resDict = manager.dict()
 			myPool = Pool(2)
 			myPool.apply_async(log2file,args=(tmplogPath,uid,packageName,selectedDevId,testTime,interactFlag,))
-			myPool.apply_async(loopGetKlog,args=(uid,selectedDevId,testTime+10,resDict,))
+			# myPool.apply_async(loopGetKlog,args=(uid,selectedDevId,testTime+10,resDict,))
 			myPool.close()
 			myPool.join()
-			writeFile(tmpklogPath,resDict['ret'])
+			# writeFile(tmpklogPath,resDict['ret'])
 			
 			#uninstall/stop
 			if not keepAll:

@@ -606,70 +606,70 @@ if __name__ == "__main__":
     
     # 统计所有出现的权限api
     # dirname = 'C:\\Users\\limin\\androidSdkInAll\\Desktop\\androidOnline\\sdk24'
-    dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes'
-    pathList = FileUtils.listDir(dirname)
-    functionCount = []
-    for myPath in pathList:
-        jsonDict = FileUtils.readDict(myPath)
-        className = jsonDict['ClassName']
-        functionDict = jsonDict['Functions']
-        # print myPath
-        for key,value in functionDict.items():
-            if value['Permissions']:
-                fullName = key
-                perms = value['Permissions']
-                for perm in perms:
-                    # print fullName
-                    # print perm
-                    perm = perm.split('#')
-                    if len(perm)==1:
-                        continue
-                    perm = perm[1]
-                    functionCount.append((className,fullName,perm))
+    # dirname = 'C:\\Users\\limin\\Desktop\\androidSdkJson\\sdk28\\jsonRes'
+    # pathList = FileUtils.listDir(dirname)
+    # functionCount = []
+    # for myPath in pathList:
+    #     jsonDict = FileUtils.readDict(myPath)
+    #     className = jsonDict['ClassName']
+    #     functionDict = jsonDict['Functions']
+    #     # print myPath
+    #     for key,value in functionDict.items():
+    #         if value['Permissions']:
+    #             fullName = key
+    #             perms = value['Permissions']
+    #             for perm in perms:
+    #                 # print fullName
+    #                 # print perm
+    #                 perm = perm.split('#')
+    #                 if len(perm)==1:
+    #                     continue
+    #                 perm = perm[1]
+    #                 functionCount.append((className,fullName,perm))
 
-                # print key,value['Permissions']
-    print len(functionCount)
-    resDict = {}
-    permissionlist = []
-    classList = []
-    functionList = []
-    for function in functionCount:
-        className = function[0]
-        functionName = function[1]
-        permission = function[2]
-        if permission not in permissionlist:
-            permissionlist.append(permission)
-        if className not in classList:
-            classList.append(className)
+    #             # print key,value['Permissions']
+    # print len(functionCount)
+    # resDict = {}
+    # permissionlist = []
+    # classList = []
+    # functionList = []
+    # for function in functionCount:
+    #     className = function[0]
+    #     functionName = function[1]
+    #     permission = function[2]
+    #     if permission not in permissionlist:
+    #         permissionlist.append(permission)
+    #     if className not in classList:
+    #         classList.append(className)
 
-        if permission not in resDict:
-            subDict = {className:[functionName]}
-            resDict.update({permission:subDict})
-        elif className not in resDict[permission]:
-            subDict = {className:[functionName]}
-            resDict[permission].update(subDict)
-        else:
-            resDict[permission][className].append(functionName)
-    FileUtils.writeDict(resDict,'./res.json')
-    print 'permission length:'
-    print len(permissionlist)
-    InteractUtils.showList(permissionlist)
-    FileUtils.writeList(permissionlist,'tmpOutO28.txt')
-    print 'class length'
-    print len(classList)
-    allDict = FileUtils.readDict('D:\\androidsdkdoc\\permission28.json')
+    #     if permission not in resDict:
+    #         subDict = {className:[functionName]}
+    #         resDict.update({permission:subDict})
+    #     elif className not in resDict[permission]:
+    #         subDict = {className:[functionName]}
+    #         resDict[permission].update(subDict)
+    #     else:
+    #         resDict[permission][className].append(functionName)
+    # FileUtils.writeDict(resDict,'./res.json')
+    # print 'permission length:'
+    # print len(permissionlist)
+    # InteractUtils.showList(permissionlist)
+    # FileUtils.writeList(permissionlist,'tmpOutO28.txt')
+    # print 'class length'
+    # print len(classList)
+    # allDict = FileUtils.readDict('D:\\androidsdkdoc\\permission28.json')
     
-    partList = FileUtils.readList('tmpOutO28.txt')
-    resList = []
-    for permission in partList:
-        tmp = ''
-        for key,value in allDict.items():
-            if permission in value:
-                tmp = key+'\t'+permission +'\t' +' '.join(resDict[permission].keys())
-                resList.append(tmp)
-    resList = sorted(resList)
-    FileUtils.writeList(resList, 'tmpOut28.txt')
-    FileUtils.writeDict()
+    # partList = FileUtils.readList('tmpOutO28.txt')
+    # resList = []
+    # for permission in partList:
+    #     tmp = ''
+    #     for key,value in allDict.items():
+    #         if permission in value:
+    #             tmp = key+'\t'+permission +'\t' +' '.join(resDict[permission].keys())
+    #             resList.append(tmp)
+    # resList = sorted(resList)
+    # FileUtils.writeList(resList, 'tmpOut28.txt')
+    # FileUtils.writeDict()
 
     # list1 = FileUtils.readList('tmpOut.txt')
     # list2 = FileUtils.readList('tmpOutO24.txt')
@@ -792,4 +792,51 @@ if __name__ == "__main__":
     # for item in fileList:
     #     content = FileUtils.readDict(item)
     
-        
+    # listPath = 'C:\\Users\\limin\\Desktop\\v4Log\\norule.txt'
+    # norulelist = FileUtils.readList(listPath)
+
+    # norulelist = CollectionUtils.graftListItem(norulelist,tailStr='.txt')
+
+    # srcdir = 'C:\\Users\\limin\\Desktop\\v4Log\\v1\\payTrain667\\logs\\traces'
+    # destdir = 'C:\\Users\\limin\\Desktop\\v4Log\\newv1PayTrain'
+    # FileUtils.listCopy(norulelist,srcdir,destdir)
+
+    # tDir = 'C:\\Users\\limin\\Desktop\\allMal'
+    # myPathList = FileUtils.listDirRecur(tDir)
+    # tmpList = []
+    # for item in myPathList:
+    #     if 'tmplog' in item or 'antivirusOut' in item or 'apkInfoDict' in item or \
+    #         'lastTest' in item or 'notInstalled' in item or 'error' in item or\
+    #             'tmpKlog' in item:
+    #         continue
+    #     if os.path.isfile(item):
+    #         tmpList.append(item)
+    # myPathList = tmpList
+    # # method_id: 6004
+    # allMethodIds = []
+    # rex = r'method_id: (\d+) '
+    # for mylog in myPathList:
+    #     content = FileUtils.readFile(mylog)
+    #     methodIds = RexUtils.rexFind(rex,content)
+    #     methodIds = list(set(methodIds))
+    #     allMethodIds = list(set(allMethodIds + methodIds)) 
+    # resPath = 'C:\\Users\\limin\\Desktop\\v4Log\\allMethodIds_old_mal.txt'
+    # FileUtils.writeList(allMethodIds, resPath)
+
+    # dir1 = 'C:\\Users\\limin\\Desktop\\v4Log\\allMethodIds_old.txt'
+    # dir2 = 'C:\\Users\\limin\\Desktop\\v4Log\\allMethodIds_new.txt'
+    # dirList1 = FileUtils.readList(dir1)
+    # dirList2 = FileUtils.readList(dir2)
+
+    # print('old diff new:')
+    # diffList = sorted(CollectionUtils.listDifference(dirList1,dirList2))
+    # print diffList
+    # FileUtils.writeList(diffList,'C:\\Users\\limin\\Desktop\\v4Log\\olddiffnew.txt')
+
+    # print('new diff old:')
+    # diffList = CollectionUtils.listDifference(dirList2,dirList1)
+    # print diffList
+
+    # FileUtils.writeList(tmpList,'C:\\Users\\limin\\Desktop\\v4Log\\allMethodIds_old.txt')
+
+    
