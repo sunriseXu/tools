@@ -839,4 +839,55 @@ if __name__ == "__main__":
 
     # FileUtils.writeList(tmpList,'C:\\Users\\limin\\Desktop\\v4Log\\allMethodIds_old.txt')
 
+    # allSteal = FileUtils.listDir3('G:\\newMalware\\malSteal')
+
+    # allMal1  = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\aa\\v1MalTest500.txt')
+    # allMal2  = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\aa\\v1MalTrain2000.txt')
+    # allMal3  = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\aa\\v2MalTest500.txt')
+    # allMal4  = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\aa\\v2MalTrain2000.txt')
+    # allMal = allMal1 + allMal2+allMal3+allMal4
+    # diffList = CollectionUtils.listDifference(allSteal, allMal)
+    # print(len(diffList))
+    # FileUtils.writeList(diffList,'C:\\Users\\limin\\Desktop\\stealext.txt')
+    v1MalTest = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v1MalTest.txt')
+    v1MalTrain = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v1MalTrain.txt')
+    v2MalTest = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v2MalTest.txt')
+    v2MalTrain = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v2MalTrain.txt')
+
+    cpApkList = v2MalTest
+    destDir = 'C:\\Users\\limin\\Desktop\\apks\\v1MalTest'
+    cpApkList = CollectionUtils.graftListItem(cpApkList,tailStr='.apk')
     
+
+    # dirList = [
+    #     'G:\\malware',
+    #     'G:\\newMalware',
+    #     ]
+    # allFileList = []
+    # for mydir in dirList:
+    #     allFileList = allFileList + FileUtils.listDirRecur(mydir)
+    # print(len(allFileList))
+    # rex = r'.*?\.apk'
+    # for item in allFileList:
+    #     res = RexUtils.rexFind(rex, item)
+    #     if not res:
+    #         allFileList.remove(item)
+    # print(len(allFileList))
+    # flen = len('FC63850CF209FE54953BE035296630BC.apk')
+    # # build map
+    # apkDict = {}
+    # rex = r'\\([^\\]*?\.apk)'
+    # for item in allFileList:
+    #     res = RexUtils.rexFind(rex, item)
+    #     if not res:
+    #         print item
+    #     elif len(res[0])!=flen:
+    #         print item
+    #     else:
+    #         bs = os.path.basename(item)
+    #         apkDict[bs] = item
+
+    # for item in cpApkList:
+    #     src = apkDict[item]
+    #     dest = os.path.join(destDir,item)
+    #     shutil.copy(src, dest)
