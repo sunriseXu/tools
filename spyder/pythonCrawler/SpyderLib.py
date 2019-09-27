@@ -5,13 +5,18 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-
+import logging
+from lxml import etree
+import uuid
 from bs4 import BeautifulSoup
 
 pwd = os.path.dirname(os.path.realpath(__file__))
 pwd = os.path.dirname(pwd)
 ppwd = os.path.dirname(pwd)
 sys.path.append(ppwd)
+
+logging.basicConfig(level=logging.DEBUG)
+l = logging.getLogger("spyderlib")
 class MySpyder:
     def __init__(self, *args, **kwargs):
         self.url = args[0]
@@ -95,6 +100,7 @@ class MySpyder:
                 f.write(res)
 
 
+
 def downloadFile(url, fileName):
     urllib.request.urlretrieve(url,fileName)
 
@@ -170,8 +176,40 @@ def scrawlXiciIp(num, xiciUrl='https://www.xicidaili.com/wt/'):
         time.sleep(5)
     ipList = list(set(ipList))
     return ipList
+def html2Xpath(srcPath=None):
+    if not os.path.exists(srcPath):
+        l.warning("srcPath does not exist!")
+        return None
+    parser = etree.HTMLParser(encoding="utf-8")
+    tree = etree.parse(srcPath, parser=parser)
+    return tree
+
+def getAllLink(element=None, rex=None):
+    if not element:
+        l.warning("element is none!")
+        return None
+    links = element.xpath("//@href")
+    return links
+
 
 if __name__ == "__main__":
+
+    htmlPath = '/home/limin/Desktop/llvmTu.html'
+    le = html2Xpath(htmlPath)
+    #/html/body/pre/a[22]
+    # / html / body / pre / a[1]
+    links = le.xpath('/html/body/pre/a/@href')
+    links = [i for i in links if '.pdf' in i]
+    print(links)
+    baselink = 'https://www.cs.cmu.edu/afs/cs/academic/class/15745-s12/public/lectures/'
+    baseDir = '/home/limin/Documents/jianguoyun/Nutstore/papers/cmu-llvm-compiler-pdf'
+    for link in links:
+        fLink = baselink + link
+        dst = os.path.join(baseDir,link)
+        l.debug('src: {}\ndst: {}'.format(fLink,dst))
+        downloadFile(fLink, dst)
+        l.debug('download {} done!'.format(fLink))
+
     url = 'http://www.baidu.com'
 
     # myDict = {
@@ -250,6 +288,8 @@ if __name__ == "__main__":
     # response = opener.open(request)
     # with open('testingProxy.html','w') as f:
     #     f.write(response.read().decode())
+
+
 
 
 
