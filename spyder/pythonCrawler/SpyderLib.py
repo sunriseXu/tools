@@ -194,18 +194,25 @@ def getAllLink(element=None, rex=None):
 
 if __name__ == "__main__":
 
-    htmlPath = '/home/limin/Desktop/llvmTu.html'
+    htmlPath = '/home/limin/Desktop/afs_cs_academic_class_15745-s16_www_lectures.html'
     le = html2Xpath(htmlPath)
     #/html/body/pre/a[22]
     # / html / body / pre / a[1]
-    links = le.xpath('/html/body/pre/a/@href')
+    # /html/body/table/tbody/tr[5]/td[2]/a
+    # /html/body/table/tbody/tr[4]/td[2]/a
+    # /html/body/table/tbody/tr[6]/td[2]/a
+    xp = '/html/body/table/tbody/tr/td/a/@href'
+    links = le.xpath(xp)
     links = [i for i in links if '.pdf' in i]
     print(links)
-    baselink = 'https://www.cs.cmu.edu/afs/cs/academic/class/15745-s12/public/lectures/'
-    baseDir = '/home/limin/Documents/jianguoyun/Nutstore/papers/cmu-llvm-compiler-pdf'
+    # baselink = 'https://www.cs.cmu.edu/afs/cs/academic/class/15745-s12/public/lectures/'
+    baselink = ''
+    baseDir = '/home/limin/Documents/jianguoyun/Nutstore/papers/cmu-llvm-compiler-pdf-2'
+    # os.makedirs(baseDir)
     for link in links:
+        fileName = os.path.basename(link)
         fLink = baselink + link
-        dst = os.path.join(baseDir,link)
+        dst = os.path.join(baseDir,fileName)
         l.debug('src: {}\ndst: {}'.format(fLink,dst))
         downloadFile(fLink, dst)
         l.debug('download {} done!'.format(fLink))

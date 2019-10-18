@@ -749,16 +749,315 @@ if __name__ == "__main__":
     # print('haveList length: %d' %len(haveList))
     # print('noList length: %d' %len(noList))
 
-    myDir = '/home/limin/Desktop/apks/huawei/todayApk-2019-08-15'
-    haveLen, noLen = getPermissionListLen(myDir)
-    print('haveList length: %d' %haveLen)
-    print('noList length: %d' %noLen)
+    # myDir = '/home/limin/Desktop/apks/huawei/todayApk-2019-08-15'
+    # haveLen, noLen = getPermissionListLen(myDir)
+    # print('haveList length: %d' %haveLen)
+    # print('noList length: %d' %noLen)
+    #
+    # DirList = [
+    #     '',
+    #     '',
+    #
+    # ]
 
-    DirList = [
-        '',
-        '',
+    # mydir = '/home/limin/Desktop/v4Log/v1Test/malpayTrain667/noRule'
+    # noruleList = FileUtils.listDir3(mydir)
+    # print(noruleList)
+    #
+    # destPath = '/home/limin/Desktop/v4Log/v1Test/malpayTrain667/norule.txt'
+    # FileUtils.writeList(noruleList,destPath)
+    # partNum = 2
+    # originPath = '/home/limin/Desktop/v1pkg/aa/split3/v2NorTrainPart4.txt'
+    # originList = FileUtils.readList(originPath)
+    # print(len(originList))
+    #
+    #
+    #
+    # errorPath = '/home/limin/Desktop/v4Log/v2/norTrain20000/part4/logs/error.txt'
+    # errorList = FileUtils.readList(errorPath)
+    # print(len(errorList))
+    #
+    # notInstallPath = '/home/limin/Desktop/v4Log/v2/norTrain20000/part4/logs/notInstalled.txt'
+    # notInstallList = FileUtils.readList(notInstallPath)
+    # print(len(notInstallList))
+    #
+    # testedPath = '/home/limin/Desktop/v4Log/v2/norTrain20000/part4/logs/lastTest.txt'
+    # testedList = FileUtils.readList(testedPath)
+    # print(len(testedList))
+    #
+    # testedList = testedList+errorList+notInstallList
+    # diffList = CollectionUtils.listDifference(originList,testedList)
+    # print("difflen:")
+    # print(len(diffList))
+    # difflen = len(diffList)
+    # half = difflen / 2
+    # part1 = random.sample(diffList,half)
+    # part2 = CollectionUtils.listDifference(diffList,part1)
+    # print('part1 && part 2')
+    # # print(len(CollectionUtils.listIntersection(part1,testedList)))
+    # p5Path = '/home/limin/Desktop/v4Log/v2/norTrain20000/part7.txt'
+    # p6Path = '/home/limin/Desktop/v4Log/v2/norTrain20000/part8.txt'
+    # FileUtils.writeList(part1,p5Path)
+    # FileUtils.writeList(part2,p6Path)
 
-    ]
+    # mydir = '/home/limin/Desktop/v4Log/v1Test/upDB/norTrain'
+    # mydir = '/home/limin/Desktop/v4Extr/nortrain/dbToUp'
+    # mypathList = FileUtils.listDir(mydir)
+    #
+    # timePath = '/home/limin/Desktop/v4Log/v1Test/timestamp.txt'
+    # actionPath = '/home/limin/Desktop/v4Log/v1Test/action.txt'
+    # uidPath = '/home/limin/Desktop/v4Log/v1Test/uid.txt'
+    # timeInvalid = []
+    # with open(timePath, "w") as f1,\
+    #         open(actionPath, "w") as f2,\
+    #         open(uidPath, "w") as f3:
+    #     for mypath in mypathList:
+    #         content = FileUtils.readList(mypath)
+    #         for line in content:
+    #             #time: 1567939248586, uid: 13846, method_id: 14001 Action_startProcessLocked
+    #             if 'time' not in line or 'uid' not in line or 'method_id' not in line:
+    #                 print(mypath + 'error in ' + line)
+    #                 continue
+    #             tmpList = line.split(',')
+    #             if len(tmpList) < 3:
+    #                 print(mypath + 'error in ' + line)
+    #                 continue
+    #             timestamp = tmpList[0].strip()
+    #             # if len(timestamp
+    #             timestamp = timestamp.split()
+    #             if len(timestamp) != 2:
+    #                 print(mypath+'error in '+line)
+    #                 continue
+    #             timestamp = timestamp[1].strip()
+    #             # tmp = int(timestamp)
+    #             # print(len(timestamp))
+    #             if len(timestamp) < 13:
+    #                 timeInvalid.append(os.path.basename(mypath))
+    #
+    #             uid = tmpList[1].strip()
+    #             uid = uid.split()
+    #             if len(uid) != 2:
+    #                 print(mypath+'error in '+line)
+    #                 continue
+    #             uid = uid[1].strip()
+    #             tmp = int(uid)
+    #             mid = tmpList[2].strip()
+    #             mid = mid.split()
+    #             if len(mid) < 2:
+    #                 print(mypath + 'error in ' + line)
+    #                 continue
+    #             mid = mid[1].strip()
+    #             tmp = int(mid)
+    #             f1.write(timestamp+'\n')
+    #             f2.write(uid+'\n')
+    #             f3.write(mid+'\n')
+    # print 'hello?'
+    # timeInvalid = list(set(timeInvalid))
+    # InteractUtils.showList(timeInvalid)
+    # part1dir = '/home/limin/Desktop/v4Log/v1/norTrain20000/part1/logs/traces'
+    # part2dir = '/home/limin/Desktop/v4Log/v1/norTrain20000/part2/logs/traces'
+    # part3dir = '/home/limin/Desktop/v4Log/v1/norTrain20000/part3/logs/traces'
+    # part4dir = '/home/limin/Desktop/v4Log/v1/norTrain20000/part4/logs/traces'
+    #
+    # part1pathList = FileUtils.listDir2(part1dir)
+    # part2pathList = FileUtils.listDir2(part2dir)
+    # part3pathList = FileUtils.listDir2(part3dir)
+    # part4pathList = FileUtils.listDir2(part4dir)
+    #
+    # p1 = []
+    # p2 = []
+    # p3 = []
+    # p4 = []
+    # for t in timeInvalid:
+    #     if t in part1pathList:
+    #         p1.append(t)
+    #     elif t in part2pathList:
+    #         p2.append(t)
+    #     elif t in part3pathList:
+    #         p3.append(t)
+    #     elif t in part4pathList:
+    #         p4.append(t)
+    #     else:
+    #         print(t+' no found')
+    # print('part1 len: '+str(len(p1)))
+    # print('part2 len: ' + str(len(p2)))
+    # print('part3 len: ' + str(len(p3)))
+    # print('part4 len: ' + str(len(p4)))
+    #
+    # p1 = CollectionUtils.trimListItem(p1,unTailStr='.txt')
+    # p2 = CollectionUtils.trimListItem(p2,unTailStr='.txt')
+    # FileUtils.writeList(p1,'/home/limin/Desktop/v4Log/v1/norTrain20000/p1_wrongTime.txt')
+    # FileUtils.writeList(p2, '/home/limin/Desktop/v4Log/v1/norTrain20000/p2_wrongTime.txt')
+
+    # p1 = '/home/limin/Desktop/v1pkg/aa/split3/v1NorTrain20000.txt'
+    # p2 = '/home/limin/Desktop/v1pkg/aa/split3/v1NorTest5000.txt'
+    # p3 = '/home/limin/Desktop/v1pkg/aa/split3/v2NorTrain20000.txt'
+    # p4 = '/home/limin/Desktop/v1pkg/aa/split3/v2NorTest5000.txt'
+    #
+    # list1 = FileUtils.readList(p1)
+    # list2 = FileUtils.readList(p2)
+    # list3 = FileUtils.readList(p3)
+    # list4 = FileUtils.readList(p4)
+    #
+    # p5 = '/home/limin/Desktop/apks/huawei/20190515_all'
+    # list5 = FileUtils.listDir3(p5)
+    # resList = CollectionUtils.listDifference(list5, list1+list2+list3+list4)
+    #
+    # FileUtils.writeList(resList,'/home/limin/Desktop/exceptv1v2.txt')
+    #拷贝apk
+    # v1MalTest = FileUtils.readList('totest/v4pkgname/v4db/v1MalTest.txt')
+    # v1MalTrain = FileUtils.readList('totest/v4pkgname/v4db/v1MalTrain.txt')
+    # v2MalTest = FileUtils.readList('totest/v4pkgname/v4db/v2MalTest.txt')
+    # v2MalTrain = FileUtils.readList('totest/v4pkgname/v4db/v2MalTrain.txt')
+    # v1NorTest = FileUtils.readList('totest/v4pkgname/v4db/v1NorTest.txt')
+    # v2NorTest = FileUtils.readList('totest/v4pkgname/v4db/v2NorTest.txt')
+    #
+    # cpApkList = v2NorTest
+    # destDir = '/home/limin/Desktop/stage2_apk/apks/v2NorTest'
+    # cpApkList = CollectionUtils.graftListItem(cpApkList, tailStr='.apk')
+    #
+    # dirList = [
+    #     '/home/limin/Desktop/apks/huawei/20190515_all',
+    #     '/home/limin/Desktop/apks/huawei/201902_all',
+    #     ]
+    # allFileList = []
+    # for mydir in dirList:
+    #     allFileList = allFileList + FileUtils.listDirRecur(mydir)
+    # print(len(allFileList))
+    # rex = r'.*?\.apk'
+    # for item in allFileList:
+    #     res = RexUtils.rexFind(rex, item)
+    #     if not res:
+    #         allFileList.remove(item)
+    # print(len(allFileList))
+    # apkDict = {}
+    # rex = r'/([^/]*?\.apk)'
+    # for item in allFileList:
+    #     res = RexUtils.rexFind(rex, item)
+    #     if not res:
+    #         print item
+    #     else:
+    #         bs = os.path.basename(item)
+    #         apkDict[bs] = item
+    # print(len(apkDict))
+    # print(len(cpApkList))
+    # for item in cpApkList:
+    #     src = apkDict[item]
+    #     dest = os.path.join(destDir,item)
+    #     shutil.copy(src, dest)
+#     /home/limin/Desktop/stage2_apk/apks/v1MalTest
+#     v1MalTest = FileUtils.listDir3('/home/limin/Desktop/stage2_apk/apks/v1MalTest')
+#     v2MalTest = FileUtils.listDir3('/home/limin/Desktop/stage2_apk/apks/v2MalTest')
+#     v1NorTest = FileUtils.listDir3('/home/limin/Desktop/stage2_apk/apks/v1NorTest')
+    # v2NorTest = FileUtils.listDir3('/home/limin/Desktop/stage2_apk/apks/v2NorTest')
+#
+#     FileUtils.writeList(v1MalTest,'/home/limin/Desktop/aaaa/v1MalTest.txt')
+#     FileUtils.writeList(v2MalTest, '/home/limin/Desktop/aaaa/v2MalTest.txt')
+#     FileUtils.writeList(v1NorTest, '/home/limin/Desktop/aaaa/v1NorTest.txt')
+#     FileUtils.writeList(v2NorTest, '/home/limin/Desktop/aaaa/v2NorTest.txt')
+
+    # rule137 = FileUtils.readList('/home/limin/Documents/jianguoyun/Nutstore/shareTemp/ruled137.txt')
+    # print(len(rule137))
+    # rule137 = CollectionUtils.trimListItem(rule137,unTailStr='\r')
+    # rule137 = CollectionUtils.graftListItem(rule137,'','.txt')
+    # srcDir = '/home/limin/Desktop/v4Log/v1Test/norRuled/ruled'
+    # destDir = '/home/limin/Desktop/v4Log/ruled137'
+    # for i in rule137:
+    #     src = os.path.join(srcDir,i)
+    #     dest = os.path.join(destDir,i)
+    #     shutil.copy(src,dest)
+    # newV2NorTest = FileUtils.readList('/home/limin/Documents/jianguoyun/Nutstore/shareTemp/newV2NorTest.txt')
+
+    # newV2NorTest = CollectionUtils.trimListItem(newV2NorTest,unTailStr='\r')
+    # inter = CollectionUtils.listIntersection(v2NorTest,newV2NorTest)
+    # print(len(inter))
+    # toDe = CollectionUtils.listDifference(v2NorTest,newV2NorTest)
+    # # print(toDe)
+
+    # toAdd = CollectionUtils.listDifference(newV2NorTest,v2NorTest)
+    # print(len(toAdd))
+    #delete tode
+    # toDe = CollectionUtils.graftListItem(toDe,tailStr='.apk')
+    # src = '/home/limin/Desktop/stage2_apk/apks/v2NorTest'
+    # for item in toDe:
+    #     srcApk = os.path.join(src,item)
+    #     os.remove(srcApk)
+
+    #add toAdd
+    # cpApkList = toAdd
+    # destDir = '/home/limin/Desktop/stage2_apk/apks/v2NorTest'
+    # cpApkList = CollectionUtils.graftListItem(cpApkList, tailStr='.apk')
+
+    # dirList = [
+    #     '/home/limin/Desktop/apks/huawei/20190515_all',
+    #     '/home/limin/Desktop/apks/huawei/201902_all',
+    #     ]
+    # allFileList = []
+    # for mydir in dirList:
+    #     allFileList = allFileList + FileUtils.listDirRecur(mydir)
+    # print(len(allFileList))
+    # rex = r'.*?\.apk'
+    # for item in allFileList:
+    #     res = RexUtils.rexFind(rex, item)
+    #     if not res:
+    #         allFileList.remove(item)
+    # print(len(allFileList))
+    # apkDict = {}
+    # rex = r'/([^/]*?\.apk)'
+    # for item in allFileList:
+    #     res = RexUtils.rexFind(rex, item)
+    #     if not res:
+    #         print item
+    #     else:
+    #         bs = os.path.basename(item)
+    #         apkDict[bs] = item
+    # print(len(apkDict))
+    # print(len(cpApkList))
+    # for item in cpApkList:
+    #     src = apkDict[item]
+    #     dest = os.path.join(destDir,item)
+    #     shutil.copy(src, dest)
+    # srcDir = '/home/limin/Desktop/tmpFp+fileman'
+    # myList = FileUtils.listDir(srcDir)
+    # destPath = '/home/limin/Desktop/v4Log/tmp.txt'
+    # lines = ''
+    # for item in myList:
+    #     apkHash = os.path.basename(item)
+    #     if '.apk' not in apkHash:
+    #         continue
+    #     packageName=AdbUtils.getApkInfo(item,"package: name=")
+    #     apkName=AdbUtils.getApkInfo(item,"label=")
+    #     print("apkHash:"+apkHash)
+    #     print("pkgName:"+packageName)
+    #     print("appName:"+apkName)
+    #     line = '{}\t{}\t{}\n'.format(apkHash,packageName,apkName)
+    #     lines+=line
+    # FileUtils.writeFile(destPath,lines)
+    # tmpdir = '/home/limin/Desktop/v4Log/v2Test/malrogTest167/dbToUp'
+    # dest  = '/home/limin/Desktop/v2Rog167.txt'
+    # todir = '/home/limin/Desktop/stage2_apk/apks/v2MalTest'
+    # rest = '/home/limin/Desktop/v2MalTest500.txt'
+    # myList = FileUtils.listDir3(tmpdir)
+    # alllist = FileUtils.listDir3(todir)
+    # # alllist = CollectionUtils.listDifference(alllist,myList)
+    # print(len(alllist))
+    # FileUtils.writeList(alllist,rest)
+    import subprocess
+    import time
+    antivirusOutPath = 'modelTest.txt'
+    filteredStr = 'ModelHandler'
+    logcmd = 'adb %s shell logcat -s "%s">>%s' %('-s D3H0117704000035',filteredStr,antivirusOutPath)
+    print logcmd
+    # logcmd=logcmd.strip().split()
+    modelHandler = subprocess.Popen(logcmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    while True:
+        print(modelHandler)
+        time.sleep(3)
+
+
+
+
+
 
 
 

@@ -175,11 +175,12 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag):
 
 
 def touchFile(selectedDevId):
-	cmd = 'adb %s push guard /sdcard/' %selectedDevId
+	cmd = 'adb %s push guard001 /sdcard/' %selectedDevId
 	return os.popen(cmd).read()
 
 def checkDeviceOn(selectedDevId):
 	idx = 0
+	rebootFlag = False
 	devId = selectedDevId.split('-s')[1].strip()
 	rebootCmd = 'fastboot {} reboot'.format(selectedDevId)
 	while(True):
@@ -191,6 +192,7 @@ def checkDeviceOn(selectedDevId):
 		if devId in res and 'not found' in res:
 			print("device shut down, try to reboot, timeId: {}".format(idx))
 			execute_command(rebootCmd,2)
+			rebootFlag = True
 			time.sleep(30)
 		elif 'file pushed' in res:
 			print("device is running!")
@@ -198,6 +200,7 @@ def checkDeviceOn(selectedDevId):
 		if idx > 5:
 			print("try to reboot device 5 times, but not work! check manually")
 			break
+	return rebootFlag
 
 
 def checkAppAlive(selectedDevId, pkgName):
@@ -306,6 +309,7 @@ if __name__ == "__main__":
 		'com.eg.android.AlipayGphone',
 		'com.example.limin.sendsmsoneline',
 		'com.sina.weibo',
+		'com.antivirus.dbconnector',
 		]
 	l.warning("uninstall thirdParty apps")
 	uninstallAllThird(selectedDevId,whiteList)
@@ -314,11 +318,11 @@ if __name__ == "__main__":
 	# antivirusOutPath = '%s/antivirusOut-%s.txt' %(logsDir,date)
 	fileName = 'antivirusOut-%s.txt' %(date)
 	antivirusOutPath = os.path.join(logsDir,fileName)
-	antiResHandle = open(antivirusOutPath, 'w')
-	filteredStr = 'Modelresult'
-	logcmd = 'adb %s shell logcat -s %s' %(selectedDevId,filteredStr)
-	logcmd=logcmd.strip().split()
-	p = subprocess.Popen(logcmd, stdout=antiResHandle,stderr=subprocess.PIPE)
+	# antiResHandle = open(antivirusOutPath, 'w')
+	filteredStr = 'ModelHandler'
+	logcmd = 'adb %s shell logcat -s %s >> %s' %(selectedDevId,filteredStr,antivirusOutPath)
+	# logcmd=logcmd.strip().split()
+	
 	
 	
 	testedIdx=len(testedList)
@@ -347,14 +351,18 @@ if __name__ == "__main__":
 				continue
 
 			# todo check device is attached, otherwise, fastboot -s dev reboot
-			checkDeviceOn(selectedDevId)
+			rebootFlag=checkDeviceOn(selectedDevId)
+			# if rebootFlag:
+			# 	subprocess.Popen(logcmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+			os.popen('adb {} logcat -G 8m'.format(selectedDevId))
 
 			l.warning(time.strftime('%H:%M:%S',time.localtime(time.time())))
 			touchFile(selectedDevId)
 			testingFlag = True
 			AdbRoot(selectedDevId)
 			unlockPhone(selectedDevId)
-			checkAppAlive(selectedDevId,'com.fdu.testcryptfile')
+			checkAppAlive(selectedDevId,'com.antivirus.dbconnector')
+			modelHandler = subprocess.Popen(logcmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 			
 
 			# query manifest for apkInfo
@@ -411,9 +419,11 @@ if __name__ == "__main__":
 			newlogPath=logDir+'/'+apkHash+'.txt'
 			writenFlag = trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
 			# trimKlog(uid,packageName,tmpklogPath, newlogPath)
+			writenFlag = True
 			if writenFlag:
 				testedList.append(apkHash)
-			antiResHandle.flush()
+			# antiResHandle.flush()
+			modelHandler.kill()
 			testedIdx+=1
 			if testedIdx%10==0:
 				uninstallAllThird(selectedDevId,whiteList)
