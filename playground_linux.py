@@ -910,41 +910,42 @@ if __name__ == "__main__":
     # v2MalTest = FileUtils.readList('totest/v4pkgname/v4db/v2MalTest.txt')
     # v2MalTrain = FileUtils.readList('totest/v4pkgname/v4db/v2MalTrain.txt')
     # v1NorTest = FileUtils.readList('totest/v4pkgname/v4db/v1NorTest.txt')
-    # v2NorTest = FileUtils.readList('totest/v4pkgname/v4db/v2NorTest.txt')
+    v2NorTest = FileUtils.readList('totest/v4pkgname/v4db/v2NorTest.txt')
     #
-    # cpApkList = v2NorTest
-    # destDir = '/home/limin/Desktop/stage2_apk/apks/v2NorTest'
-    # cpApkList = CollectionUtils.graftListItem(cpApkList, tailStr='.apk')
+    cpApkList = v2NorTest
+    destDir = '/home/xjchi/apks/huawei/v2NorTest'
+    FileUtils.mkdir(destDir)
+    cpApkList = CollectionUtils.graftListItem(cpApkList, tailStr='.apk')
     #
-    # dirList = [
-    #     '/home/limin/Desktop/apks/huawei/20190515_all',
-    #     '/home/limin/Desktop/apks/huawei/201902_all',
-    #     ]
-    # allFileList = []
-    # for mydir in dirList:
-    #     allFileList = allFileList + FileUtils.listDirRecur(mydir)
-    # print(len(allFileList))
-    # rex = r'.*?\.apk'
-    # for item in allFileList:
-    #     res = RexUtils.rexFind(rex, item)
-    #     if not res:
-    #         allFileList.remove(item)
-    # print(len(allFileList))
-    # apkDict = {}
-    # rex = r'/([^/]*?\.apk)'
-    # for item in allFileList:
-    #     res = RexUtils.rexFind(rex, item)
-    #     if not res:
-    #         print item
-    #     else:
-    #         bs = os.path.basename(item)
-    #         apkDict[bs] = item
-    # print(len(apkDict))
-    # print(len(cpApkList))
-    # for item in cpApkList:
-    #     src = apkDict[item]
-    #     dest = os.path.join(destDir,item)
-    #     shutil.copy(src, dest)
+    dirList = [
+        '/home/xjchi/apks/huawei/20190515_all',
+        '/home/xjchi/apks/huawei/201902_all',
+        ]
+    allFileList = []
+    for mydir in dirList:
+        allFileList = allFileList + FileUtils.listDirRecur(mydir)
+    print(len(allFileList))
+    rex = r'.*?\.apk'
+    for item in allFileList:
+        res = RexUtils.rexFind(rex, item)
+        if not res:
+            allFileList.remove(item)
+    print(len(allFileList))
+    apkDict = {}
+    rex = r'/([^/]*?\.apk)'
+    for item in allFileList:
+        res = RexUtils.rexFind(rex, item)
+        if not res:
+            print item
+        else:
+            bs = os.path.basename(item)
+            apkDict[bs] = item
+    print(len(apkDict))
+    print(len(cpApkList))
+    for item in cpApkList:
+        src = apkDict[item]
+        dest = os.path.join(destDir,item)
+        shutil.copy(src, dest)
 #     /home/limin/Desktop/stage2_apk/apks/v1MalTest
 #     v1MalTest = FileUtils.listDir3('/home/limin/Desktop/stage2_apk/apks/v1MalTest')
 #     v2MalTest = FileUtils.listDir3('/home/limin/Desktop/stage2_apk/apks/v2MalTest')
@@ -1042,17 +1043,17 @@ if __name__ == "__main__":
     # # alllist = CollectionUtils.listDifference(alllist,myList)
     # print(len(alllist))
     # FileUtils.writeList(alllist,rest)
-    import subprocess
-    import time
-    antivirusOutPath = 'modelTest.txt'
-    filteredStr = 'ModelHandler'
-    logcmd = 'adb %s shell logcat -s "%s">>%s' %('-s D3H0117704000035',filteredStr,antivirusOutPath)
-    print logcmd
-    # logcmd=logcmd.strip().split()
-    modelHandler = subprocess.Popen(logcmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-    while True:
-        print(modelHandler)
-        time.sleep(3)
+    # import subprocess
+    # import time
+    # antivirusOutPath = 'modelTest.txt'
+    # filteredStr = 'ModelHandler'
+    # logcmd = 'adb %s shell logcat -s "%s">>%s' %('-s D3H0117704000035',filteredStr,antivirusOutPath)
+    # print logcmd
+    # # logcmd=logcmd.strip().split()
+    # modelHandler = subprocess.Popen(logcmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    # while True:
+    #     print(modelHandler)
+    #     time.sleep(3)
 
 
 
