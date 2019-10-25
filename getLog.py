@@ -236,6 +236,28 @@ def trimLog(uid,tmplogPath,tmpKlogPath,newlogPath):
 		return False
 	return True
 
+def getAllMalDict(malDirs):
+	dirList = malDirs
+	allFileList = []
+	for mydir in dirList:
+		allFileList = allFileList + listDirRecur(mydir)
+	print(len(allFileList))
+	rex = r'.*?\.apk'
+	for item in allFileList:
+		res = rexFind(rex, item)
+		if not res:
+			allFileList.remove(item)
+	apkDict = {}
+	rex = r'\\([^\\]*?\.apk)'
+	for item in allFileList:
+		res = rexFind(rex, item)
+		if not res:
+			print item
+		else:
+			bs = os.path.basename(item)
+			apkDict[bs] = item
+	return apkDict
+
 if __name__ == "__main__":
 	desktopDir=os.path.join(os.path.expanduser("~"), 'Desktop')
 	parser = argparse.ArgumentParser(description="test!!")
@@ -275,6 +297,14 @@ if __name__ == "__main__":
 	else:
 		toTestFilePath = toTestPath
 
+	# malDirs = [
+	# 	'G:\\malware',
+	# 	'G:\\newMalware'
+	# ]
+	# allMalDict = getAllMalDict(malDirs)
+	# writeDict(allMalDict,"totest/allMalPathDict.json")
+	allMalDict = readDict("totest/allMalPathDict.json")
+	
 	mkdir(tmplogDir)
 	mkdir(logDir)
 	mkdir(klogDir)
@@ -295,7 +325,8 @@ if __name__ == "__main__":
 		l.warning("no device attached!")
 		sys.exit()
 	
-	apkItems=listDir(dirName,appName)
+	# apkItems=listDir(dirName,appName)
+	apkItems = allMalDict.values()
 	itemLen=len(apkItems)
 	if testInListFlag:
 		itemLen=len(toTestList)

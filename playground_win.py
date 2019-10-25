@@ -849,14 +849,14 @@ if __name__ == "__main__":
     # diffList = CollectionUtils.listDifference(allSteal, allMal)
     # print(len(diffList))
     # FileUtils.writeList(diffList,'C:\\Users\\limin\\Desktop\\stealext.txt')
-    v1MalTest = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v1MalTest.txt')
-    v1MalTrain = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v1MalTrain.txt')
-    v2MalTest = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v2MalTest.txt')
-    v2MalTrain = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v2MalTrain.txt')
+    # v1MalTest = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v1MalTest.txt')
+    # v1MalTrain = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v1MalTrain.txt')
+    # v2MalTest = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v2MalTest.txt')
+    # v2MalTrain = FileUtils.readList('C:\\Users\\limin\\Desktop\\v1pkg\\v4db\\v2MalTrain.txt')
 
-    cpApkList = v2MalTest
-    destDir = 'C:\\Users\\limin\\Desktop\\apks\\v1MalTest'
-    cpApkList = CollectionUtils.graftListItem(cpApkList,tailStr='.apk')
+    # cpApkList = v2MalTest
+    # destDir = 'C:\\Users\\limin\\Desktop\\apks\\v1MalTest'
+    # cpApkList = CollectionUtils.graftListItem(cpApkList,tailStr='.apk')
     
 
     # dirList = [
@@ -891,3 +891,71 @@ if __name__ == "__main__":
     #     src = apkDict[item]
     #     dest = os.path.join(destDir,item)
     #     shutil.copy(src, dest)
+    # basedir = './0emptyDirs'
+    # for i in range(0,1001):
+    #     tmpdir = 'tmp_{}'.format(i)
+    #     tmpdir = os.path.join(basedir,tmpdir)
+    #     FileUtils.mkdir(tmpdir)
+    # pkgD = EasyDir('C:\\Users\\limin\\Desktop\\aaaa')
+    # pkgDict = pkgD.getAbsPathDict()
+    # v1NorTrain = FileUtils.readList(pkgDict['v1NorTrain.txt'])
+    # v1NorTest  = FileUtils.readList(pkgDict['v1NorTest.txt'])
+    # v1MalTrain = FileUtils.readList(pkgDict['v1MalTrain.txt'])
+    # v1MalTest  = FileUtils.readList(pkgDict['v1MalTest.txt'])
+    # v2NorTrain = FileUtils.readList(pkgDict['v2NorTrain.txt'])
+    # v2NorTest  = FileUtils.readList(pkgDict['v2NorTest.txt'])
+    # v2MalTrain = FileUtils.readList(pkgDict['v2MalTrain.txt'])
+    # v2MalTest  = FileUtils.readList(pkgDict['v2MalTest.txt'])
+
+    # # print(len(v1NorTrain))
+    # print(len(CollectionUtils.listIntersection(v2MalTrain,v1MalTest)))
+    # v1apkMalTest = FileUtils.readList('F:\\aaaa\\v1MalTest.txt')
+    # v2apkMalTest = FileUtils.readList('F:\\aaaa\\v2MalTest.txt')
+    # v1apkNorTest = FileUtils.readList('F:\\aaaa\\v1NorTest.txt')
+    # v2apkNorTest = FileUtils.readList('F:\\aaaa\\v2NorTest.txt')
+    # print(len(CollectionUtils.listIntersection(v2apkNorTest,v2NorTest)))
+
+    # pkgD = EasyDir('C:\\Users\\limin\\Desktop\\aaaa')
+    # pkgDict = pkgD.getAbsPathDict()
+    # norRuled = FileUtils.readList(pkgDict['norRuled.txt'])
+    # v2NorTest  = FileUtils.readList(pkgDict['v2NorTest.txt'])
+    # v2deleteFp = FileUtils.readList(pkgDict['v2deleteFp.txt'])
+    # v2New = FileUtils.readList('C:\\Users\\limin\\Desktop\\newV2NorTest.txt')
+    # v2NorTest = CollectionUtils.trimListItem(v2NorTest,unTailStr='\r')
+    # v2New = CollectionUtils.trimListItem(v2New,unTailStr='\r')
+    # print(len(norRuled))
+    # print(len(v2NorTest))
+    # print(len(v2deleteFp))
+    # print(len(CollectionUtils.listIntersection(v2NorTest, v2New)))
+    # print('done')
+    # print(len(v2NorTest))
+    # delete124 = random.sample(v2NorTest,124)
+    # print(len(delete124))
+    # delete from test2NorTest where pkgName="C100188771";
+    # qString = ''
+    # for i in delete124:
+    #     qString += 'delete from test2NorTest where pkgName="{}";\n'.format(i)
+    # FileUtils.writeFile('C:\\Users\\limin\\Desktop\\aaaa\\query.txt',qString)
+    # ruled136 = random.sample(norRuled,137)
+    # print(len(CollectionUtils.listIntersection(ruled136,v2NorTest)))
+    # FileUtils.writeList(ruled136,'C:\\Users\\limin\\Desktop\\aaaa\\ruled137.txt')
+
+    leng = 16383
+    tmppath = 'C:\\Users\\limin\\Desktop\\tmpfile.txt'
+    def genStr(mystr,length):
+        res = ''
+        for i in range(0,length):
+            res += mystr
+        return res
+    res = genStr('a',leng)
+    FileUtils.writeFile(tmppath,res)
+
+    res = FileUtils.readFile(tmppath)
+    res = res.strip()
+    print(res)
+    print(len(res))
+    
+    
+
+
+    
