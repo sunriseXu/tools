@@ -71,7 +71,7 @@ if __name__ == '__main__':
     currTime = yesterday.strftime('%Y-%m-%d')
     sessionName = 'evaluate-{}'.format(currTime)
     screenKillSession(sessionName)
-    cmd = 'python3 /home/limin/antivirus_evaluation/AntiVirus/ml/Evaluation.py'
+    cmd = 'python3 /home/limin/Desktop/Eva/Evaluation.py'
     cmdList = [
         'screen -dmS {}'.format(sessionName),
         'screen -S {} -X stuff "{}\n"'.format(sessionName, cmd),

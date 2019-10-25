@@ -157,6 +157,7 @@ def chooseDevice():
 
 def unlockPhone(selectedDevId):
 	checkLockedCmd='adb'+selectedDevId+' shell "dumpsys window policy|grep isStatusBarKeyguard"'
+	print(checkLockedCmd)
 	res = os.popen(checkLockedCmd).read()
 	if "false" in res:
 		swipeCmd="adb"+selectedDevId+" shell input swipe 500 1000 500 0"

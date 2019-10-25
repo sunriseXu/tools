@@ -47,7 +47,7 @@ def startTmate():
 
 
 if __name__ == '__main__':
-    yesterday = datetime.today()+ timedelta(-1)
+    yesterday = datetime.today()#+ timedelta(-1)
     currTime = yesterday.strftime('%Y-%m-%d')
     cmdList = [
         'screen -dmS downApk-{}'.format(currTime),

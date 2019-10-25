@@ -222,10 +222,10 @@ def trimLog(uid,tmplogPath,tmpKlogPath,newlogPath):
 	while line:
 		line = str(line).strip()
 		myFilter="uid: "+uid
-		myFilter2 = 'AntiVirusService: time:'
+		myFilter2 = 'SocketHandler: time:'
 		myFileter3 = 'Message from kernel'
 		if myFilter in line and myFilter2 in line and myFileter3 not in line: 
-			line_list=line.split("AntiVirusService: ")
+			line_list=line.split("SocketHandler: ")
 			if line_list and line_list[1].startswith('time:'):
 				emptyFlag=0
 				fres.write(line_list[1]+'\n')          

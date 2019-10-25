@@ -66,18 +66,41 @@ def screenKillSession(sessionName):
             ]
             exeCmdList(cmdList, zshEnv)
             print('kill old session done!')
-
+def createTable(tableName):
+    import pymysql
+    # 打开数据库连接
+    #10.141.209.138:6603 -d antivirus -u antivirus -s antivirus -t test2NorTest
+    db = pymysql.connect(host="10.141.209.138",port=6603,user="antivirus",password="antivirus",database="antivirus" )
+    # 使用 cursor() 方法创建一个游标对象 cursor
+    cursor = db.cursor()
+    # 使用 execute() 方法执行 SQL，如果表存在则删除
+    cursor.execute("DROP TABLE IF EXISTS {}".format(tableName))
+    # 使用预处理语句创建表
+    sql = """create table {}
+        (
+        GUID      varchar(255) not null,
+        pkgName   varchar(255) not null,
+        timestamp varchar(255) not null,
+        ActionID  int          not null
+        )""".format(tableName)
+    print(sql)
+    cursor.execute(sql)
+    print("CREATE TABLE OK")
+    # 关闭数据库连接
+    db.close()
 if __name__ == '__main__':
     yesterday = datetime.today()+ timedelta(-1)
     currTime = yesterday.strftime('%Y-%m-%d')
+    desktopDir='/home/limin/Desktop/'#os.path.join(os.path.expanduser("~"), 'Desktop')
 
-    ipAndPort = 'localhost:3306'
-    account = 'root'
-    passwd = 'xcz1995818123'
+    ipAndPort = '10.141.209.138:6603'
+    account = 'antivirus'
+    passwd = 'antivirus'
     dbName = 'antivirus'
     tableName = 'per_day_{}'.format(yesterday.strftime('%Y_%m_%d'))
-    upScript = '/home/limin/Desktop/mygit/tools/oneShot_perday.py'
-    upDir = '/home/limin/Desktop/logs_today/logs_today-{}'.format(currTime)
+    createTable(tableName)
+    upScript = '{}/mygit/tools/oneShot_perday.py'.format(desktopDir)
+    upDir = '{}/logs_today/logs_today-{}'.format(desktopDir,currTime)
     upCmd = 'python {} -d {} -i {} -u {} -s {} -b {} -t {}'.format(upScript,upDir,ipAndPort,account,passwd,dbName,tableName)
     print(upCmd)
     # python oneShot_perday.py -d ~/Desktop/logs_today/logs_today0729/ -i localhost:3306 -u root -s xcz1995818123 -b antivirus -t per_day_0701
@@ -92,7 +115,7 @@ if __name__ == '__main__':
         'screen -S {} -X stuff "{}\n"'.format(sessionName,upCmd),
     ]
     print(cmdList)
-    res = exeCmdList(cmdList, zshEnv)
+    res = exeCmdList(cmdList)
     # one shot脚本在这里不能用了,因为,上传到数据库得trace是专门测试用的,所以不能经过rule得筛选
     #上传脚本之前把测试session关闭
     #screen -X -S {} quit

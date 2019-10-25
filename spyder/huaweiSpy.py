@@ -43,7 +43,7 @@ def downloadFile(dlink,savePath):
 debug = False
 testAmount=10
 pwd = os.path.dirname(os.path.realpath(__file__))
-yesterday = datetime.today() + timedelta(-1)
+yesterday = datetime.today() #+ timedelta(-1)
 
 currTime = yesterday.strftime('%Y-%m-%d')
 

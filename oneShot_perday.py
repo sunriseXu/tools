@@ -89,6 +89,7 @@ if __name__ == "__main__":
     # 如果存在分批测试得情况,需要merge
     partPathList = []
     childPath = wkDirDict.values()
+    traceDir = ""
     for cp in childPath:
         if os.path.isfile(cp):
             continue
@@ -123,7 +124,7 @@ if __name__ == "__main__":
     FileUtils.listCopy(validList, tracesDir, validDir)
     # 所有的筛选都完成了，接下来，将normal为通过rule的样本随机挑选对应的数量拷贝到特定目录上传到数据库
 
-    uploadTracesDB(validDir,ipAndPort,dbName,account,passwd,tableName, upDBbin)
+    uploadTracesDB(traceDir,ipAndPort,dbName,account,passwd,tableName, upDBbin)
 
 
 
