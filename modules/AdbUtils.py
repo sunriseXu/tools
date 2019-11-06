@@ -186,9 +186,28 @@ def pullFile(selectedDevId,srcPath, destPath,timeout=10):
 	# some issue here, if timeout not set, the process will hang! to do
 	res = execute_command(cmd,timeout)
 	# l.warning(res)
-
+def rebootRecovery(selectedDevId):
+	'''
+	enter recovery mode, to wipe data!
+	'''
+	cmd = 'adb {} reboot recovery'.format(selectedDevId)
+	execute_command(cmd)
 # def pullRootFile(selectedDevId, srcPath, destPath, timeout=10):
-
+def getDevices():
+	adbCmd="adb devices"
+	res =os.popen(adbCmd).read()
+	res = res.strip().split('\n')
+	res = [i.strip().split()[0:2] for i in res]
+	res = [i[0] for i in res if "device" in i]
+	res1=[]
+	for item in res:
+		if item not in res1:
+			res1.append(item)
+	return res1
+def getPhoneModel(selectedDevId):
+	cmd = 'adb {} shell getprop ro.product.model'.format(selectedDevId)
+	res = os.popen(cmd).read()
+	return res
 
 
 if __name__ == "__main__":

@@ -75,7 +75,7 @@ if __name__ == "__main__":
     account = args.user
     passwd = args.passwd
     tableName = args.tablename
-    upDBbin='/home/limin/Desktop/v3_log/logUpload.jar'
+    upDBbin='/home/limin/Desktop/filterAnduploadBin/logUpload.jar'
 
     pwd = os.path.dirname(os.path.realpath(__file__))
     abandonBin = os.path.join(pwd, 'examples/filterLog.py')
@@ -104,8 +104,10 @@ if __name__ == "__main__":
             FileUtils.listCopy2(ppItems, mergedDir)
         print('Merge %s done!' %wkPath)
 
-
-    tracesDir = os.path.join(wkPath, 'logs/traces')
+    print("wkpath "+wkPath)
+    tracesDir = wkPath+'/logs/traces'
+    print("tracesDir:"+tracesDir)
+    
     allTraceList = FileUtils.listDir3(tracesDir)
     shortOrInvalidPath = os.path.join(wkPath, 'shortInvalid.txt')
     shortOrInvalidDir = os.path.join(wkPath, 'shortInvalid')
@@ -124,7 +126,7 @@ if __name__ == "__main__":
     FileUtils.listCopy(validList, tracesDir, validDir)
     # 所有的筛选都完成了，接下来，将normal为通过rule的样本随机挑选对应的数量拷贝到特定目录上传到数据库
 
-    uploadTracesDB(traceDir,ipAndPort,dbName,account,passwd,tableName, upDBbin)
+    uploadTracesDB(tracesDir,ipAndPort,dbName,account,passwd,tableName, upDBbin)
 
 
 

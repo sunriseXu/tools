@@ -214,7 +214,7 @@ def checkAppAlive(selectedDevId, pkgName):
 	return 
 	
 	
-def trimLog(uid,tmplogPath,tmpKlogPath,newlogPath):
+def trimLog(uid,tmplogPath,tmpKlogPath,newlogPath,logTag):
 	f = open(tmplogPath,'rb')
 	emptyFlag=1
 	fres=open(newlogPath,'w')
@@ -222,10 +222,10 @@ def trimLog(uid,tmplogPath,tmpKlogPath,newlogPath):
 	while line:
 		line = str(line).strip()
 		myFilter="uid: "+uid
-		myFilter2 = 'SocketHandler: time:'
+		myFilter2 = '{}: time:'.format(logTag)
 		myFileter3 = 'Message from kernel'
 		if myFilter in line and myFilter2 in line and myFileter3 not in line: 
-			line_list=line.split("SocketHandler: ")
+			line_list=line.split("{}: ".format(logTag))
 			if line_list and line_list[1].startswith('time:'):
 				emptyFlag=0
 				fres.write(line_list[1]+'\n')          
@@ -248,7 +248,7 @@ def getAllMalDict(malDirs):
 		if not res:
 			allFileList.remove(item)
 	apkDict = {}
-	rex = r'\\([^\\]*?\.apk)'
+	rex = r'/([^/]*?\.apk)'
 	for item in allFileList:
 		res = rexFind(rex, item)
 		if not res:
@@ -280,7 +280,7 @@ if __name__ == "__main__":
 	interactFlag=args.interact
 	keepAll=args.keepall
 	logsDir=args.logsdir
-	kernelflag=args.kernel
+	normalflag=args.kernel
 	pureStop=True
 	testInListFlag=args.totest
 	toTestPath = args.totestPath
@@ -298,18 +298,19 @@ if __name__ == "__main__":
 		toTestFilePath = toTestPath
 
 	# malDirs = [
-	# 	'G:\\malware',
-	# 	'G:\\newMalware'
+	# 	'/home/limin/Desktop/allMalware',
 	# ]
 	# allMalDict = getAllMalDict(malDirs)
-	# writeDict(allMalDict,"totest/allMalPathDict.json")
-	allMalDict = readDict("totest/allMalPathDict.json")
+	# writeDict(allMalDict,"totest/allMalPathDict-linux.json")
+	pwd = os.path.dirname(os.path.realpath(__file__))
+	allMalDict = readDict(pwd+"/totest/allMalPathDict-linux.json")
 	
 	mkdir(tmplogDir)
 	mkdir(logDir)
 	mkdir(klogDir)
 
 	toTestList=readList(toTestFilePath)
+	toTestList=[i.strip() for i in toTestList]
 	testedList=readList(testedFilePath)
 	notInstallList=readList(notInstallPath)
 	apkInfoDict=readDict(apkInfoPath)
@@ -324,9 +325,10 @@ if __name__ == "__main__":
 	else:
 		l.warning("no device attached!")
 		sys.exit()
-	
-	# apkItems=listDir(dirName,appName)
-	apkItems = allMalDict.values()
+	if normalflag:
+		apkItems=listDir(dirName,appName)
+	else:
+		apkItems = allMalDict.values()
 	itemLen=len(apkItems)
 	if testInListFlag:
 		itemLen=len(toTestList)
@@ -353,12 +355,20 @@ if __name__ == "__main__":
 	filteredStr = 'ModelHandler'
 	logcmd = 'adb %s shell logcat -s %s >> %s' %(selectedDevId,filteredStr,antivirusOutPath)
 	# logcmd=logcmd.strip().split()
+	phoneModel = getPhoneModel(selectedDevId)
+	print("phoneModel:"+phoneModel)
+	logTag = ''
+	if 'kirin' in phoneModel:
+		logTag = 'SocketHandler'
+	else:
+		logTag = 'AntiVirusService'
 	
-	
-	
+	print(logTag)
+	# print(toTestList)
 	testedIdx=len(testedList)
 	testingFlag = False
 	for apkItem in apkItems:
+		# print(apkItem)
 		if testedIdx>maxLength:
 			break
 		if testedIdx and testedIdx%2==0 and testingFlag: 
@@ -370,17 +380,18 @@ if __name__ == "__main__":
 		try:
 			apkHash=os.path.basename(apkItem)
 			apkHash= os.path.splitext(apkHash)[0]
-			
+			# print(apkHash)
+			# print(len(toTestList))
 			if testInListFlag and (apkHash not in toTestList):
 				continue
-			
+			# print(apkHash)
 			if apkHash in testedList:
 				continue
 			if apkHash in notInstallList:
 				continue
 			if apkHash in indexErrorList:
 				continue
-
+			print(apkHash)
 			# todo check device is attached, otherwise, fastboot -s dev reboot
 			rebootFlag=checkDeviceOn(selectedDevId)
 			# if rebootFlag:
@@ -448,7 +459,7 @@ if __name__ == "__main__":
 
 			#filter antivirus log
 			newlogPath=logDir+'/'+apkHash+'.txt'
-			writenFlag = trimLog(uid,tmplogPath,tmpklogPath,newlogPath)
+			writenFlag = trimLog(uid,tmplogPath,tmpklogPath,newlogPath,logTag)
 			# trimKlog(uid,packageName,tmpklogPath, newlogPath)
 			writenFlag = True
 			if writenFlag:
