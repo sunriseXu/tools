@@ -20,7 +20,8 @@ from datetime import datetime
 from multiprocessing import Process
 from multiprocessing import Pool
 from configparser import ConfigParser
-
+import pymysql
+import re
 logging.basicConfig()
 l = logging.getLogger("playground")
 
@@ -42,6 +43,39 @@ def uploadTracesDB(myDir, ipAndPort,dbName,account,passwd,tableName, upDBbin, de
     print('uploading thread done ..')
     if debug:
         print(res)
+def table_exists(con,table_name):
+    sql = "show tables;"
+    con.execute(sql)
+    tables = [con.fetchall()]
+    table_list = re.findall('(\'.*?\')',str(tables))
+    table_list = [re.sub("'",'',each) for each in table_list]
+    if table_name in table_list:
+        return 1
+    else:
+        return 0
+
+def createTable(tableName):
+    
+    # 打开数据库连接
+    #10.141.209.138:6603 -d antivirus -u antivirus -s antivirus -t test2NorTest
+    db = pymysql.connect(host="10.141.209.138",port=6603,user="antivirus",password="antivirus",database="antivirus" )
+    # 使用 cursor() 方法创建一个游标对象 cursor
+    cursor = db.cursor()
+    # 使用 execute() 方法执行 SQL，如果表存在则删除
+    cursor.execute("DROP TABLE IF EXISTS {}".format(tableName))
+    # 使用预处理语句创建表
+    sql = """create table {}
+        (
+        GUID      varchar(255) not null,
+        pkgName   varchar(255) not null,
+        timestamp varchar(255) not null,
+        ActionID  int          not null
+        )""".format(tableName)
+    print(sql)
+    cursor.execute(sql)
+    print("CREATE TABLE OK")
+    # 关闭数据库连接
+    db.close()
 # 1.首先每日下载app在凌晨进行，然后测试app在每日7点开始
 # python3 huaweiSpy.py && python3 downloadApk.py
 # 定时完成测试 完成 检查下载是否完成

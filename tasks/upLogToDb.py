@@ -89,7 +89,7 @@ def createTable(tableName):
     # 关闭数据库连接
     db.close()
 if __name__ == '__main__':
-    yesterday = datetime.today()+ timedelta(-27)
+    yesterday = datetime.today()+ timedelta(-42)
     currTime = yesterday.strftime('%Y-%m-%d')
     desktopDir='/home/limin/Desktop'#os.path.join(os.path.expanduser("~"), 'Desktop')
 

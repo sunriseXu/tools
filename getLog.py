@@ -170,7 +170,7 @@ def log2file(filePath,uid,packageName,selectedDevId,testTime,interactFlag):
 		l.warning('MonkeyTesting time: %d', endTime-startTime)
 	logcat_file.flush()
 	l.warning("stop MonkeyTest...")
-	handle.terminate()
+	handle.kill()
 	stopMonkey(selectedDevId)
 
 
@@ -298,12 +298,13 @@ if __name__ == "__main__":
 		toTestFilePath = toTestPath
 
 	# malDirs = [
-	# 	'/home/limin/Desktop/allMalware',
+	# 	'/home/limin/Desktop/apks/huawei/201902_all',
+	# 	'/home/limin/Desktop/apks/huawei/20190515_all'
 	# ]
 	# allMalDict = getAllMalDict(malDirs)
-	# writeDict(allMalDict,"totest/allMalPathDict-linux.json")
+	# writeDict(allMalDict,"totest/allNorPathDict-linux.json")
 	pwd = os.path.dirname(os.path.realpath(__file__))
-	allMalDict = readDict(pwd+"/totest/allMalPathDict-linux.json")
+	allApkDict = readDict(pwd+"/totest/allNorPathDict-linux.json")
 	
 	mkdir(tmplogDir)
 	mkdir(logDir)
@@ -328,7 +329,7 @@ if __name__ == "__main__":
 	if normalflag:
 		apkItems=listDir(dirName,appName)
 	else:
-		apkItems = allMalDict.values()
+		apkItems = allApkDict.values()
 	itemLen=len(apkItems)
 	if testInListFlag:
 		itemLen=len(toTestList)
@@ -348,10 +349,8 @@ if __name__ == "__main__":
 	uninstallAllThird(selectedDevId,whiteList)
 
 	date = time.strftime('%H-%M-%S',time.localtime(time.time()))
-	# antivirusOutPath = '%s/antivirusOut-%s.txt' %(logsDir,date)
 	fileName = 'antivirusOut-%s.txt' %(date)
 	antivirusOutPath = os.path.join(logsDir,fileName)
-	# antiResHandle = open(antivirusOutPath, 'w')
 	filteredStr = 'ModelHandler'
 	logcmd = 'adb %s shell logcat -s %s >> %s' %(selectedDevId,filteredStr,antivirusOutPath)
 	# logcmd=logcmd.strip().split()
@@ -364,27 +363,21 @@ if __name__ == "__main__":
 		logTag = 'AntiVirusService'
 	
 	print(logTag)
-	# print(toTestList)
 	testedIdx=len(testedList)
 	testingFlag = False
 	for apkItem in apkItems:
-		# print(apkItem)
 		if testedIdx>maxLength:
 			break
 		if testedIdx and testedIdx%2==0 and testingFlag: 
 			testingFlag = False
 			writeDict(apkInfoDict,apkInfoPath)
 			writeList(testedList,testedFilePath)
-		# if testedIdx%30==0:
-		# 	writeList(testedList, '/home/limin/Documents/jianguoyun/Nutstore/tested.txt')
 		try:
 			apkHash=os.path.basename(apkItem)
 			apkHash= os.path.splitext(apkHash)[0]
-			# print(apkHash)
-			# print(len(toTestList))
+
 			if testInListFlag and (apkHash not in toTestList):
 				continue
-			# print(apkHash)
 			if apkHash in testedList:
 				continue
 			if apkHash in notInstallList:
@@ -394,8 +387,7 @@ if __name__ == "__main__":
 			print(apkHash)
 			# todo check device is attached, otherwise, fastboot -s dev reboot
 			rebootFlag=checkDeviceOn(selectedDevId)
-			# if rebootFlag:
-			# 	subprocess.Popen(logcmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+			
 			os.popen('adb {} logcat -G 8m'.format(selectedDevId))
 
 			l.warning(time.strftime('%H:%M:%S',time.localtime(time.time())))
@@ -404,7 +396,7 @@ if __name__ == "__main__":
 			AdbRoot(selectedDevId)
 			unlockPhone(selectedDevId)
 			checkAppAlive(selectedDevId,'com.antivirus.dbconnector')
-			modelHandler = subprocess.Popen(logcmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+			# modelHandler = subprocess.Popen(logcmd, shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 			
 
 			# query manifest for apkInfo
@@ -414,7 +406,7 @@ if __name__ == "__main__":
 			if packageName in 'com.ioty_app':
 				continue
 			appendDict(apkInfoDict,apkHash,[packageName,apkName])
-			l.warning("start to install apk, Hash:%s pkgName:%s apkName:%s !",apkHash, packageName, apkName)
+			# l.warning("start to install apk, Hash:%s pkgName:%s apkName:%s !",apkHash, packageName, apkName)
 			
 			# start to install apkFile, set delayTime
 			delayTime = 100
@@ -441,6 +433,10 @@ if __name__ == "__main__":
 			#start to logcat, https://blog.csdn.net/feixueyinjiayue/article/details/49229029
 			tmplogPath = tmplogDir+"/"+apkHash+".txt"
 			tmpklogPath = klogDir+"/"+apkHash+".txt"
+
+			muteRes = muteMusic(selectedDevId)
+			disableIME(selectedDevId)
+			l.warning("mute music res:"+muteRes)
 			
 			manager = Manager()
 			resDict = manager.dict()
@@ -465,7 +461,7 @@ if __name__ == "__main__":
 			if writenFlag:
 				testedList.append(apkHash)
 			# antiResHandle.flush()
-			modelHandler.kill()
+			# modelHandler.kill()
 			testedIdx+=1
 			if testedIdx%10==0:
 				uninstallAllThird(selectedDevId,whiteList)

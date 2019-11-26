@@ -208,7 +208,14 @@ def getPhoneModel(selectedDevId):
 	cmd = 'adb {} shell getprop ro.product.model'.format(selectedDevId)
 	res = os.popen(cmd).read()
 	return res
-
+def muteMusic(selectedDevId):
+	cmd = 'adb {} shell media volume --set 0'.format(selectedDevId)
+	res = os.popen(cmd).read()
+	return res
+def disableIME(selectedDevId):
+	cmd = 'adb {} shell ime disable com.android.inputmethod.latin/.LatinIME'.format(selectedDevId)
+	res = os.popen(cmd).read()
+	return res
 
 if __name__ == "__main__":
 	devId,devNum=chooseDevice()
