@@ -3,9 +3,9 @@ import sys
 import time
 import logging
 import subprocess
-from InteractUtils import *
-from ThreadUtils import execute_command
-from FileUtils import *
+from modules.InteractUtils import *
+from modules.ThreadUtils import execute_command
+from modules.FileUtils import *
 logging.basicConfig()
 l = logging.getLogger("AdbUtils")
 

@@ -1,12 +1,12 @@
 #coding=utf-8
 from modules import FileUtils
-from modules import CollectionUtils
+# from modules import CollectionUtils
 
 from modules import RexUtils
 from modules import AdbUtils
 from modules import ApkUtils
 from modules.FileUtils import EasyDir
-from modules import SpyderUtils
+# from modules import SpyderUtils
 from modules import InteractUtils
 from modules import ThreadUtils
 from rooms import FileRoom
@@ -940,20 +940,66 @@ if __name__ == "__main__":
     # print(len(CollectionUtils.listIntersection(ruled136,v2NorTest)))
     # FileUtils.writeList(ruled136,'C:\\Users\\limin\\Desktop\\aaaa\\ruled137.txt')
 
-    leng = 16383
-    tmppath = 'C:\\Users\\limin\\Desktop\\tmpfile.txt'
-    def genStr(mystr,length):
-        res = ''
-        for i in range(0,length):
-            res += mystr
+    def findMatchedPath(className,fileList):
+        packages = className.split('.')
+        res = []
+        for file in fileList:
+            findFlag = True
+            for package in packages:
+                if package not in file:
+                    findFlag = False
+                    break
+            if findFlag:
+                res.append(file)
         return res
-    res = genStr('a',leng)
-    FileUtils.writeFile(tmppath,res)
+    def findDex(className, myDirs, cacheDir=''):
+        '''
+        className是要找的类的全称，myDir是解包后的目录，
+        cacheDir是缓存目录（如果多次运行，那么直接从缓存中取结果）
+        cache目录只缓存myDir对应的结果，并且一一对应
+        myDir唯一的标准是创建时间，而非修改时间
+        '''
+        fileList = []
+        for myDir in myDirs:
+            tmpList = []
+            #if cacheDir exist
+            if cacheDir:
+                dirName = os.path.basename(myDir)
+                createTime = str(os.path.getctime(myDir))
+                cacheName = dirName+'-'+createTime+'.txt'
+                myCacheFile = os.path.join(cacheDir,cacheName)
+                if os.path.exists(myCacheFile):
+                    # read txt file to list
+                    tmpList = FileUtils.readList(myCacheFile)
+                else:
+                    tmpList = FileUtils.listDirRecur(myDir)
+                    #write to cache file
+                    FileUtils.writeList(tmpList, myCacheFile)
+            else:
+                tmpList = FileUtils.listDirRecur(myDir)
+            fileList.extend(tmpList)
+        # now fileList contains all path string
+        resPathList = findMatchedPath(className,fileList)
+        return resPathList
+    
 
-    res = FileUtils.readFile(tmppath)
-    res = res.strip()
-    print(res)
-    print(len(res))
+    className = 'com.tencent.mm.model.az'
+    myDirs = [
+        'F:\\vxp\\wechat707'
+    ]
+    cacheDir = 'C:\\Users\\limin\\Desktop\\tmp'
+    res = findDex(className,myDirs,cacheDir)
+    InteractUtils.showList(res)
+    
+                    
+
+
+
+        
+
+
+
+
     
     
 

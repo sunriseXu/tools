@@ -53,7 +53,7 @@ def execute_command(cmdstring, timeout=None,env=None, debug=False):
             if end_time <= datetime.datetime.now():
                 try:
                     sub.kill()
-                except Exception,e:
+                except Exception:
                     return "TIME_OUT"
                 return "TIME_OUT"
     res=sub.stdout.read()

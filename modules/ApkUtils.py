@@ -1,8 +1,8 @@
 import os
 import sys
 import subprocess
-from ThreadUtils import execute_command
-import AdbUtils
+from modules.ThreadUtils import execute_command
+import modules.AdbUtils
 import platform
 
 

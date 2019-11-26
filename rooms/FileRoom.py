@@ -24,7 +24,7 @@ def print_all(module_):
     modulelist = dir(module_)
     length = len(modulelist)
     for i in range(0,length,1):
-        print getattr(module_,modulelist[i])
+        print(getattr(module_,modulelist[i]))
 
 def randomCopy(srcDir,destDir,maxNum):
     '''
@@ -67,10 +67,10 @@ def ruleStatistic(filteredPath, debug=False):
             if logName not in noRuleList:
                 noRuleList.append(logName)
     if debug:
-        print 'pass:%d / total:%d' %(count,len(mylist))
+        print('pass:{} / total:{}'.format(count,len(mylist)))
         mykeys=sorted(mydict.keys())
         for key in mykeys:
-            print 'rule: ',key,'log_count: ',len(mydict[key])
+            print('rule: '+key+'log_count: '+len(mydict[key]))
     return ruledList, noRuleList
 
 def filterFileContent(filePath, splitStr):
@@ -157,7 +157,7 @@ def renamePkg2Hash(srcDir, destDir, apkInfoDictPath):
         else:
             myHash = newdict[pkg]
         if not myHash:
-            print 'error!'
+            print('error!')
             continue 
         srcPath = os.path.join(srcDir, pkg+'.txt')
         destPath = os.path.join(destDir,myHash+'.txt')
@@ -192,10 +192,6 @@ def splitMalware(mergedList):
         else:
             # print '%s dont match any one' %apkhash
             noMatch.append(apkhash)
-    print 'pay: ',len(payList)
-    print 'rog: ',len(rogList)
-    print 'steal:', len(stealList)
-    print 'noMath', len(noMatch)
     # todo 可以将结果写入文件
     return len(payList),len(rogList),len(stealList)
 

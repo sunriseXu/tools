@@ -1,6 +1,4 @@
 # -*- coding:utf-8 -*-
-import urllib
-import urllib2
 import re
 import os
 import json
@@ -141,7 +139,7 @@ def queryValueOfDict(myDict, myValue):
 	try:
 	    myKey = list(myDict.keys())[list(myDict.values()).index(myValue)]
 	except ValueError:
-	    print 'search %s error!' %myValue
+	    print('search {} error!'.format(myValue))
 	    return ''
 	return myKey
 
@@ -205,4 +203,4 @@ if __name__ == "__main__":
     b={'c':'cc','d':'dd'}
     e={'e':'eeeee'}
     res = dictMerge(a,b,e)
-    print res
+    print(res)
