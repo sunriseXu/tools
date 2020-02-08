@@ -90,17 +90,17 @@ if __name__ == "__main__":
         copytree(trueDir,oriDir)
 
     #重打包
-    if repackageFlag:
-        if os.path.exists(repactApkPath):
-            os.remove(repactApkPath)
-        print("start to repackage...")
-        recompileApk(destPath, repactApkPath)
+    # if repackageFlag:
+    #     if os.path.exists(repactApkPath):
+    #         os.remove(repactApkPath)
+    #     print("start to repackage...")
+    #     recompileApk(destPath, repactApkPath)
             
-    #签名
-    passwd = '123456'
-    alias = 'demo.keystore'
-    if signFlag:
-        print("start to sign apk...")
-        signApk(keyPath,passwd,repactApkPath,alias)
+    # #签名
+    # passwd = '123456'
+    # alias = 'demo.keystore'
+    # if signFlag:
+    #     print("start to sign apk...")
+    #     signApk(keyPath,passwd,repactApkPath,alias)
 
 

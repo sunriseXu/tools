@@ -1,6 +1,6 @@
 #coding=utf-8
 from modules import FileUtils
-# from modules import CollectionUtils
+from modules import CollectionUtils
 
 from modules import RexUtils
 from modules import AdbUtils
@@ -896,16 +896,40 @@ if __name__ == "__main__":
     #     tmpdir = 'tmp_{}'.format(i)
     #     tmpdir = os.path.join(basedir,tmpdir)
     #     FileUtils.mkdir(tmpdir)
-    # pkgD = EasyDir('C:\\Users\\limin\\Desktop\\aaaa')
+    # pkgD = EasyDir('C:\\Users\\limin\\Desktop\\mygit\\tools\\totest\\v4pkgname\\v4db')
     # pkgDict = pkgD.getAbsPathDict()
     # v1NorTrain = FileUtils.readList(pkgDict['v1NorTrain.txt'])
     # v1NorTest  = FileUtils.readList(pkgDict['v1NorTest.txt'])
     # v1MalTrain = FileUtils.readList(pkgDict['v1MalTrain.txt'])
     # v1MalTest  = FileUtils.readList(pkgDict['v1MalTest.txt'])
+
     # v2NorTrain = FileUtils.readList(pkgDict['v2NorTrain.txt'])
     # v2NorTest  = FileUtils.readList(pkgDict['v2NorTest.txt'])
     # v2MalTrain = FileUtils.readList(pkgDict['v2MalTrain.txt'])
     # v2MalTest  = FileUtils.readList(pkgDict['v2MalTest.txt'])
+
+    # bucong = FileUtils.readList("C:\\Users\\limin\\Desktop\\v1MalTest.txt")
+    # bucong = [i.strip() for i in bucong]
+    # print(len(bucong))
+    # print(bucong)
+
+    # tmp = CollectionUtils.listDifference(bucong,v1MalTest)
+    # pay,rog,steal=FileRoom.splitMalware(tmp)
+    # FileUtils.writeList(tmp,"C:\\Users\\limin\\Desktop\\toDe.txt")
+    # print(tmp)
+    # print(pay,rog,steal)
+    # print(len(tmp))
+
+    # rogDict = FileUtils.readDict("C:\\Users\\limin\\Desktop\\mygit\\tools\\totest\\rogAllDict.txt")
+    # rogAllList = rogDict.keys()
+    # print(len(rogAllList))
+    # malAll = v1MalTest+v1MalTrain+v2MalTest+v2MalTrain
+    # restRogList = CollectionUtils.listIntersection(bucong,malAll)
+    # print(len(restRogList))
+    # FileUtils.writeList(restRogList,"C:\\Users\\limin\\Desktop\\restRog.txt")
+    
+
+    # print(v1NorTest)
 
     # # print(len(v1NorTrain))
     # print(len(CollectionUtils.listIntersection(v2MalTrain,v1MalTest)))
@@ -983,16 +1007,39 @@ if __name__ == "__main__":
         return resPathList
     
 
-    className = 'com.tencent.mm.model.az'
-    myDirs = [
-        'F:\\vxp\\wechat707'
-    ]
-    cacheDir = 'C:\\Users\\limin\\Desktop\\tmp'
-    res = findDex(className,myDirs,cacheDir)
-    InteractUtils.showList(res)
-    
-                    
+    # className = 'jp.naver.line.android.m.a.a'
+    # myDirs = [
+    #     'F:\\LINE-9.10.2'
+    # ]
+    # cacheDir = 'C:\\Users\\limin\\Desktop\\tmp'
+    # res = findDex(className,myDirs,cacheDir)
+    # InteractUtils.showList(res)
 
+    def myCombinations(pNum):
+        from itertools import combinations,permutations
+        resList = []
+        #计算每组人数
+        perGroup = (int)(pNum / 3)
+        pSet = set(range(1,pNum+1))
+        #取出第一组的情况
+        for grpA in combinations(pSet, perGroup):
+            #计算剩余两组的差集
+            grpBC = pSet.difference(grpA)
+            #取出第二组的情况
+            for grpB in combinations(grpBC, perGroup):
+                #计算第三组的情况
+                grpC = tuple(grpBC.difference(grpB))
+                resList.append([grpA, grpB, grpC])
+        return resList
+                
+
+
+
+    # myCombinations(6)
+        
+
+    
+   
 
 
         

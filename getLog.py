@@ -55,46 +55,7 @@ def UIPassCheck(selectedDevId):
 		i+=1
 		l.warning("pass check!")
 	clickWelcome(selectedDevId)
-def reshapeKlog(filename,actionStr,pkgname):
-    if 'sys_rmdir' in actionStr:
-        mid = 400
-    elif 'sys_unlink' in actionStr:
-        mid = 300
-    elif 'sys_renameat2' in actionStr:
-        mid = 200
-    elif 'sys_open' in actionStr:
-        mid = 100
-    if mid == 100:
-        if pkgname in filename:
-            mid += 0;
-        elif "/storage/emulated/0/Download" in filename or "/sdcard/Download" in filename:
-            mid += 2;
-        elif "/storage/emulated/0/Music" in filename or "/sdcard/Music" in filename:
-            mid += 3;
-        elif "/storage/emulated/0/Android" in filename or "/sdcard/Android" in filename:
-            mid += 4;
-        elif "/storage/emulated/0/DCIM" in filename or "/sdcard/DCIM" in filename:
-            mid += 5;
-        elif "/storage/emulated/0/Movies" in filename or "/sdcard/Movies" in filename:
-            mid += 6;
-        elif "/storage/emulated/0/Pictures" in filename or "/sdcard/Pictures" in filename:
-            mid += 7;
-        elif "/storage/emulated/0/Notifications" in filename or "/sdcard/Notifications" in filename:
-            mid += 8;
-        elif "/storage/emulated/0/Ringtones" in filename or "/sdcard/Ringtones" in filename:
-            mid += 9;
-        elif "/storage/emulated/0/guard" in filename or "/sdcard/guard" in filename:
-            mid += 10;
-        else:
-            mid += 1;
-    else:
-        if pkgname in filename:
-            mid += 0;
-        elif "guard" in filename:
-            mid += 2;
-        else:
-            mid += 1;
-    return mid
+
 
 def trimKlog(uid,pkgname,tmpklogPath,newlogPath):
 	klogList = readList(tmpklogPath)

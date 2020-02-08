@@ -131,7 +131,7 @@ def readList(myPath):
 def writeList(myList,myPath):
 	with open(myPath,"w") as file:
 		for item in myList:
-			item=item.strip()+"\n"
+			item=str(item).strip()+"\n"
 			file.write(item)
 
 def readDict(dictFile):
@@ -169,6 +169,15 @@ def readFile(filePath):
 	with open(filePath,'r') as f:
 		myStr=f.read()
 	return myStr
+
+def readFileLines(filePath, lineNum):
+	lines = ""
+	with open(filePath,"r") as f:
+		for i in range(lineNum):
+			lines += f.readline()
+	return lines
+
+
 
 def writeFile(filePath,myStr):
 	createPDkir(filePath)

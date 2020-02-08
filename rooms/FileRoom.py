@@ -169,7 +169,7 @@ def splitMalware(mergedList):
     1. mydir 存放所有三类恶意样本的hash-pkgName字典文件，每类大概三千多个（不到四千）
     2. mydir固定为C:\\Users\\limin\\Desktop\\allHashDict\\allMalDict
     '''
-    mydir = 'C:\\Users\\limin\\Desktop\\allHashDict\\allMalDict'
+    mydir = os.path.join(pwd,'../totest')
     #读取三类样本字典
     malDictDir = EasyDir(mydir)
     malDict = malDictDir.getAbsPathDict()
