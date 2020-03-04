@@ -5,16 +5,14 @@ pwd = os.path.dirname(os.path.realpath(__file__))
 ppwd = os.path.dirname(pwd)
 sys.path.append(ppwd)
 from modules import FileUtils
-# from modules import CollectionUtils
+from modules import CollectionUtils
 
 from modules import RexUtils
 from modules import AdbUtils
 from modules import ApkUtils
 from modules.FileUtils import EasyDir
-# from modules import SpyderUtils
 from modules import InteractUtils
 from modules import ThreadUtils
-from rooms import FileRoom
 import os
 import shutil
 import random
@@ -23,6 +21,9 @@ import sys
 import time
 from datetime import datetime
 import argparse 
+from modules import InteractUtils
+import Levenshtein
+import random
 
 class Method:
     def __init__(self, modifier, methodName, params, retType, constStrList,classDict,invokeList,callers):
@@ -48,102 +49,511 @@ class Method:
         #这个方法出发的函数调用图 图的表示 关键部分
 
 
-def findConstStr(packageDict,str):
+
+## 0层 简单的判断和字符串操作 简单的容器操作
+def isBasicType(className):
+    '''
+    判断一个类是否是基本类型
+    返回布尔值
+    '''
+    className = className.strip('[]')
+    if className=='int' or className=='boolean' or className=='byte'\
+        or className=='short' or className=='char' or className=='long'\
+            or className=='float' or className=='double' or className=='void':
+            return True
+    else:
+        return False
+def IsSysClazzOrDeObfuscated(className, DeObfuscatedClazzSet):
+    '''
+    判断一个类是否是系统api
+    返回布尔值
+    '''
+    if className in DeObfuscatedClazzSet or className.startswith('android.')\
+         or className.startswith('java.') \
+             or className.startswith('javax.') or isBasicType(className):
+            return True
+    else:
+        return False
+def isCostomerClazz(clazz):
+    '''
+    这里判断是否是app自定的方法，即非系统方法，由于发现app会对androidx，com.google包进行混淆
+    '''
+    if clazz.startswith('android.') or clazz.startswith('androidx.')\
+            or clazz.startswith('com.google.') or clazz.startswith('com.facebook.')\
+                or clazz.startswith('org.') or clazz.startswith('okhttp3.')\
+                    or clazz.startswith('kotlin.') or clazz.startswith('addon.')\
+                        or clazz.startswith('com.airbnb') or clazz.startswith('kotlinx.')\
+                        	or clazz.startswith('net.') or clazz.startswith('kotlinx.')\
+                        		or clazz.startswith('javax.') or clazz.startswith('com.ad'):
+                                return False
+    else:
+        return True
+### 0层 把参数列表转换成认为可读的字符串形式
+def list2Str(myList):
+    res = '('
+    if len(myList) == 0:
+        return '()'
+    for idx in range(len(myList)):
+        if idx != len(myList)-1:
+            res += myList[idx]+','
+        else:
+            res += myList[idx]+')'
+    return res
+def calTopN(myList,N,newElem):
+    for idx in range(0,N):
+        if newElem[1]<myList[idx][1]:
+            myInsert(myList,idx,newElem,N)
+            break
+def myInsert(myList,idx,value,N):
+    assert(idx>=0 and idx<N)
+    for i in range(N-1,-1,-1):
+        if i == idx:
+            break
+        myList[i] = myList[i-1]
+    myList[idx] = value
+    return myList
+### 0层 判断列表元素符合条件的个数
+def sysClassNum(params):
+    '''
+    统计参数中包含的系统参数的数量，用于筛选一定长度的包含系统类的参数
+    '''
+    count = 0
+    for item in params:
+        if item.startswith('java.') or item.startswith('android.')\
+            or item.startswith('javax.') or item.startswith('androidx.'):
+            count+=1
+    return count
+def concatList(myList, sperator='##'):
+    return sperator.join(myList)
+def splitFullMethodName(item):
+    '''
+    基础重要方法，对完整方法名进行分离成 类名 方法名 参数
+    输入：
+        item：完整方法名
+    输出：
+        方法名的分解
+    '''
+    tmp = item.strip().split('(')
+    fullName = tmp[0]
+    params = '('+tmp[1]
+    fullNameList = fullName.split('.')
+    clazz = fullNameList[0:-1]
+    clazzName = '.'.join(clazz)
+    methodName = fullNameList[-1].strip()
+    methodIdentifier = methodName+params
+    return clazzName, methodName, params,methodIdentifier
+## 算法层 简单算法
+def jaccard_similarity(list1, list2):
+    s1 = set(list1)
+    s2 = set(list2)
+    if len(s1.union(s2)) == 0:
+        return 1.0
+    return len(s1.intersection(s2)) / len(s1.union(s2))
+### 路径操作，在原路径中，对文件名添加后缀
+def addExt2Path(oriPath, myExt):
+    '''
+    路径操作，在原路径中，对文件名添加后缀
+    输入：
+        oriPath：原始路径
+        myExt：文件需要添加的后缀
+    输出：
+        添加完后缀的文件路径
+    '''
+    targetDir = os.path.dirname(oriPath)
+    targetName = os.path.basename(oriPath)
+    bsName = os.path.splitext(targetName)[0]
+    if len(os.path.splitext(targetName))>1:
+        ext = os.path.splitext(targetName)[1]
+    else:
+        ext = ''
+    bsName = bsName+myExt+ext
+    destPath = os.path.join(targetDir,bsName)
+    return destPath
+
+### 1层 统计类
+###1 层 对字典中的字段进行简单的统计
+def getCalleeLen(methodDict):
+    '''
+    参数是代表方法的字典，返回这个方法invoke callee序列的长度
+    '''
+    invokeList = methodDict['invoke']
+    return len(invokeList)
+def tongjilei(packageDict):
+    '''
+    统计这个包下面类的数量，方法的数量，字段的数量
+    '''
+    clazzCount = len(packageDict)
+    methodCount = 0
+    fieldCount = 0
     for clazz in packageDict:
         classDict = packageDict[clazz]
         methodDictList = classDict['methods']
-        for methodIdentifer in methodDictList:
-            methodDict = methodDictList[methodIdentifer]
-            constStr = methodDict['constStr']
-            for item in constStr:
-                if str in item:
-                    # print('found match constStr:{}'.format(methodDict))
-                    pretyPrintMethodDict(clazz, methodDict)
-                    break
-def findMethod(packageDict,className, methodName):
-    className = className.strip()
-    methodName = methodName.strip()
-    classDict = packageDict[className]
+        methodCount+=len(methodDictList)
+        fields = classDict['fields']
+        fieldCount+= len(fields['staticFields'])
+        fieldCount+= len(fields['instanceFields'])
+    print("clazzCount:{}".format(clazzCount))
+    print("methodCount:{}".format(methodCount))
+    print("fieldCount:{}".format(fieldCount))
+def sysApiNum(invokeList):
+    '''
+    统计invokelist中包含的系统api的数量，用于筛选一定长度的syscallee函数
+    '''
+    count = 0
+    for invokeDict in invokeList:
+        className = invokeDict['className'][0]
+        if className.startswith('java.') or className.startswith('android.')\
+            or className.startswith('javax.') or className.startswith('androidx.'):
+            count+=1
+    return count
+
+### 对字典字段的简单查询
+def getCaller(basePackageDict, fullName):
+    '''
+    打印一个函数所有的caller信息
+    输入：
+        basePackageDict：app包
+        fullName：函数的完整签名
+    输出：
+        caller信息
+    '''
+    className, _, _, methodIdentifier = splitFullMethodName(fullName)
+    classDict = getClass(basePackageDict, className)
+    res = ''
+    if not classDict:
+        return res
+    methodDict = getMethod(classDict,methodIdentifier)
+    callers = methodDict['caller']
+    print(callers)
+
+### 查询类 返回类字典
+def getClass(packageDict, className):
+    if className in packageDict:
+        return packageDict[className]
+    return {}
+
+### 查询方法 返回方法字典
+def getMethod(classDict,methodIdentifier):
+    '''
+    在类字典中根据方法签名获取方法字典
+    输入：
+        classDict：类字典
+        methodIdentifier：方法签名 去类
+    输出：
+        方法字典
+    '''
     methodDictList = classDict['methods']
-    for methodIdentifer in methodDictList:
-        methodDict = methodDictList[methodIdentifer]
-        metName = methodDict['methodName']
-        if metName in methodName:
-            # finally we found matched methodDict, now it is time to prety print
-            # print("match method dict:{}".format(methodDict))
-            res = pretyPrintMethodDict(className, methodDict)
-            print(res)
-def findClass(packageDict, className):
-    className = className.strip()
-    classDict = packageDict[className]
-    return classDict
-def pretyPrintMethodDict(className, methodDict):
+    if methodIdentifier in methodDictList:
+        return methodDictList[methodIdentifier]
+    else:
+        print("no method found in this classDict! {}".format(methodIdentifier))
+        return {}
+
+### 通过callee长度和参数长度 筛选出符合条件的方法列表 
+def SelectAPI(packageDict, paramMin=2, sysParmMin=2, calleeMin=10, sysApiRotio=0.4):
+    '''
+    从app包中筛选出包含一定参数、callee符合指定长度的方法列表
+    返回合格的方法列表
+    '''
+    resList = []
+    for clazz in packageDict:
+        if not isCostomerClazz(clazz):
+            continue
+        classDict = packageDict[clazz]
+        methodDictList = classDict['methods']
+        for methodIdentifer in methodDictList:
+            #取出这个类中的所有方法
+            key = "{}.{}".format(clazz, methodIdentifer)
+            methodDict = methodDictList[methodIdentifer]
+            params = methodDict['methodParams']
+            invokeList = methodDict['invoke']
+            if len(params)>paramMin and sysApiNum(invokeList)>=5:
+                resList.append(key)
+    return resList
+
+### 打印类中所有方法的签名 简单的字典查询
+def printClazzMethodIdenti(packageDict,clazz):
+    classDict = getClass(packageDict,clazz)
+    methodDictList = classDict['methods']
+    identifierList = methodDictList.keys()
+    InteractUtils.showList(identifierList)
+    return identifierList
+#列举出每一个类中的常量字符串
+def getClazzConstStr(packageDict,clazz):
+    classDict = getClass(packageDict,clazz)
+    methodDictList = classDict['methods']
+    allConstStr = set()
+    for methodIdentifier in methodDictList:
+        methodDict = methodDictList[methodIdentifier]
+        constStr = methodDict['constStr']
+        allConstStr=allConstStr.union(set(constStr))
+    InteractUtils.showList(allConstStr)
+### 对结果字典进行格式化打印
+def GetMatchedResult(resDict):
+    '''
+    打印匹配的结果
+    '''
+    ## 有这种情况 那就是调用runThread函数，一个是用java方法调用的，另一个是用自己实现的方法调用
+    ## 这种情况下callee匹配不会准确的 除非将callee中的自定义方法都修改成父类java/安卓方法
+    minCalleeLen = 3
+    minSimilarity = 0.2
+    idx = 0
+    for clazz in resDict:
+        methodDict = resDict[clazz]
+        if clazz.startswith('androidx.') or clazz.startswith('org.') or clazz.startswith('com.ad'):
+            continue
+        for methodIdentifier in methodDict:
+            idx+=1
+            matchRes = methodDict[methodIdentifier]
+            topN = matchRes['topN']
+            callee = matchRes['callee']
+            calleeLen = len(callee)
+            if topN:
+                if calleeLen<minCalleeLen or topN[0][1]['r']>minSimilarity:
+                    continue
+                
+                print("line0:{}.{}".format(clazz,methodIdentifier))
+                print("line1:{}.{}".format(clazz,topN[0][0]))
+                print("similarity:{}".format(topN[0][1]['r']))
+                print()
+    print('methodNumber:{}'.format(idx))
+
+### 2 查询字典，并且做计算 生成新的字段 例如特征生成
+### 获取方法的特征向量，基础中基础，这是统一封装的接口
+def getMethodFeature(className, methodDict, DeObfuscatedClazzSet=set(),useReplace=True):
+    '''
+    输入：
+        className: 这个方法的类名
+        methodDict:这个方法的包
+    输出：
+        这个方法的 签名特征字符串 callee特征字符串 和 常量字符串
+    '''
+    # 这里是查询是否有methodFeature字段，用于已经缓存过特征向量的字典
+    res = getMethodFeature2(methodDict)
+    if res:
+        return res
     modifier = methodDict['modifier']
     methodName = methodDict['methodName']
     params = methodDict['methodParams']
     callers = methodDict['caller']
+    # 对方法的参数归一化处理
+    unifiedParams = []
+    idx = 0
+    for item in params:
+        idx+=1
+        if IsSysClazzOrDeObfuscated(item, DeObfuscatedClazzSet):
+            unifiedParams.append(item)
+        else:
+            if useReplace:
+                unifiedParams.append('x{}'.format(idx))
+            else:
+                unifiedParams.append(item)
     paramsStr = ''
-    if params:
-        paramsStr = ', '.join(params)
+    if unifiedParams:
+        paramsStr = ', '.join(unifiedParams)
     retType = methodDict['retType']
     retStr = ''
     if retType:
-        retStr = retType[0]
+        if IsSysClazzOrDeObfuscated(retType[0], DeObfuscatedClazzSet):
+            retStr = retType[0]
+        else:
+            if useReplace:
+                retStr = 'RET'
+            else:
+                retStr = retType[0]
     invokeList = methodDict['invoke']
     constStrList = methodDict['constStr']
-    methodHead = 'method: {} {} {}.{}({})'.format(modifier,retStr,className,methodName,paramsStr)
-    methodConstStr = 'constStr: {}'.format(constStrList)
-    # start print
-    resStr = '{}\n{}\n'.format(methodHead,methodConstStr)
-    # print('{}'.format(methodHead))
-    # print('\t{}'.format(methodConstStr))
-    for invokeDict in invokeList:
-        invokeStr = pretyPrintInvoke(invokeDict)
-        resStr += '{}\n'.format(invokeStr)
-        # print('\t\t{}'.format(invokeStr))
-    resStr += 'caller:{}'.format(callers)
-    # print('caller:{}'.format(callers))
-    return resStr
 
-def pretyPrintInvoke(invokeDict):
+    AllCallee = []
+    sysAndDeObCallee = []
+    ObfuscatedCallee = []
+    for invokeDict in invokeList:
+        isSysOrDeOb,invokeStr = getInvokeFeature(invokeDict, DeObfuscatedClazzSet,useReplace)
+        AllCallee.append(invokeStr)
+        if isSysOrDeOb or not useReplace:
+            sysAndDeObCallee.append(invokeStr)
+        else:
+            ObfuscatedCallee.append(invokeStr)
+    clazzParts = className.split('.')
+    if '$' in clazzParts[-1]:
+        clazzParts[-1] = 'c$c'
+    else:
+        clazzParts[-1] = 'c'
+    for idx in range(len(clazzParts)-1):
+        clazzParts[idx] = 'c'
+    className = '.'.join(clazzParts)
+    methodHeader = '{} {} {}.{}({})'.format(modifier, retStr, className,methodName,paramsStr)
+    return methodHeader, constStrList, AllCallee, sysAndDeObCallee, ObfuscatedCallee
+### 如果有特征字段，那么直接返回
+def getMethodFeature2(methodDict):
+    if 'methodFeature' not in methodDict:
+        return ''
+    else: 
+        return methodDict['methodFeature']
+### 获取callee特征，基础中的基础
+def getInvokeFeature(invokeDict, DeObfuscatedClazzSet,useReplace=True):
+    '''
+    获取callee序列的特征
+    输入：
+        invokeDict:方法的callee字典
+        DeObfuscatedClazzSet：两个版本共同的类交集，预设是没有混淆的类
+        useReplace：对自定义且混淆的累是否采用x替换策略
+    输入：
+        方法的callee序列，syscallee序列，非syscallee序列
+    '''
     invokeType = invokeDict['invokeType']
-    className = invokeDict['className']
+    className = invokeDict['className'][0]
     methodName = invokeDict['methodName']
     params = invokeDict['methodParams']
+    IsSysOrDeOb = False
+    if IsSysClazzOrDeObfuscated(className, DeObfuscatedClazzSet):
+        IsSysOrDeOb = True
+    unifiedParams = []
+    idx = 0
+    for item in params:
+        idx+=1
+        if IsSysClazzOrDeObfuscated(item, DeObfuscatedClazzSet):
+            unifiedParams.append(item)
+        else:
+            if useReplace:
+                unifiedParams.append('x{}'.format(idx))
+            else:
+                unifiedParams.append(item)
     paramsStr = ''
-    if params:
-        paramsStr = ', '.join(params)
+    if unifiedParams:
+        paramsStr = ', '.join(unifiedParams)
+    
     retType = invokeDict['retType']
     retStr = ''
     if retType:
-        retStr = retType[0]
-    invokeStr = '{} {} {}.{}({})'.format(invokeType,retStr, className[0],methodName,paramsStr)
-    return invokeStr
-def GetMethod(packageDict, className, methodDict):
-    classDict = findClass(packageDict, className)
-    modifier = methodDict['modifier']
-    methodName = methodDict['methodName']
-    params = methodDict['methodParams']
-    retType = methodDict['retType']
-    retStr = ''
-    if retType:
-        retStr = retType[0]
-    invokeList = methodDict['invoke']
-    constStrList = methodDict['constStr']
-    #caller需要提前计算好，然后存起来避免再次计算，因为需要耗费大量时间，这个特征需要放在methodDict中，遍历所有方法
-    methodNode = Method(modifier,methodName,params,retStr,constStrList,classDict,invokeList,callers)
+        if IsSysClazzOrDeObfuscated(retType[0], DeObfuscatedClazzSet):
+            retStr = retType[0]
+        else:
+            if useReplace:
+                retStr = 'RET'
+            else:
+                retStr = retType[0]
+    invokeStr = '{} {} {}.{}({})'.format(invokeType,retStr, className,methodName,paramsStr)
+    return IsSysOrDeOb,invokeStr
+### 查询或者计算方法的特征向量，根据packageDict的是否包含特征字段来区分 废弃
+def findMethod(packageDict,className, methodName, params,intersecSet,useReplace=True):
+    '''
+    废弃方法，通过类名，方法名和参数来获得方法的特征向量
+    '''
+    res = ''
+    className = className.strip()
+    methodName = methodName.strip()
 
-def cmpList(alist, blist):
-    sortedA = sorted(alist)
-    sortedB = sorted(blist)
-    equals = True
-    if len(alist) != len(blist):
-        return False
-    for i in range(len(alist)):
-        if sortedA[i] != sortedB[i]:
-            equals = False
-            break
-    return equals
+    classDict = getClass(packageDict, className)
+    if not classDict:
+        return res
+
+    methodIdentifier = methodName+params
+    methodDict = getMethod(classDict,methodIdentifier)
+    
+    if methodDict:
+        res = getMethodFeature(className, methodDict,intersecSet,useReplace) 
+    return res
+### 查询或者计算方法的特征向量，根据packageDict的是否包含特征字段来区分
+def findMethod2(packageDict, className, methodSig, intersecSet, useReplace=True):
+    '''
+    通过类名和方法签名获取方法的特征向量
+    输入：
+        packageDict：方法所在的包
+        className:方法名
+        methodSig：方法签名 除去类
+    '''
+    res = ''
+    classDict = getClass(packageDict, className)
+    if not classDict:
+        return res
+    methodDict = getMethod(classDict,methodSig)
+    
+    if methodDict:
+        res = getMethodFeature(className, methodDict,intersecSet,useReplace)
+    return res
+
+### 打印一个方法的特征向量,对字典的简单查询，可能涉及到特征向量的计算
+def printMethodFeature(basePackageDict, fullName, intersecSet, useReplace=True):
+    '''
+    打印一个方法的特征向量
+    输入：
+        basePackageDict：app包
+        fullName：方法的完整签名
+    输出：
+        这个方法的callee列表，可以拓展成完整签名
+    '''
+    clazz, _, _, methodIdentifier = splitFullMethodName(fullName)
+    baseMethodFeature = findMethod2(basePackageDict, clazz,methodIdentifier, intersecSet, useReplace)
+    InteractUtils.showList(baseMethodFeature[2])
+    return baseMethodFeature
+
+# 关于解耦，参数尽量传元素而非列表，如下面，sameClazz是sameClazzList 元素
+def getClazzMethodFeature(classDict, clazz,intersecSet, useReplace):
+    '''
+    获取这个class中所有方法的方法特征向量
+    输入：
+        ClassDict：这个类字典
+        clazz：这个类名，比较冗余
+    输出：
+        所有方法签名及其对应的方法特征向量
+    '''
+    methodFeatureDict = {}
+    methodDictList = classDict['methods']
+    for methodIdentifer in methodDictList:
+        #取出这个类中的所有方法
+        methodDict = methodDictList[methodIdentifer]
+        methodFeature = getMethodFeature(clazz, methodDict,intersecSet,useReplace)
+        methodFeatureDict[methodIdentifer] = methodFeature
+    return methodFeatureDict
+
+### 生成类字段特征
+def genFieldFeature(fieldsDict):
+    staticFields = fieldsDict['staticFields']
+    instanceFields = fieldsDict['instanceFields']
+    staticTypeList = []
+    instanceTypeList = []
+    for item in staticFields:
+        staticTypeList.append(staticFields[item]['type'][0])
+    for item in instanceFields:
+        instanceTypeList.append(instanceFields[item]['type'][0])
+    return staticTypeList, instanceTypeList
+### 生成class特征
+def genClazzFeature(packageDict,clazz):
+    classDict = packageDict[clazz]
+    _genClazzFeature(classDict)
+def _genClazzFeature(classDict):
+    #'classModifier':classModifier,'super':supName,'implements':impList, 'imports':importList,'fields':fieldsDict,'methods':methodLists
+    modifier = classDict['classModifier']
+    supName = classDict['super']
+    imports = classDict['imports']
+
+    #修正import问题
+    importList = []
+    for item in imports:
+        item = item[0]
+        if ':L' in item:
+            item = item.split(':L')[-1].strip('[')
+        elif '[L' in item:
+            item = item.split('[L')[-1]
+        if item not in importList:
+            importList.append(item)
+    
+    fieldsDict = classDict['fields']
+    staticTypeList, instanceTypeList = genFieldFeature(fieldsDict)
+    methodList = classDict['methods']
+    methodIdentifiers = methodList.keys()
+    for methodkey in methodList:
+        methodDict = methodList[methodkey]
+        
+    print(modifier)
+    print(supName)
+    print(importList)
+    print(staticTypeList)
+    print(instanceTypeList)
+    print(methodIdentifiers)
+
+### 包生成，添加childClass字段，生成每个类的继承关系
 def GenInherit(packageDict,newDictPath):
     for clazz in packageDict:
         classDict = packageDict[clazz]
@@ -170,312 +580,613 @@ def GenInherit(packageDict,newDictPath):
                         superClsDict['childClass'].append(clazz)
                     else:
                         superClsDict.update({'childClass':[clazz]})
-    # FileUtils.writeDict(packageDict,newDictPath)
-def list2Str(myList):
-    res = '('
-    if len(myList) == 0:
-        return '()'
-    for idx in range(len(myList)):
-        if idx != len(myList)-1:
-            res += myList[idx]+','
-        else:
-            res += myList[idx]+')'
-    return res
-def GenCallers(packageDict,androidCallerDict):
-    #遍历每一个方法，根据这个方法再计算对其的交叉引用，这个计算过程是巨大的假设有10 0000个方法，每个方
-    #法需要遍历10 0000次，所以时间复杂度 是 10^10， 而我的电脑是2.5GHz 每秒2.5*10^9时钟周期，一次遍历需要5s，
-    #那么一共需要多少秒呢？5*10^5 = 500000s = 13h 不可能缓存的好吧 只能用服务器的机器来跑，但是可以这样来减少
-    #计算时间，那就是在每次正向计算的时候存下调用自己的方法不久行了吗，可以的，就这样算
-    #所以遍历每个方法的invoke函数，每个invoke函数记录下自己的caller，问题来了，需要记录安卓函数的父类吗
-    #感觉是可以的，相当于我自己在计算callgraph，java中有多态的invoke吗
-    #那么对象也存在交叉引用啊，这涉及到数据流怎么构建的问题了，总之 这个dict需要不断地更新，所以按道理只要遍历一次
-    #那么是否需要用额外的数据结构来存储callgraph，有必要,需要标记这个调用的属性，即direct / virtual
-    #那么这个数据结构怎么表示呢？ classname:{methodnameA:{direct:[{classname:methodname},pb],virtual:[va,vb]},methodnameB:{}}
-    #想了一下，还是觉得没有必要新建数据结构，直接增加到原来的字典中
-    #新的问题出现了 
-    exceptInfoList = []
-    notfoundList = []
-    foundcount = 0
-    notfoundcount = 0
-    notfoundSet = {}
-    methodCount = 0
-    androidapiCallcount=0
-    foundinChild = 0
-    #取出每一个类
+
+### 特征包的抽取，形成键值对的形式 其输出供traverseClazzMethod3使用
+def extractAllMethodFeature(packageDict,intersecSet,useReplace):
+    '''
+    生成特征字典：
+    提取出所有方法特征，用 方法签名:特征向量 的字典来存放，字典需要存起来
+    packageDict: 目标app包结构
+    intersecSet：如果动态生成的话需要这个结构，否则不用
+    useReplace:动态生成的情况下是否需要替换自定义参数为 x
+    '''
+    resDict = {}
     for clazz in packageDict:
         classDict = packageDict[clazz]
-        cPath = classDict['clsPath']
         methodDictList = classDict['methods']
-        methodCount += len(methodDictList)
         for methodIdentifer in methodDictList:
-            #取出这个类中的所有方法
             methodDict = methodDictList[methodIdentifer]
-            modifier = methodDict['modifier']
-            methodName = methodDict['methodName']
-            params = methodDict['methodParams']
-            retType = methodDict['retType']
-            invokeList = methodDict['invoke']
-            callerKey = '{}{}'.format(methodName,list2Str(params))
-            #对这个方法中的所有函数调用进行遍历
-            for invokeDict in invokeList:
-                invokeType = invokeDict['invokeType']
-                iclassName = invokeDict['className'][0]
-                # 如果调用的是java/android方法，那么跳过
-                # 获取这个方法的指纹信息
-                imethodName = invokeDict['methodName']
-                iparams = invokeDict['methodParams']
-                invokeKey = '{}{}'.format(imethodName,list2Str(iparams))
-                #开始找caller
-                # try: 
-                if iclassName.startswith('java.') or iclassName.startswith('android.') \
-                    or iclassName.startswith('androidx.') \
-                        or iclassName.startswith('javax.') or 'dalvik' in iclassName:#'dalvik.system.DexClassLoader com.linecorp.linepay.biz.googlepay.a' 'com.samsung.android.sep.camera.SemCameraCaptureProcessor$CaptureParameter'
-                    androidapiCallcount+=1
-                    #这个点的调用占用到了一半以上，这是图的sink，所以很重要可以从这里开始分析
-                    # print("{}.{}".format(iclassName,invokeKey))
-                    # input() #这里需要对android/java api进行caller字典生成，暂时生成一个新的字典存放
-                    # {classname:{methods:{methodkey:{caller:{cclazzname:{cmethod:invoketype}}}}}}
-                    if iclassName not in androidCallerDict:
-                        androidCallerDict[iclassName]= {'methods':{invokeKey:{'caller':{clazz:{callerKey:invokeType}}}}}
-                    else:
-                        if 'methods' not in androidCallerDict[iclassName]:
-                            androidCallerDict[iclassName]['methods']= {invokeKey:{'caller':{clazz:{callerKey:invokeType}}}}
-                        else:
-                            if invokeKey not in androidCallerDict[iclassName]['methods']:
-                                androidCallerDict[iclassName]['methods'][invokeKey] = {'caller':{clazz:{callerKey:invokeType}}}
-                            else:
-                                if clazz not in androidCallerDict[iclassName]['methods'][invokeKey]['caller']:
-                                    androidCallerDict[iclassName]['methods'][invokeKey]['caller'][clazz] = {callerKey:invokeType}
-                                else:
-                                    androidCallerDict[iclassName]['methods'][invokeKey]['caller'][clazz].update({callerKey:invokeType})
-                    
-                    continue
-                if iclassName not in packageDict: # 包含[] 数组方法
-                    continue                 
-                # 获取invoke方法的类，尝试找到这个invoke方法
-                callerclassDict = packageDict[iclassName]
-                #这个类找不到的原因有： 这个类是数组
-                cclassmethodDictList = callerclassDict['methods']
-                #获取这个类的父类，接口等
-                
-                foundFlag = False
-                
-                if invokeKey in cclassmethodDictList:
-                    # print("{} {}".format(iclassName,invokeKey))
-                    foundcount += 1
-                    foundFlag = True
-                    cmethodDict = cclassmethodDictList[invokeKey]
-                    callerDict = cmethodDict['caller']
-                    #添加caller信息
-                    if clazz in callerDict:
-                        cclazzDict = callerDict[clazz]
-                        cclazzDict.update({callerKey:invokeType})
-                    else:
-                        callerDict[clazz] = {callerKey:invokeType}
-                        #这里我们找到了直接调用的方法，为了构建callgraph，并且便于索引，需要在目标方法中添加caller字段
-                        # caller字段是一个dict {invoke-type:类名，现在最恶心的是，方法是一个list，不能够直接索引}
-                        # 明天要重构字典，修改所有方法为字典访问，键是什么呢？方法名+参数 可行！
-                        # 重构完成后需要抛出一个dict大概需要1个小时
-                        # 跑完后需要重新修改所有方法的访问，改成以字典访问
-                        # 最后构建每个方法字典的caller字段
-                        # caller字段构建后，应该可以完成大部分callgraph的生成，
-                        # 打印某些方法的callgraph进行验证，注意需要处理android/java方法的callgraph
-                        # 然后是匹配，匹配是最难处理的一步，callgraph上每个节点都是一个方法，匹配需要方法的指纹，然后再说整个图的匹配
-                        # 这里需要用到图的匹配算法，所以需要进行调研
-                        # 调用完成后实现算法的匹配，说实话，这里不能保证可用
-                        # 完成这些需要大概一周的时间
-                        # break
-                if not foundFlag:
-                    #由于invoke-virtual 的关系，导致无法确定具体的对象类，所以需要在父类或者子类中找
-                    #首先在子类中找，但是子类可能很多，导致无法确定具体的子类，怎么办？
-                    #总之尝试在子类中找吧，但是遍历所有来来找子类是不可能的，只能生成
-                    #super 和 implement字段找到父类或者接口，然后在父类或者接口中添加字段
-                    #一直super回溯搜索好了 如果这个方法死活找不到，有两种可能性
-                    #
-                    superClass = callerclassDict['super']
-                    implementList = callerclassDict['implements']
-                    impList = []
-                    impList.extend(implementList)
-                    if superClass:
-                    #将接口和父类合在一起
-                        impList.append(superClass)
-                    notfoundList.append("{} {} {} {} {} {}".format(iclassName,imethodName,iparams,clazz,methodName,cPath))
-                    print("current cls not found:\n\tclassName:{} methodName:{}({}) location: {}.{} {}".format(iclassName,imethodName,iparams,clazz,methodName,cPath))
-                    #遍历父类，在父类方法中匹配
-                    # print(implementList)
-                    foundFlag = False
-                    for sup in impList:
-                        print("try super:{}".format(sup))
-                        if sup not in packageDict:
-                            continue
-                        tmp, retClazz, retKey = traverseMethod(packageDict, sup, imethodName, iparams)
-                        if tmp:
-                            foundcount+=1
-                            foundFlag = True
-                            foundinChild +=1
-                            callerDict = packageDict[retClazz]['methods'][retKey]['caller']
-                            #添加caller信息
-                            if clazz in callerDict:
-                                cclazzDict = callerDict[clazz]
-                                cclazzDict.update({callerKey:invokeType+'-child'})
-                            else:
-                                callerDict[clazz] = {callerKey:invokeType+'-child'}
-                            break
-                    if not foundFlag:
-                        notfoundcount+=1
-                        # notfoundSet.add(imethodName)
-                        if imethodName in notfoundSet:
-                            notfoundSet[imethodName] += 1
-                        else:
-                            notfoundSet[imethodName] = 0
-                        print("not found method")
-                        # input()
-                    else:
-                        ## todo 这里我们找到了invoke的父类方法，这里的方法是父类方法
-                        pass
-                # input()
-                # except KeyError as err:
-                #     exceptInfoList.append('{}'.format(err))
-                #     pass
-                        # input()
-    # print("error:{}".format(exceptInfoList))
-    FileUtils.writeList(exceptInfoList,"C:\\Users\\limin\\Desktop\\tmp\\error.txt")
-    # print("notfound:{}".format(notfoundList))
-    FileUtils.writeList(notfoundList,"C:\\Users\\limin\\Desktop\\tmp\\notfound.txt")
-    print("{}".format(notfoundSet))
-    print("foundcount:{} notfoundcount:{} foundinChild:{}".format(foundcount,notfoundcount,foundinChild))
-    print("classcount:{}".format(len(packageDict)))
-    print("methodcount:{}".format(methodCount))
-    print("androidapiCallcount:{}".format(androidapiCallcount))
-    FileUtils.writeDict(androidCallerDict,"C:\\Users\\limin\\Desktop\\tmp\\testAndroid.json")
-def traverseMethod(packageDict, iclassName, imethodName, iparams):
-    # if iclassName not in packageDict:
-    #     #如果父类不在字典中，说明回溯已经到头了 返回
-    #     print('no super class found! back')
-    callerclassDict = packageDict[iclassName]
-    cclassmethodDictList = callerclassDict['methods']
-    superClass = callerclassDict['super']
-    implementList = callerclassDict['implements']
-    impList = []
-    impList.extend(implementList)
-    if superClass:
-    #将接口和父类合在一起
-        impList.append(superClass)
-    
-    foundFlag = False
-    invokeKey = '{}{}'.format(imethodName,list2Str(iparams))
-    
-    if invokeKey in cclassmethodDictList:
-        foundFlag = True
-        print("found in super class:{} {}".format(iclassName,invokeKey))
-        return (foundFlag, iclassName, invokeKey)
-    # for cmethodDict in cclassmethodList:
-    #     cmetName = cmethodDict['methodName']
-    #     cparams = cmethodDict['methodParams']
-    #     if cmetName == imethodName and cmpList(cparams,iparams):
-    #         print("found: {} {} {}".format(iclassName,cmetName,cparams))
-    #         foundFlag = True
-    #         # input()
-    #         return foundFlag
-    if not foundFlag:
-        #由于invoke-virtual 的关系，导致无法确定具体的对象类，所以需要在父类或者子类中找
-        #首先在子类中找，但是子类可能很多，导致无法确定具体的子类，怎么办？
-        #总之尝试在子类中找吧，但是遍历所有来来找子类是不可能的，只能生成
-        #super 和 implement字段找到父类或者接口，然后在父类或者接口中添加字段
-        #一直super回溯搜索好了
-        for sup in impList:
-            if sup not in packageDict:
-                #这里需要筛选出java/android api
-                continue
-            tmp,retClazz, retKey = traverseMethod(packageDict, sup, imethodName, iparams)
-            if tmp:
-                return (tmp, retClazz, retKey)
-    return (False,"","")
+            targetMethodFeature = getMethodFeature(clazz, methodDict,intersecSet,useReplace)
+            key = '{}.{}'.format(clazz,methodIdentifer)
+            resDict[key] = targetMethodFeature
+    return resDict
+### 特征包的预计算，并且记录到字典，其输出供extractAllMethodFeature使用
+def genAllClazzMethodFeature(packageDict, intersecSet,useReplace):
+    '''
+    生成一个app包下面所有方法的特征，并且存在每个方法字典的 methodFeature字段
+    packageDict: 目标app包
+    intersecSet：特征需要引入两个app之间的交集类
+    useReplace：是否在生成特征的时候用x来替换自定义参数类
+    '''
+    idx = 0
+    for clazz in packageDict:
+        classDict = packageDict[clazz]
+        methodDictList = classDict['methods']
+        for methodIdentifer in methodDictList:
+            idx +=1
+            print(idx)
+            #取出这个类中的所有方法
+            key = "{}.{}".format(clazz, methodIdentifer)
+            methodDict = methodDictList[methodIdentifer]
+            # 首先看这个
+            targetMethodFeature = getMethodFeature(clazz, methodDict,intersecSet,useReplace)
+            methodDict['methodFeature'] = targetMethodFeature
+
+
+### 3 高层算法 即新的字段参与的计算
+## 匹配核心方法 计算两个特征向量之间的距离
+def calFeatureSimilarity(baseMethodFeature, targetMethodFeature, useDebug=False):
+    '''
+    计算两个特征之间的距离，分别是第一个特征和第二个特征，useDebug会打印计算的距离值
+    '''
+    baseMethodHeader = str(baseMethodFeature[0])
+    baseConstList = str(concatList(baseMethodFeature[1]))
+    baseCallee = str(concatList(baseMethodFeature[2]))
+    baseSysOrDeCallee = str(concatList(baseMethodFeature[3]))
+    baseObfuscCallee = concatList(baseMethodFeature[4])
+
+    baseMethodHeaderLen = float(len(baseMethodHeader))
+    baseCalleeLen = float(len(baseCallee))
+    baseSysOrDeCalleeLen = float(len(baseSysOrDeCallee))
+    baseObfuscCalleeLen = float(len(baseObfuscCallee))
+
+    targetMethodHeader = str(targetMethodFeature[0])
+    targetConstList = str(concatList(targetMethodFeature[1]))
+    targetCallee = str(concatList(targetMethodFeature[2]))
+    targetSysOrDeCallee = str(concatList(targetMethodFeature[3]))
+    targetObfuscCallee = concatList(targetMethodFeature[4])
+
+    ## 对方法名进行相似度计算
+    # print(baseMethodHeader,targetMethodHeader)
     # input()
-def traverseClazzMethod(packageDict,baseStr):
+    dist1 = Levenshtein.distance(baseMethodHeader,targetMethodHeader)
+    partitionR1 = dist1/baseMethodHeaderLen
+    # if partitionR1>1:
+    #     partitionR1 = 1
+    # partitionR1 = 1 - partitionR1
+    
+    # 对callee计算相似度
+    if baseSysOrDeCallee:
+        dist2 = Levenshtein.distance(baseSysOrDeCallee,targetSysOrDeCallee)
+        partitionR2 = dist2/baseSysOrDeCalleeLen
+        # if partitionR2>1:
+        #     partitionR2 = 1
+        # partitionR2 = jaccard_similarity(baseMethodFeature[3],targetMethodFeature[3])
+        # print('baseSysOrDeCallee:\n{}\ntargetSysOrDeCallee:\n{}'.format(baseSysOrDeCallee,targetSysOrDeCallee))            
+    else:
+        dist2 = Levenshtein.distance(baseCallee,targetCallee)
+        if not baseCallee and not targetCallee:
+            partitionR2 = 0
+        elif not baseCallee:
+            partitionR2 = 1
+        else:
+            tmp = dist2/baseCalleeLen
+            if tmp>1:
+                partitionR2 = 1
+            else:
+                partitionR2 = tmp
+    # partitionR2 = 1 - partitionR2
+
+    useLevens = False
+    partitionR3 = 0
+    # 对常量字符串计算相似度
+    if baseConstList:
+        if useLevens:
+            dist3 = Levenshtein.distance(baseConstList,targetConstList)
+            partitionR3 = dist3/float(len(baseConstList))
+            # print('baseConstList:{}\n\ntargetConstList:{}'.format(baseConstList,targetConstList))
+        else:
+            partitionR3 = jaccard_similarity(baseMethodFeature[1], targetMethodFeature[1])
+            # print('baseConstList:{}\n\ntargetConstList:{}'.format(baseFeature[1],targetFeature[1]))     
+            partitionR3 = 1-partitionR3
+    if useDebug:
+        print('basekey:{}\ntargetKey:{} \ndist:{} ratio:{}'.format(baseMethodHeader,targetMethodHeader,dist1,partitionR1))
+        InteractUtils.showList(baseMethodFeature[3])
+        print()
+        InteractUtils.showList(targetMethodFeature[3])
+        print('SysOrDeCallee ratio:{}'.format(partitionR2))
+        print()
+        print(baseMethodFeature[1])
+        print()
+        print(targetMethodFeature[1])
+        print('constStr ratio:{}'.format(partitionR3))
+        print('all ratio:{}'.format(partitionR1+partitionR2+partitionR3))
+    return partitionR1, partitionR2, partitionR3, partitionR1+partitionR2
+
+### 单方法匹配，低效，考虑废弃
+def traverseClazzMethod(packageDict,baseMethodFeature, intersecSet,useReplace):
+    '''
+    单个方法的匹配，这个函数可以获取所有匹配距离，暂时还有用
+    输入：
+        packageDict: 需要全方法搜索的app包
+        baseMethodFeature:目标方法的特征向量
+    输出：
+        这个方法的所有匹配结果排序列表，按距离从小到大排序
+    '''
+    sortedList = _traverseClazzMethod(packageDict, baseMethodFeature, intersecSet, useReplace)
+    return sortedList
+def _traverseClazzMethod(packageDict, baseMethodFeature, intersecSet,useReplace):
     a = 0.6
     low = 1-a
     high = 1+a
     resDict = {}
     sortedList = []
-    baseLen = len(baseStr)+0.0
+    baseLen = len(baseMethodFeature[2])+0.0
     #取出每一个类
     idx = 0
     for clazz in packageDict:
         classDict = packageDict[clazz]
-        cPath = classDict['clsPath']
         methodDictList = classDict['methods']
-        # methodCount += len(methodDictList)
         for methodIdentifer in methodDictList:
             idx +=1
             #取出这个类中的所有方法
             key = "{}.{}".format(clazz, methodIdentifer)
             methodDict = methodDictList[methodIdentifer]
-            modifier = methodDict['modifier']
-            methodName = methodDict['methodName']
-            params = methodDict['methodParams']
-            retType = methodDict['retType']
-            invokeList = methodDict['invoke']
-            callerKey = '{}{}'.format(methodName,list2Str(params))
-            resStr = pretyPrintMethodDict(clazz, methodDict)
-            if len(resStr)>baseLen*low and len(resStr)<baseLen*high:
-                dist = Levenshtein.distance(baseStr,resStr)
-                partition = dist/baseLen
-                resDict.update({key:partition})
+            # 首先看这个
+            targetCalleeLen = getCalleeLen(methodDict)
+            if targetCalleeLen>baseLen*low and targetCalleeLen<baseLen*high:
+                targetMethodFeature = getMethodFeature(clazz, methodDict,intersecSet,useReplace)
+                r1,r2,r3,rT = calFeatureSimilarity(baseMethodFeature, targetMethodFeature)
+                resDict.update({key:rT})
                 print(idx)
-                print(partition)
+                print(methodIdentifer)
+                print("similarity:{}".format(rT))
     sortedList = sorted(resDict.items(), key=lambda x:x[1])
-    FileUtils.writeList(sortedList,"alltmp2.txt")
-import Levenshtein
+    return sortedList
+### 多方法同时匹配，低效，考虑废弃
+def traverseClazzMethod2(packageDict, baseMethodFeatureDict, intersecSet,useReplace):
+    '''
+    实时生成方法的特征向量，效率过于低下，考虑废弃
+    输入：
+        packageDict:需要进行全方法遍历的包，原始包，不包含方法特征向量字段
+        baseMethodFeatureDict:包含需要进行匹配的方法及其特征向量字典
+    输出：
+        baseMethodFeatureDict中的方法的匹配结果，其返回结果写入baseMethodFeatureDict字典中
+    '''
+    a = 0.6
+    low = 1-a
+    high = 1+a
+    N = 3
+    #取出每一个类
+    idx = 0
+    for key in baseMethodFeatureDict:
+        cachedDict = baseMethodFeatureDict[key]
+        if 'topN' not in cachedDict:
+            cachedDict['topN'] = [('',100),('',100),('',100),('',100)]
+    
+    for clazz in packageDict:
+        if not isCostomerClazz(clazz):
+            continue
+        classDict = packageDict[clazz]
+        methodDictList = classDict['methods']
+        for methodIdentifer in methodDictList:
+            idx +=1
+            #取出这个类中的所有方法
+            key = "{}.{}".format(clazz, methodIdentifer)
+            methodDict = methodDictList[methodIdentifer]
+            # 首先看这个
+            targetCalleeLen = getCalleeLen(methodDict)
+            for baseKey in baseMethodFeatureDict:
+                cachedDict = baseMethodFeatureDict[baseKey]
+                baseMethodFeature = cachedDict['Feature']
+                
+                baseLen = len(baseMethodFeature[2])+0.0
+                if targetCalleeLen>baseLen*low and targetCalleeLen<baseLen*high:
+                    targetMethodFeature = getMethodFeature(clazz, methodDict,intersecSet,useReplace)
+
+                    r1,r2,r3,rT = calFeatureSimilarity(baseMethodFeature, targetMethodFeature)
+                    # middleResDict[baseKey].update({key:rT})
+                    calTopN(cachedDict['topN'],N,(key,rT))
+                    print(idx)
+                    print(methodIdentifer)
+                    print("similarity:{}".format(rT))
+    return baseMethodFeatureDict
+### 多方法同时匹配，高效
+def traverseClazzMethod3(packageDict, baseMethodFeatureDict, intersecSet,useReplace):
+    '''
+    对特征向量列表进行全局搜索匹配
+    输入：
+        packageDict：目标app包的特征向量键值对
+        baseMethodFeatureDict：目标特征向量列表
+    输出：
+        目标特征向量的topN匹配结果
+    '''
+    a = 0.6
+    low = 1-a
+    high = 1+a
+    N = 3
+    #取出每一个类
+    idx = 0
+    for key in baseMethodFeatureDict:
+        cachedDict = baseMethodFeatureDict[key]
+        if 'topN' not in cachedDict:
+            cachedDict['topN'] = [('',100),('',100),('',100),('',100)]
+        if 'length' not in cachedDict:
+            cachedDict['length'] = 0
+    
+    for fullName in packageDict:
+        idx+=1
+        clazz,_,_,_=splitFullMethodName(fullName)
+        if not isCostomerClazz(clazz):
+            continue
+        targetMethodFeature = packageDict[fullName]
+        targetCalleeLen = len(targetMethodFeature[2])
+        
+        
+        for baseKey in baseMethodFeatureDict:
+            cachedDict = baseMethodFeatureDict[baseKey]
+            baseMethodFeature = cachedDict['Feature']
+            
+            baseLen = len(baseMethodFeature[2])+0.0
+            if targetCalleeLen>baseLen*low and targetCalleeLen<baseLen*high:
+                r1,r2,r3,rT = calFeatureSimilarity(baseMethodFeature, targetMethodFeature)
+                
+                calTopN(cachedDict['topN'],N,(fullName,rT))
+                cachedDict['length'] += 1
+                print(idx)
+                print(fullName)
+                print("similarity:{}".format(rT))
+    return baseMethodFeatureDict
+
+### 鸡肋方法，对交集类之间进行匹配
+def MatchSameClazz(baseDict, targetDict, sameClazz,intersecSet,useReplace):
+    '''
+    对两个包中的相同类的方法进行匹配，匹配范围仅限相同类，这个方法很鸡肋
+    输入：
+        baseDict：第一个app包
+        targetDict：待匹配的app包
+        sameClazz：相同的类名，即交集类
+    输出：
+        所有相同类中方法的匹配结果，存于字典中
+    '''
+    a = 0.8
+    topN = 3
+    classDict = baseDict[sameClazz]
+    baseFeatureDict = getClazzMethodFeature(classDict, sameClazz,intersecSet,useReplace)
+
+    targetClassDict = targetDict[sameClazz]
+    targetFeatureDict = getClazzMethodFeature(targetClassDict, sameClazz,intersecSet,useReplace)
+    resDict = {}
+    for basekey in baseFeatureDict:
+        baseFeature = baseFeatureDict[basekey]
+        baseMethodHeader = baseFeature[0]
+        baseConstList = concatList(baseFeature[1])
+        baseCallee = concatList(baseFeature[2])
+        baseSysOrDeCallee = concatList(baseFeature[3])
+        baseObfuscCallee = concatList(baseFeature[4])
+
+        baseMethodHeaderLen = float(len(baseMethodHeader))
+        baseCalleeLen = float(len(baseCallee))
+        baseSysOrDeCalleeLen = float(len(baseSysOrDeCallee))
+
+        resDict[basekey] = {}
+        resDict[basekey]['methodHeader'] = baseMethodHeader
+        resDict[basekey]['const'] = baseFeature[1]
+        resDict[basekey]['callee'] = baseFeature[2]
+        
+        matchingRes = {}
+        matchingTopN = []
+        for tkey in targetFeatureDict:
+            targetFeature = targetFeatureDict[tkey]
+            targetMethodHeader = targetFeature[0]
+            targetConstList = concatList(targetFeature[1])
+            targetCallee = concatList(targetFeature[2])
+            targetSysOrDeCallee = concatList(targetFeature[3])
+            targetObfuscCallee = concatList(targetFeature[4])
+            matchingRes[tkey] = {}
+            matchingRes[tkey]['methodHeader'] = targetMethodHeader
+            matchingRes[tkey]['const'] = targetFeature[1]
+            matchingRes[tkey]['callee'] = targetFeature[2]
+            ## 对方法名进行相似度计算
+            dist = Levenshtein.distance(baseMethodHeader,targetMethodHeader)
+            partitionR1 = dist/baseMethodHeaderLen
+            print('basekey:{}\ntargetKey:{} \ndist:{} ratio:{}'.format(baseMethodHeader,targetMethodHeader,dist,partitionR1))
+            matchingRes[tkey]['r1'] = partitionR1
+            # 对callee计算相似度
+            if baseSysOrDeCallee:
+                dist = Levenshtein.distance(baseSysOrDeCallee,targetSysOrDeCallee)
+                partitionR2 = dist/baseSysOrDeCalleeLen
+                # print('baseSysOrDeCallee:\n{}\ntargetSysOrDeCallee:\n{}'.format(baseSysOrDeCallee,targetSysOrDeCallee))
+                print('SysOrDeCallee dist:{} ratio:{}'.format(dist,partitionR2))
+            else:
+                dist = Levenshtein.distance(baseCallee,targetCallee)
+                if not baseCallee and not targetCallee:
+                    partitionR2 = 0
+                elif not baseCallee:
+                    partitionR2 = 2
+                else:
+                    partitionR2 = dist/baseCalleeLen
+                print('SysOrDeCallee dist:{} ratio:{}'.format(dist,partitionR2))
+            matchingRes[tkey]['r2'] = partitionR2
+            useLevens = False
+            partitionR3 = 0
+            # 对常量字符串计算相似度
+            if baseConstList:
+                if useLevens:
+                    dist = Levenshtein.distance(baseConstList,targetConstList)
+                    partitionR3 = dist/float(len(baseConstList))
+                    # print('baseConstList:{}\n\ntargetConstList:{}'.format(baseConstList,targetConstList))
+                    print('baseConstList Levenshtein dist:{} ratio:{}'.format(dist,partitionR3))
+                else:
+                    partitionR3 = jaccard_similarity(baseFeature[1], targetFeature[1])
+                    # print('baseConstList:{}\n\ntargetConstList:{}'.format(baseFeature[1],targetFeature[1]))
+                    print('jaccard_similarity dist:{} ratio:{}'.format(dist,partitionR3))
+                partitionR3 = 1-partitionR3
+            matchingRes[tkey]['r3'] = partitionR3
+            matchingRes[tkey]['r'] = partitionR1+partitionR2+partitionR3
+        sortedList = sorted(matchingRes.items(), key=lambda x:x[1]['r'])
+        idx = 0
+        for item in sortedList:
+            idx += 1
+            matchingTopN.append(item)
+            if idx >= topN:
+                break
+        resDict[basekey]['topN'] = matchingTopN
+    return resDict
+
+### 对单个函数的全局搜索匹配 低效
+def compareAll(basePackageDict, fullName, tarPackageDict,intersecSet,useReplace=True):
+    '''
+    对单个函数的全局搜索匹配 低效
+    输入：
+        basePackageDict：目标函数所在的app包
+        fullName：目标函数的完整签名
+        tarPackageDict：需要进行全局搜索的函数
+    输出：
+        这个函数的匹配所有匹配结果，排序
+    '''
+    clazz, _, _, methodIdentifier = splitFullMethodName(fullName)
+    baseMethodFeature = findMethod2(basePackageDict, clazz,methodIdentifier, intersecSet, useReplace)
+    print(fullName)
+    resList = traverseClazzMethod(tarPackageDict, baseMethodFeature, intersecSet,useReplace)
+    return resList
+
+### 对一对函数进行匹配计算，多用于调试
+def compareTwo(basePackageDict, fullName, tarPackageDict,fullName2,intersecSet,useReplace=True):
+    '''
+    对一对函数进行匹配计算，多用于调试
+    输入：
+        basePackageDict:第一个函数所在的app包
+        fullName：第一个函数完整签名
+        tarPackageDict：第二个函数所在的app包
+        fullName2：第二个函数完整签名
+    输出：
+        特征向量之间的匹配结果，debug开启会打印出来
+    '''
+    clazz, _, _, methodIdentifier = splitFullMethodName(fullName)
+    baseMethodFeature = findMethod2(basePackageDict, clazz,methodIdentifier, intersecSet, useReplace)
+
+    clazz2, _, _, methodIdentifier2 = splitFullMethodName(fullName2)
+    targetMethodFeature = findMethod2(tarPackageDict, clazz2,methodIdentifier2, intersecSet, useReplace)
+    calFeatureSimilarity(baseMethodFeature,targetMethodFeature,True)
+
+### 对两个列表的函数进行匹配 鸡肋
+def getAccessment(basePackageDict, accessmentList, tarPackageDict, accessmentList2):
+    '''
+    对两个列表的函数进行匹配 鸡肋 两个列表需要在两个app包中一一对应
+    输入：
+        basePackageDict：第一个函数列表所在的app包
+        accessmentList：第一个函数列表
+    输出：
+        函数列表的相互比较结果，是compareTwo的拓展
+    '''
+    tmpList = []
+    idx = 0
+    for item in accessmentList:
+        clazz, methodName, params, methodIdentifier = splitFullMethodName(item)
+        baseMethodFeature = findMethod2(basePackageDict, clazz,methodIdentifier, intersecSet, useReplace=True)
+
+        item2 = accessmentList2[idx]
+        clazz, methodName, params, methodIdentifier = splitFullMethodName(item2)
+        targetMethodFeature = findMethod2(tarPackageDict, clazz,methodIdentifier, intersecSet, useReplace=True)
+        partitionR1, partitionR2, partitionR3, rT=calFeatureSimilarity(baseMethodFeature,targetMethodFeature,True)
+
+        tmpList.append('{}\t{}\t{}\t{}\t{}'.format(item,round(partitionR1,3),round(partitionR2,3),round(partitionR3,3),round(rT,3)))
+        idx+=1
+    return tmpList
+
+### 实际的高效的方法列表全局搜索匹配算法
+def doEvaluation(basePackageDict,filteredMethodList,tarPackageDict,intersecSet,useReplace=True):
+    '''
+    输入：
+        basePackageDict：需要匹配的方法所在的app包
+        filteredMethodList 需要进行特征匹配的方法签名序列
+        tarPackageDict：特征向量键值对
+    输出：
+        每一个方法topN匹配结果，resDict
+    对列表中的所有方法进行全app内方法匹配 全包一共有30万方法，100个方法进行匹配的时间大概是1h，2700个方法要27h
+    注意tarPackageDict是cache过的特征dict
+    '''
+    resDict = {}
+    for item in filteredMethodList:
+        resDict[item] = {}
+        ##求特征
+        clazz, _, _, methodIdentifier = splitFullMethodName(item)
+        baseMethodFeature = findMethod2(basePackageDict, clazz,methodIdentifier, intersecSet, useReplace=True)
+        resDict[item]['Feature'] = baseMethodFeature
+    traverseClazzMethod3(tarPackageDict,resDict,intersecSet,useReplace)
+    return resDict
+##现在的情况是大概有60%的函数能够精确地被找到，那么这些函数怎么办呢 首先把它们的混淆都收集起来
+##混淆收集起来对混淆进行还原
+
+### 0 字符串 容器 低级算法接口
+### 1 查询字段 不做任何筛选等操作 包含统计信息 或者做一下筛选
+### 2 查询字典，筛选并且计算新字段
+### 3 匹配算法
+
+### 首先为了加快寻找过程 我需要进行全局的字符串匹配
+
+# getClazzConstStr(packageDict,clazz)
+
+
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="find dex!!")
-    parser.add_argument('-d', '--dictpath', nargs='?',default="") #多个参数 默认放入list中 +表示至少一个 + 就放在list中
-    parser.add_argument('-t', '--tmp', help='tmp dir', nargs='?',default="")
-    parser.add_argument('-g', '--getdict', help='get all class dict', nargs='?',default="")
+    parser.add_argument('-b', '--basePath', nargs='?',default="") #多个参数 默认放入list中 +表示至少一个 + 就放在list中
+    parser.add_argument('-d', '--tarPath', nargs='?',default="")
+    parser.add_argument('-c', '--cached', help='tmp dir', nargs='?',default="")
+    parser.add_argument('-o', '--resname', help='get all class dict', nargs='?',default="")
     args = parser.parse_args() 
-    myDictPath=args.dictpath
-    
-    packageDict = FileUtils.readDict(myDictPath)
-    className = 'jp.naver.line.android.am.a.d' #j.a.a.a.b2.e.h jp.naver.line.android.obs.net.s
-    methodName = 'a'
-    tmp1 = FileUtils.readFile('tmp2.txt')
-    traverseClazzMethod(packageDict,tmp1)
-    # findMethod(packageDict,className,methodName)
-    # findConstStr(packageDict,"X-Line-Access")
-    # findClass(packageDict,className)
-    # androidCallerDict = {}
-    # GenCallers(packageDict,androidCallerDict)
-    # FileUtils.writeDict(packageDict,"C:\\Users\\limin\\Desktop\\tmp\\line-9-22-2-addCaller.json")
-    # FileUtils.writeDict(androidCallerDict,"C:\\Users\\limin\\Desktop\\tmp\\line-9-22-2-androidCallerDict.json")
-    # print(packageDict['okhttp3.internal.platform.Platform'])
-    # GenInherit(packageDict,'')
-    # for clazz in packageDict:
-    #     classDict = packageDict[clazz]
-        # if 'childClass' in classDict:
-        #     childClass = classDict['childClass']
-        #     print('classname:{} childclass:{}'.format(clazz, childClass))
-        #     input()
-        # methodDicts = classDict['methods']
-        # for key in methodDicts:
-        #     methodDict = methodDicts[key]
-        #     callers = methodDict['caller']
-        #     if callers:
-        #         # print("caller:{} callee:{}".format(callers,clazz+'.'+key))
-        #         for cc in callers:
-        #             value = callers[cc]
-        #             for i,j in value.items():
-        #                 if 'child' in j:
-                            # print(i,j)
-                            # input()
-                
+    basePath=args.basePath
+    tarPath=args.tarPath
+    cachedPath = args.cached
+    output = args.resname
+    basePackageDict = FileUtils.readDict(basePath)
 
-    # clzDict = packageDict['c.a']
-    # super = clzDict['super']
-    # implist = clzDict['implements']
-    # print("{} {}".format(super, implist))
+    fullName = 'com.linecorp.line.media.picker.fragment.sticker.b.a(android.content.Context,com.linecorp.line.media.picker.fragment.sticker.a.t,boolean)'
+    # getClazzConstStr(basePackageDict,"com.linecorp.line.timeline.d.a")
+    getCaller(basePackageDict, fullName)
+    input()
+    # resList = SelectAPI(basePackageDict)
+    # FileUtils.writeList(resList,"filter17.txt")
+    tarPackageDict = FileUtils.readDict(tarPath)
+    cachedDict = FileUtils.readDict(cachedPath)
+    baseClazzSet = basePackageDict.keys()
+    targetClazzSet = tarPackageDict.keys()
     
-    # tmp2 = FileUtils.readFile('tmp3.txt')
+    intersecSet = CollectionUtils.listIntersection(baseClazzSet,targetClazzSet)
+    print(len(intersecSet))
+    # line-9-10-2-methodFeature.json
+    # allMethodFeatureDict = extractAllMethodFeature(tarPackageDict,intersecSet,True)
+    
+    # destPath = addExt2Path(tarPath,'-methodfeature')
+    # FileUtils.writeDict(allMethodFeatureDict,destPath)
+    # print('done')
+    # FileUtils.writeList(intersecSet,'inter2.txt')
+    # filteredMethodList = SelectAPI(basePackageDict)
+    filteredMethodList = FileUtils.readList('random100List.txt')
+    filteredMethodList = [i.strip('\r') for i in filteredMethodList]
 
-    # dist=Levenshtein.distance(tmp2,tmp1)
-    # print("levendist:{} tmp1:{} tmp2:{}".format(dist,len(tmp1),len(tmp2)))
+
+
+    #计算2000个函数的匹配结果
+    # print("length of evaluation:{}".format(len(filteredMethodList)))
+    # resDict=doEvaluation(basePackageDict,filteredMethodList,cachedDict,intersecSet,useReplace=True)
+
+    # FileUtils.writeDict(resDict,"doEvaluation-{}.json".format(output))
+
+
+
+    # resList = compareAll(basePackageDict, fullName, tarPackageDict,intersecSet,useReplace=True)
+    # FileUtils.writeList(resList,'reslist.txt')
+    # fullName = 'k.a.f.p.c.a.b.a(android.content.Context)'
+    # printClazzMethodIdenti(basePackageDict,'jp.naver.line.android.obs.net.q')
+    # printMethodFeature(basePackageDict,fullName,intersecSet)
+    #jp.naver.line.android.am.a.d
+    #j.a.a.a.a2.l.c
+    # genClazzFeature(tarPackageDict,'com.linecorp.android.slideshowengine.PlatformFileUtils')
     
+    # genAllClazzMethodFeature(tarPackageDict,intersecSet,True)
+    # FileUtils.writeDict(tarPackageDict,'C:\\Users\\limin\\Desktop\\tmp\\line-9-22-2-feature.json')
+
+    ## 首次计算每个方法的feature：
+    # 从确认的函数中挑出已经完成映射的类 对混淆的类进行还原 或者说统一
+    # 例如 jp.naver.line.android.am.a.d.a
+    #      j.a.a.a.a2.l.c.a
+    #是映射的，那么他们的类名可以进行叠加 如：
+    # jp&j.naver&a.line&a.android&a2 说到底还是类的相似度吗
+
+
+    ## 首先挑选出最有可能匹配的函数，交集来挑选
+    # resDict = {}
+    # intersecSet2 = FileUtils.readList('intersec.txt')
+    # for clazz in intersecSet2:
+    #     if clazz.startswith('jp.') or clazz.startswith('com.linecorp.'):
+    #         classDict = basePackageDict[clazz]
+    #         methodList = classDict['methods']
+
+    #         for methodIdentifer in methodList:
+    #             methodDict = methodList[methodIdentifer]
+    #             params = methodDict['methodParams']
+    #             if len(params)<3:
+    #                 continue
+    #             # print('{}.{}'.format(clazz, methodIdentifer))
+    #             # print(params)
+    #             baseMethodFeature = findMethod2(basePackageDict, clazz,methodIdentifer, intersecSet2, useReplace=True)
+    #             if baseMethodFeature[3]:
+    #                 if len(baseMethodFeature[3])>=5:
+    #                     if random.randint(0,15)==1:
+    #                         reskey='{}.{}'.format(clazz, methodIdentifer)
+    #                         print('paramlen:{}'.format(len(params)))
+    #                         # print(params)
+    #                         resList=traverseClazzMethod(tarPackageDict, baseMethodFeature, intersecSet,useReplace=True)
+    #                         compareCount = len(resList)
+    #                         print(compareCount)
+    #                         top3 = [resList[0],resList[1],resList[2]]
+    #                         InteractUtils.showList(top3)
+    #                         resDict[reskey] = {'length':compareCount,'top3':top3}
+    #                         # print()
+    #                         FileUtils.writeDict(resDict,'testResDict.json')
+
+
+    ## 打印上面随机比较的结果 9-10-2 9-22-2 只打印top1
+    # testResDict = FileUtils.readDict('testResDict.json')
+
+    # for key in testResDict:
+    #     value = testResDict[key]
+    #     length = value['length']
+    #     top3 = value['top3']
+    #     top1_key,top1_ratio = top3[0]
+    #     print(key)
+    #     print(top1_key)
+    #     print(top1_ratio)
+    #     print(length)
+    #     print()
+
+    # accessmentList = FileUtils.readList('Accessment.txt')
+    # accessmentList2 = FileUtils.readList('Accessment3.txt')
+    # getAccessment(basePackageDict, accessmentList,tarPackageDict,accessmentList2)
+
+    
+    # for item in accessmentList:
+        
+    #     resList = compareAll(basePackageDict, item, tarPackageDict,intersecSet,useReplace=True)
+    #     FileUtils.writeList(resList, "reslinepay.txt")
+    #     print("{} done!".format(item))
+    #     input()
+
+
+    ## 2000个大概话了28个小时跑完了
+    ## 现在需要随机挑选100个出来人工分析是否能够正确匹配上
+    # evaluationDict = FileUtils.readDict('doEvaluation-random100.json')
+    # print(len(evaluationDict))
+    # useRandom = False
+    # if useRandom:
+    #     random100List = list(random.sample(evaluationDict.keys(),100))
+    #     FileUtils.writeList(random100List,'random100List.txt')
+    # else:
+    #     random100List = FileUtils.readList("random100List.txt")
+
+
+    # for item in random100List:
+    #     value = evaluationDict[item]
+    #     topN = value['topN']
+    #     print(item)
+    #     for i in range(0,3):
+    #         tmp = topN[i]
+    #         print(tmp[1],tmp[0])
+    #     print()
+    fullName = 'jp.naver.line.android.db.main.a.k.a(android.database.sqlite.SQLiteDatabase,long,jp.naver.line.android.db.main.b.s$a)'
+    fullName2 = 'j.a.a.a.j.a.a.j.a(android.database.sqlite.SQLiteDatabase,long,j.a.a.a.j.a.f.t,boolean)'
+    if fullName2 in cachedDict:
+        print('yes')
+    else:
+        print('no')
+    # filteredMethodList = [fullName]
+    # resDict=doEvaluation(basePackageDict,filteredMethodList,tarPackageDict,intersecSet,useReplace=True)
+    # FileUtils.writeDict(resDict,"tmp.json")
+    compareTwo(basePackageDict,fullName,tarPackageDict,fullName2,intersecSet,True)
+    # FileUtils.MergeAllDir2One('F:\\LINE_ALL_SMALI\\line-9-10-2','F:\\LINE_ALL_SMALI\\line-9-10-1-merge\\smali')
+
+    # printClazzMethodIdenti(tarPackageDict,'k.a.a.b.b.b.a')

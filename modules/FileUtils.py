@@ -9,6 +9,7 @@ import sys
 import subprocess
 import logging
 from modules.RexUtils import rexFind
+from distutils.dir_util import copy_tree
 logging.basicConfig()
 l = logging.getLogger("FileUtils")
 
@@ -45,6 +46,21 @@ class EasyDir:
 			os.makedirs(dirPath)
 		return absPath
 
+def copytree2(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        print(item)
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            copy_tree(s, d)
+        else:
+            shutil.copy2(s, d)
+def MergeAllDir2One(root, dest):
+    childDir = EasyDir(root)
+    childPathList = childDir.getAbsPathDict().values()        
+    for childDir in childPathList:
+        print("start to copy {} to {}".format(childDir, dest))
+        copytree2(childDir, dest)
 def mkdir(path):
 	folder = os.path.exists(path)
 	if not folder:

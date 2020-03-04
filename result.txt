@@ -1,0 +1,249 @@
+*******start to compare t5****
+deal with:t5
+get tree done!
+item dist t5:0.0
+deal with:f6
+get tree done!
+item dist f6:26.0
+deal with:androidx
+get tree done!
+item dist androidx:402.0
+deal with:h2
+get tree done!
+item dist h2:563.0
+deal with:okhttp3
+get tree done!
+item dist okhttp3:304.0
+deal with:d6
+get tree done!
+item dist d6:90.0
+deal with:b6
+get tree done!
+item dist b6:28.0
+deal with:io
+get tree done!
+item dist io:121.0
+deal with:org
+get tree done!
+item dist org:157.0
+deal with:ezvcard
+get tree done!
+item dist ezvcard:30.0
+deal with:y5
+get tree done!
+item dist y5:866.0
+deal with:u5
+get tree done!
+item dist u5:32.0
+deal with:c6
+get tree done!
+item dist c6:614.0
+deal with:net
+get tree done!
+item dist net:46.0
+deal with:x5
+get tree done!
+item dist x5:194.0
+deal with:g6
+get tree done!
+item dist g6:28.0
+deal with:jp
+get tree done!
+item dist jp:2145.0
+deal with:v5
+get tree done!
+item dist v5:1359.0
+deal with:a6
+get tree done!
+item dist a6:27.0
+deal with:e4
+get tree done!
+item dist e4:144.0
+deal with:e6
+get tree done!
+item dist e6:29.0
+deal with:android
+get tree done!
+item dist android:38.0
+deal with:addon
+get tree done!
+item dist addon:30.0
+deal with:kotlin
+get tree done!
+item dist kotlin:1494.0
+deal with:k
+get tree done!
+item dist k:34738.0
+deal with:j
+get tree done!
+item dist j:16710.0
+deal with:w5
+get tree done!
+item dist w5:30.0
+deal with:z5
+get tree done!
+item dist z5:28.0
+deal with:kotlinx
+get tree done!
+item dist kotlinx:30.0
+deal with:com
+get tree done!
+item dist com:13639.0
+*******start to compare f6****
+deal with:t5
+get tree done!
+item dist t5:26.0
+deal with:f6
+get tree done!
+item dist f6:0.0
+deal with:androidx
+get tree done!
+item dist androidx:401.0
+deal with:h2
+get tree done!
+item dist h2:582.0
+deal with:okhttp3
+get tree done!
+item dist okhttp3:303.0
+deal with:d6
+get tree done!
+item dist d6:105.0
+deal with:b6
+get tree done!
+item dist b6:37.0
+deal with:io
+get tree done!
+item dist io:121.0
+deal with:org
+get tree done!
+item dist org:157.0
+deal with:ezvcard
+get tree done!
+item dist ezvcard:5.0
+deal with:y5
+get tree done!
+item dist y5:887.0
+deal with:u5
+get tree done!
+item dist u5:26.0
+deal with:c6
+get tree done!
+item dist c6:632.0
+deal with:net
+get tree done!
+item dist net:45.0
+deal with:x5
+get tree done!
+item dist x5:210.0
+deal with:g6
+get tree done!
+item dist g6:6.0
+deal with:jp
+get tree done!
+item dist jp:2145.0
+deal with:v5
+get tree done!
+item dist v5:1380.0
+deal with:a6
+get tree done!
+item dist a6:10.0
+deal with:e4
+get tree done!
+item dist e4:160.0
+deal with:e6
+get tree done!
+item dist e6:8.0
+deal with:android
+get tree done!
+item dist android:37.0
+deal with:addon
+get tree done!
+item dist addon:7.0
+deal with:kotlin
+get tree done!
+item dist kotlin:1494.0
+deal with:k
+get tree done!
+item dist k:34763.0
+deal with:j
+get tree done!
+item dist j:16735.0
+deal with:w5
+get tree done!
+item dist w5:11.0
+deal with:z5
+get tree done!
+item dist z5:5.0
+deal with:kotlinx
+get tree done!
+item dist kotlinx:9.0
+deal with:com
+get tree done!
+item dist com:13654.0
+*******start to compare androidx****
+deal with:t5
+get tree done!
+item dist t5:398.0
+deal with:f6
+get tree done!
+item dist f6:397.0
+deal with:androidx
+get tree done!
+item dist androidx:4.0
+deal with:h2
+get tree done!
+item dist h2:626.0
+deal with:okhttp3
+get tree done!
+item dist okhttp3:405.0
+deal with:d6
+get tree done!
+item dist d6:397.0
+deal with:b6
+get tree done!
+item dist b6:397.0
+deal with:io
+get tree done!
+item dist io:400.0
+deal with:org
+get tree done!
+item dist org:401.0
+deal with:ezvcard
+get tree done!
+item dist ezvcard:397.0
+deal with:y5
+get tree done!
+item dist y5:923.0
+deal with:u5
+get tree done!
+item dist u5:399.0
+deal with:c6
+get tree done!
+item dist c6:672.0
+deal with:net
+get tree done!
+item dist net:400.0
+deal with:x5
+get tree done!
+item dist x5:403.0
+deal with:g6
+get tree done!
+item dist g6:397.0
+deal with:jp
+get tree done!
+item dist jp:2150.0
+deal with:v5
+get tree done!
+item dist v5:1396.0
+deal with:a6
+get tree done!
+item dist a6:398.0
+deal with:e4
+get tree done!
+item dist e4:398.0
+deal with:e6
+get tree done!
+item dist e6:397.0
+deal with:android
+get tree done!
+item

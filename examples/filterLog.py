@@ -93,4 +93,3 @@ if __name__ == "__main__":
                 abandonedList.append(logName)
     writeList(abandonedList,abondonedPath)
 
-    

@@ -1036,6 +1036,10 @@ if __name__ == "__main__":
 
 
     # myCombinations(6)
+
+    MyList = FileUtils.readList("ApiMatch/checkclass.txt")
+    MyList = sorted(MyList)
+    FileUtils.writeList(MyList,'checkclass.txt')
         
 
     
