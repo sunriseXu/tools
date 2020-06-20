@@ -422,7 +422,8 @@ def traverseMethod(packageDict, iclassName, imethodName, iparams):
             if tmp:
                 return (tmp, retClazz, retKey)
     return (False,"","")        
-def GenCallers(packageDict,androidCallerDict):
+def GenCallers(packageDict,callerPath):
+    androidCallerDict={}
     #遍历每一个方法，根据这个方法再计算对其的交叉引用，这个计算过程是巨大的假设有10 0000个方法，每个方
     #法需要遍历10 0000次，所以时间复杂度 是 10^10， 而我的电脑是2.5GHz 每秒2.5*10^9时钟周期，一次遍历需要5s，
     #那么一共需要多少秒呢？5*10^5 = 500000s = 13h 不可能缓存的好吧 只能用服务器的机器来跑，但是可以这样来减少
@@ -585,7 +586,7 @@ def GenCallers(packageDict,androidCallerDict):
     print("classcount:{}".format(len(packageDict)))
     print("methodcount:{}".format(methodCount))
     print("androidapiCallcount:{}".format(androidapiCallcount))
-    FileUtils.writeDict(androidCallerDict,"./testAndroid.json")
+    FileUtils.writeDict(androidCallerDict,callerPath)
 
 
 if __name__ == "__main__":
@@ -594,11 +595,14 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--dirname', nargs='+', help='dir name') #多个参数 默认放入list中 +表示至少一个 + 就放在list中
     parser.add_argument('-t', '--tmp', help='tmp dir', nargs='?',default="")
     parser.add_argument('-g', '--getdict', help='get all class dict', nargs='?',default="")
+    parser.add_argument('-c', '--getcaller', help='get all class dict', nargs='?',default="")
+
     args = parser.parse_args() 
     myDirs=args.dirname 
     className=args.classname
     cacheDir=args.tmp
     genDict = args.getdict
+    callerDictPath = args.getcaller
 
 
     print("className: "+className)
@@ -606,7 +610,10 @@ if __name__ == "__main__":
     print("cacheDir: "+cacheDir)
     res,cacheFile = findDex(className,myDirs,cacheDir)
     InteractUtils.showList(res)
-    if genDict:
+    if callerDictPath:
+        basePackageDict = FileUtils.readDict(genDict)
+        GenCallers(basePackageDict, callerDictPath)
+    elif genDict:
         pathList = FileUtils.readList(cacheFile)
         getInheritDict(pathList,genDict)
 
