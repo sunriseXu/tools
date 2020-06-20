@@ -1041,16 +1041,20 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--tarPath', nargs='?',default="")
     parser.add_argument('-c', '--cached', help='tmp dir', nargs='?',default="")
     parser.add_argument('-o', '--resname', help='get all class dict', nargs='?',default="")
+    parser.add_argument('-l', '--caller', help='tmp dir', nargs='?',default="")
+
     args = parser.parse_args() 
     basePath=args.basePath
     tarPath=args.tarPath
     cachedPath = args.cached
     output = args.resname
+    queryMethod = args.caller
     basePackageDict = FileUtils.readDict(basePath)
 
-    fullName = 'h0.a.a.a.k.g.c.d()'
+    # fullName = 'h0.a.a.a.k.g.c.d()'
     # getClazzConstStr(basePackageDict,"j.a.a.a.b2.e.h")
-    getCaller(basePackageDict, fullName)
+    if queryMethod:
+        getCaller(basePackageDict, queryMethod)
     input()
     # resList = SelectAPI(basePackageDict)
     # FileUtils.writeList(resList,"filter17.txt")
