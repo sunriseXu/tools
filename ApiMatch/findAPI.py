@@ -284,6 +284,7 @@ def getClazzConstStr(packageDict,clazz):
     if not classDict:
         print("not class found!")
         return
+    print("class found!!!!")
     methodDictList = classDict['methods']
     allConstStr = set()
     for methodIdentifier in methodDictList:
