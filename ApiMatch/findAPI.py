@@ -1049,8 +1049,8 @@ if __name__ == "__main__":
     basePackageDict = FileUtils.readDict(basePath)
 
     fullName = 'jp.naver.line.android.util.ad.a()'
-    getClazzConstStr(basePackageDict,"j.a.a.a.b2.e.h")
-    # getCaller(basePackageDict, fullName)
+    # getClazzConstStr(basePackageDict,"j.a.a.a.b2.e.h")
+    getCaller(basePackageDict, fullName)
     input()
     # resList = SelectAPI(basePackageDict)
     # FileUtils.writeList(resList,"filter17.txt")
