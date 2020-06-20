@@ -1048,7 +1048,7 @@ if __name__ == "__main__":
     output = args.resname
     basePackageDict = FileUtils.readDict(basePath)
 
-    fullName = 'jp.naver.line.android.util.ad.a()'
+    fullName = 'h0.a.a.a.k.g.c.d()'
     # getClazzConstStr(basePackageDict,"j.a.a.a.b2.e.h")
     getCaller(basePackageDict, fullName)
     input()
