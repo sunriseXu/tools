@@ -567,15 +567,15 @@ def GenCallers(packageDict,androidCallerDict):
                 #     pass
                         # input()
     # print("error:{}".format(exceptInfoList))
-    FileUtils.writeList(exceptInfoList,"C:\\Users\\limin\\Desktop\\tmp\\error.txt")
+    FileUtils.writeList(exceptInfoList,"./error.txt")
     # print("notfound:{}".format(notfoundList))
-    FileUtils.writeList(notfoundList,"C:\\Users\\limin\\Desktop\\tmp\\notfound.txt")
+    FileUtils.writeList(notfoundList,"./notfound.txt")
     print("{}".format(notfoundSet))
     print("foundcount:{} notfoundcount:{} foundinChild:{}".format(foundcount,notfoundcount,foundinChild))
     print("classcount:{}".format(len(packageDict)))
     print("methodcount:{}".format(methodCount))
     print("androidapiCallcount:{}".format(androidapiCallcount))
-    FileUtils.writeDict(androidCallerDict,"C:\\Users\\limin\\Desktop\\tmp\\testAndroid.json")
+    FileUtils.writeDict(androidCallerDict,"./testAndroid.json")
 
 
 if __name__ == "__main__":
