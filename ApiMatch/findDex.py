@@ -22,12 +22,19 @@ import logging
 import sys
 import time
 from datetime import datetime
+import platform
 import argparse 
+
+archTec = platform.architecture()
 def findMatchedPath(className,fileList):
     packages = className.split('.')
     res = []
+    if 'WindowsPE' in archTec:
+        splitStr = '\\'
+    else:
+        splitStr = '/'
     for file in fileList:
-        catStr = '\\'.join(packages)+'.smali'
+        catStr = splitStr.join(packages)+'.smali'
         if catStr in file:
             res.append(file)
     return res
