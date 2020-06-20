@@ -586,7 +586,8 @@ def GenCallers(packageDict,callerPath):
     print("classcount:{}".format(len(packageDict)))
     print("methodcount:{}".format(methodCount))
     print("androidapiCallcount:{}".format(androidapiCallcount))
-    FileUtils.writeDict(androidCallerDict,callerPath)
+    FileUtils.writeDict(androidCallerDict,'./androidcaller.json')
+    FileUtils.writeDict(packageDict,callerPath)
 
 
 if __name__ == "__main__":
