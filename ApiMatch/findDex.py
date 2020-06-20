@@ -362,8 +362,11 @@ def getInheritDict(pathList, outDictPath):
         idx += 1
         if idx%10000 == 0:
             FileUtils.writeDict(inheritDict, dictPath)
-        sPathList = sPath.split('\\')
-        sPath = '\\\\'.join(sPathList)
+        if 'WindowsPE' in archTec:
+            sPathList = sPath.split('\\')
+            sPath = '\\\\'.join(sPathList)
+        
+        
         if not sPath.endswith('.smali'):
             continue
         # print(sPath)
