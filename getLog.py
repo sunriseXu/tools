@@ -158,6 +158,9 @@ def checkDeviceOn(selectedDevId):
 		elif 'file pushed' in res:
 			print("device is running!")
 			break
+		else:
+			print("device is running!")
+			break
 		if idx > 5:
 			print("try to reboot device 5 times, but not work! check manually")
 			break

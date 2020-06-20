@@ -18,9 +18,10 @@ if __name__ == "__main__":
     tarPath=args.tarPath
     cachedPath = args.cached
     output = args.resname
-    basePackageDict = FileUtils.readDict(basePath)
-    targetPackageDict = FileUtils.readDict(tarPath)
-    baseClazz = 'com.linecorp.line.media.picker.fragment.sticker.b'
-    resList = AlgorOp.calClazzConstStrSimilarity(basePackageDict,baseClazz,targetPackageDict,30)
-    InteractUtils.showList(resList)
+    # basePackageDict = FileUtils.readDict(basePath)
+    # targetPackageDict = FileUtils.readDict(tarPath)
+    # baseClazz = 'com.linecorp.line.media.picker.fragment.sticker.b'
+    # resList = AlgorOp.calClazzConstStrSimilarity(basePackageDict,baseClazz,targetPackageDict,30)
+    # InteractUtils.showList(resList)
+    
     

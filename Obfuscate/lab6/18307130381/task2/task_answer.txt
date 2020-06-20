@@ -1,0 +1,5 @@
+GCM_LIB
+android.app.extra.DEVICE_ADMIN
+nativeLibraryDirectories
+android.
+android.intent.action.VIEW

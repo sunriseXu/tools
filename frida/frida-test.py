@@ -2,7 +2,7 @@
 import frida
 import sys
 
-# device = frida.get_device_manager().enumerate_devices()[-1]
+device = frida.get_device_manager().enumerate_devices()[-1]
 device = frida.get_remote_device()
 # pid = device.spawn(["com.android.chrome"])
 session = device.attach("jp.naver.line.android")

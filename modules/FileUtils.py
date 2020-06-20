@@ -139,8 +139,8 @@ def readList(myPath):
 		l.warning("%s not exist! created instead",myPath)
 		temp.close()
 	with open(myPath,"r") as file:
-		mystr=file.read()
-		reslist=mystr.strip().split("\n")
+		reslist=file.readlines()
+	reslist = [i.strip().strip('\r') for i in reslist]
 	return reslist
 
 

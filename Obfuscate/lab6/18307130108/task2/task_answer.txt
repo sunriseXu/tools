@@ -1,0 +1,5 @@
+74fc5b28-65e1-4c76-aa5e-bd9c0c44ea01
+android.intent.action.VIEW
+alarm
+588799fe-2190-4ae5-96da-1065ea0f9a64
+android.app.extra.DEVICE_ADMIN

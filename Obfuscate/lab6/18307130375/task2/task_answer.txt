@@ -1,0 +1,5 @@
+nativeLibraryDirectories
+token
+android.
+GCM_LIB
+Android webkit

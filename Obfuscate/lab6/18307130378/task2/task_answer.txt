@@ -1,0 +1,5 @@
+Reboot O.K.
+GCM_LIB
+AES/CBC/PKCS5Padding
+android.app.extra.DEVICE_ADMIN
+46e1192d-33ca-4320-abc9-c9b98f827668

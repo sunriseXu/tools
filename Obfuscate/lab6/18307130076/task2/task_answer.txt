@@ -1,0 +1,5 @@
+token
+android.intent.action.VIEW
+74fc5b28-65e1-4c76-aa5e-bd9c0c44ea01
+AES/CBC/PKCS5Padding
+phone

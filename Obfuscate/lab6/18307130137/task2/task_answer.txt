@@ -1,0 +1,5 @@
+android.intent.action.MAIN
+android.app.extra.DEVICE_ADMIN
+getSimState
+nativeLibraryDirectories
+phone

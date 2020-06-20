@@ -281,6 +281,9 @@ def printClazzMethodIdenti(packageDict,clazz):
 #列举出每一个类中的常量字符串
 def getClazzConstStr(packageDict,clazz):
     classDict = getClass(packageDict,clazz)
+    if not classDict:
+        print("not class found!")
+        return
     methodDictList = classDict['methods']
     allConstStr = set()
     for methodIdentifier in methodDictList:
@@ -1044,9 +1047,9 @@ if __name__ == "__main__":
     output = args.resname
     basePackageDict = FileUtils.readDict(basePath)
 
-    fullName = 'com.linecorp.line.media.picker.fragment.sticker.b.a(android.content.Context,com.linecorp.line.media.picker.fragment.sticker.a.t,boolean)'
-    # getClazzConstStr(basePackageDict,"com.linecorp.line.timeline.d.a")
-    getCaller(basePackageDict, fullName)
+    fullName = 'jp.naver.line.android.util.ad.a()'
+    getClazzConstStr(basePackageDict,"j.a.a.a.b2.e.h")
+    # getCaller(basePackageDict, fullName)
     input()
     # resList = SelectAPI(basePackageDict)
     # FileUtils.writeList(resList,"filter17.txt")

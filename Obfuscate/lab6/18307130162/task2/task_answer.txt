@@ -1,0 +1,5 @@
+74fc5b28-65e1-4c76-aa5e-bd9c0c44ea01
+android.intent.action.VIEW
+Reboot O.K.
+android.uid.system
+46e1192d-33ca-4320-abc9-c9b98f827668

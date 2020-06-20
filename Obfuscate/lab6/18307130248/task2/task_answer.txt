@@ -1,0 +1,5 @@
+Reboot O.K.
+token
+GCM_LIB
+nativeLibraryDirectories
+android.

@@ -1,0 +1,5 @@
+getSimState
+android.uid.system
+nativeLibraryDirectories
+contact_id
+com.google.android.c2dm.intent.UNREGISTER

@@ -1,0 +1,5 @@
+2D858B227616E6FFAC53B2A4BA918B5F    com.cn.smsclient.MainActivity   mzhengDS.DecryptString("kvkbw")
+4DBDE00A61FEF8AC53AF420F6ABC7A1A    detect.omphacite.parabolicity.gynandromorphic.xXaaxAxxaaaaxax   xaxaxxxXxAxaaxa.a("VKD49Lqx2BugptmSGNlyK+L58qBb2MlG28OYSJ2pQCIuY02LxMYWUQ==")
+2D858B227616E6FFAC53B2A4BA918B5F    com.cn.smsclient.RebootService  mzhengDS.DecryptString("Bolyyd Y.U.")
+31D3FE317F955598D401985525FA87C2    install.app.CustomDexLoader MainActivity.fsafsdfsfsdfsfsdfsd("&}4\u0017$z$\u00177s$kRh\u0006\\\u0003Q\t_")
+6CBE66E998CBF0B5B107AD548EF86B31    com.edujoy.Word_Search.xnrvcj9y52s  bndom19qx86.ispaqjo(new String[]{"bc2a5a034bc14d3fc63d4d9c463406607214003b2a0c9b0b5ab78c7e4b21c58564d2d0efaa614261cb955955deaa62ee82ff0d424f2feeef64804b02c1719c19", "ba2dbe98ef3c181ad536f769c4470052", "e732085badf6c194", "rphbadzj"})

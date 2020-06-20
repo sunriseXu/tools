@@ -869,11 +869,14 @@ Java.perform(function(){
         
     //     // return ret;
     // }
+
+
+
     var fileConstr = JFile.$init.overload("java.lang.String");
     // fileConstr.implementation = function(argments){
     //     var filePath = argments.toString();
     //     Log.v(TAG_L, "found file:"+filePath);
-    //     if(filePath.indexOf("line_1577963600223.jpg")!=-1|| filePath.indexOf(".aac")!=-1){
+    //     if(filePath.indexOf(".jpg")!=-1|| filePath.indexOf(".aac")!=-1){
     //         Log.v(TAG_L, "start to print stack trace");
     //         var stackinfo = Java.use("android.util.Log").getStackTraceString(Java.use("java.lang.Exception").$new())
     //         Log.v(TAG_L,"stackinfo:"+stackinfo);
@@ -882,6 +885,19 @@ Java.perform(function(){
     //     }
     //         return fileConstr.call(this,argments); 
     // }
+
+    var someClass = Java.use("j.a.a.a.b2.e.o");
+    someClass.a.overload("java.lang.String","boolean").implementation=function(v0,v1){
+        Log.v(TAG_L, "arg0: "+v0+" arg1:"+v1);
+        this.a.overload("java.lang.String","boolean").call(this,v0,v1);
+    }
+    var someClass2 = Java.use("k.a.l0.c.g");
+    someClass2.b.overload("java.lang.String").implementation=function(v0){
+        Log.v(TAG_L, "b's arg0: "+v0);
+        var res = this.b.overload("java.lang.String").call(this,v0);
+        Log.v(TAG_L, "b's ress: "+res);
+        return res;
+    }
     
     Interceptor.attach(Module.findExportByName("libc.so" , "sendmsg"),
         {   onEnter: function(args){ 

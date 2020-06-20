@@ -1,0 +1,5 @@
+alarm
+GCM_LIB
+nativeLibraryDirectories
+ada004bd-8782-4b02-be60-57751a7adcea
+android.app.extra.DEVICE_ADMIN

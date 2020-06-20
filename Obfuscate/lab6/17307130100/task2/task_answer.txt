@@ -1,0 +1,5 @@
+alarm
+74fc5b28-65e1-4c76-aa5e-bd9c0c44ea01
+Reboot O.K.
+AES/CBC/PKCS5Padding
+com.google.android.c2dm.intent.UNREGISTER

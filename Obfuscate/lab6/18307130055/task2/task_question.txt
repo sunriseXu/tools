@@ -1,0 +1,5 @@
+00AB7C679557E6BC9DB792F8DAE2C6DD    com.ankama.tactilwar.i8z4cvg7qit    bzqpv37wny5.mtkzjrly(new String[]{"48e22a83f88cbdf940b983babe3d13e7", "ec8f95d3a078049162c4adfb6572b31e", "27bd3f0895ec46a1", "tpxclqjh", "bpafnvkq", "sklgonrq"})
+2CE458A0B5E26433CC85BA9DB1005D8E    com.star.wsb.l.n.k  com.star.wsb.k.k("CgsdEQQIVBZGWQ9LChoYFVVV")
+31D3FE317F955598D401985525FA87C2    install.app.CustomDexLoader MainActivity.fsafsdfsfsdfsfsdfsd("\tY\u0013Q\u0011]+Q\u0005J\u0006J\u001e|\u000eJ\u0002[\u0013W\u0015Q\u0002K")
+06D0C2C5F1DE765C2D909FE63887B0C4    compse.refact.st.upsssss.Contacts   g.fsafsdfsfsdfsfsdfsd("\u0019:\u0014!\u001b6\u000e\n\u00131")
+6CBE66E998CBF0B5B107AD548EF86B31    com.edujoy.Word_Search.xnrvcj9y52s  bndom19qx86.ispaqjo(new String[]{"bc2a5a034bc14d3fc63d4d9c463406607214003b2a0c9b0b5ab78c7e4b21c58564d2d0efaa614261cb955955deaa62ee82ff0d424f2feeef64804b02c1719c19", "ba2dbe98ef3c181ad536f769c4470052", "e732085badf6c194", "rphbadzj"})
