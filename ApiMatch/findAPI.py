@@ -223,8 +223,11 @@ def getCaller(basePackageDict, fullName):
     if not classDict:
         return res
     methodDict = getMethod(classDict,methodIdentifier)
-    callers = methodDict['caller']
-    print(callers)
+    if 'caller' in methodDict:
+        callers = methodDict['caller']
+        print(callers)
+    else:
+        print("no caller found")
 
 ### 查询类 返回类字典
 def getClass(packageDict, className):
