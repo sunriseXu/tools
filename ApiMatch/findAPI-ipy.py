@@ -571,7 +571,7 @@ def GenInherit(packageDict,newDictPath):
             and not superCls.startswith('androidx.') and not superCls.startswith('org.')\
                 and not superCls.startswith('javax.') and not superCls.startswith('com.google.')\
                 and not superCls.startswith('com.samsung.android.sep')\
-                    and not superCls.startswith('com.facebook.'):
+                    and not superCls.startswith('com.facebook.') and not superCls.startswith('dalvik.system'):
             superClsDict = packageDict[superCls] #父类字典
             if 'childClass' in superClsDict:
                 superClsDict['childClass'].append(clazz)
