@@ -571,7 +571,7 @@ def GenInherit(packageDict,newDictPath):
             and not superCls.startswith('androidx.') and not superCls.startswith('org.')\
                 and not superCls.startswith('javax.') and not superCls.startswith('com.google.')\
                 and not superCls.startswith('com.samsung.android.sep')\
-                    and not superCls.startswith('com.facebook.'):
+                    and not superCls.startswith('com.facebook.') and not superCls.startswith('dalvik.system'):
             superClsDict = packageDict[superCls] #父类字典
             if 'childClass' in superClsDict:
                 superClsDict['childClass'].append(clazz)
@@ -589,7 +589,18 @@ def GenInherit(packageDict,newDictPath):
                     else:
                         superClsDict.update({'childClass':[clazz]})
     FileUtils.writeDict(packageDict, newDictPath)
-    
+def PrintClassInherit(packageDict, className):
+    '''
+    提供此类的所有子类完成名
+    '''
+    classDict = getClass(packageDict, className)
+    if 'childClass' in classDict:
+        return classDict['childClass']
+    else:
+        print("no inherit subclass")
+        return []
+
+
 ### 特征包的抽取，形成键值对的形式 其输出供traverseClazzMethod3使用
 def extractAllMethodFeature(packageDict,intersecSet,useReplace):
     '''
