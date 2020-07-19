@@ -588,7 +588,8 @@ def GenInherit(packageDict,newDictPath):
                         superClsDict['childClass'].append(clazz)
                     else:
                         superClsDict.update({'childClass':[clazz]})
-
+    FileUtils.writeDict(packageDict, newDictPath)
+    
 ### 特征包的抽取，形成键值对的形式 其输出供traverseClazzMethod3使用
 def extractAllMethodFeature(packageDict,intersecSet,useReplace):
     '''
