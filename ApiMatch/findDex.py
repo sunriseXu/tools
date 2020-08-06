@@ -578,9 +578,9 @@ def GenCallers(packageDict):
                 #     pass
                         # input()
     # print("error:{}".format(exceptInfoList))
-    # FileUtils.writeList(exceptInfoList,"./error.txt")
+    FileUtils.writeList(exceptInfoList,"./error.txt")
     # print("notfound:{}".format(notfoundList))
-    # FileUtils.writeList(notfoundList,"./notfound.txt")
+    FileUtils.writeList(notfoundList,"./notfound.txt")
     print("{}".format(notfoundSet))
     print("foundcount:{} notfoundcount:{} foundinChild:{}".format(foundcount,notfoundcount,foundinChild))
     print("classcount:{}".format(len(packageDict)))
@@ -597,7 +597,7 @@ def GenInherit(packageDict,newDictPath):
         if superCls and not superCls.startswith('java.') and not superCls.startswith('android.')\
             and not superCls.startswith('androidx.') and not superCls.startswith('org.')\
                 and not superCls.startswith('javax.') and not superCls.startswith('com.google.')\
-                and not superCls.startswith('com.samsung.android.sep')\
+                and not superCls.startswith('com.samsung.')\
                     and not superCls.startswith('com.facebook.') and not superCls.startswith('dalvik.system'):
             superClsDict = packageDict[superCls] #父类字典
             if 'childClass' in superClsDict:
@@ -609,7 +609,7 @@ def GenInherit(packageDict,newDictPath):
                 if not impl.startswith('java.') and not impl.startswith('android.')\
                     and not impl.startswith('androidx.') and not impl.startswith('org.')\
                         and not impl.startswith('javax.')and not impl.startswith('com.google.')\
-                            and not impl.startswith('com.facebook.'):#'jp.naver.line.android.b.e$d'
+                            and not impl.startswith('com.facebook.' ) and not impl.startswith('com.samsung' ):#'jp.naver.line.android.b.e$d'
                     superClsDict = packageDict[impl] #接口字典
                     if 'childClass' in superClsDict:
                         superClsDict['childClass'].append(clazz)
