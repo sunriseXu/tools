@@ -360,8 +360,8 @@ def getInheritDict(pathList, outDictPath):
     print("start to generate inherit dict")
     for sPath in pathList:
         idx += 1
-        if idx%10000 == 0:
-            FileUtils.writeDict(inheritDict, dictPath)
+        # if idx%10000 == 0:
+        #     FileUtils.writeDict(inheritDict, dictPath)
         if 'WindowsPE' in archTec:
             sPathList = sPath.split('\\')
             sPath = '\\\\'.join(sPathList)
@@ -385,7 +385,7 @@ def getInheritDict(pathList, outDictPath):
             print("duplicat clsName: {} {}".format(clsName,sPath))
             print("lastPath:{}".format(lastPath))
             input()
-    FileUtils.writeDict(inheritDict, dictPath)
+    # FileUtils.writeDict(inheritDict, dictPath)
     print("done")
     return inheritDict
 def traverseMethod(packageDict, iclassName, imethodName, iparams):
@@ -422,7 +422,7 @@ def traverseMethod(packageDict, iclassName, imethodName, iparams):
             if tmp:
                 return (tmp, retClazz, retKey)
     return (False,"","")        
-def GenCallers(packageDict,callerPath):
+def GenCallers(packageDict):
     androidCallerDict={}
     #遍历每一个方法，根据这个方法再计算对其的交叉引用，这个计算过程是巨大的假设有10 0000个方法，每个方
     #法需要遍历10 0000次，所以时间复杂度 是 10^10， 而我的电脑是2.5GHz 每秒2.5*10^9时钟周期，一次遍历需要5s，
@@ -578,17 +578,44 @@ def GenCallers(packageDict,callerPath):
                 #     pass
                         # input()
     # print("error:{}".format(exceptInfoList))
-    FileUtils.writeList(exceptInfoList,"./error.txt")
+    # FileUtils.writeList(exceptInfoList,"./error.txt")
     # print("notfound:{}".format(notfoundList))
-    FileUtils.writeList(notfoundList,"./notfound.txt")
+    # FileUtils.writeList(notfoundList,"./notfound.txt")
     print("{}".format(notfoundSet))
     print("foundcount:{} notfoundcount:{} foundinChild:{}".format(foundcount,notfoundcount,foundinChild))
     print("classcount:{}".format(len(packageDict)))
     print("methodcount:{}".format(methodCount))
     print("androidapiCallcount:{}".format(androidapiCallcount))
-    FileUtils.writeDict(androidCallerDict,'./androidcaller.json')
-    FileUtils.writeDict(packageDict,callerPath)
-
+    # FileUtils.writeDict(androidCallerDict,'./androidcaller.json')
+    # FileUtils.writeDict(packageDict,callerPath)
+    return packageDict, androidCallerDict
+def GenInherit(packageDict,newDictPath):
+    for clazz in packageDict:
+        classDict = packageDict[clazz]
+        superCls = classDict['super']
+        implementList = classDict['implements']
+        if superCls and not superCls.startswith('java.') and not superCls.startswith('android.')\
+            and not superCls.startswith('androidx.') and not superCls.startswith('org.')\
+                and not superCls.startswith('javax.') and not superCls.startswith('com.google.')\
+                and not superCls.startswith('com.samsung.android.sep')\
+                    and not superCls.startswith('com.facebook.') and not superCls.startswith('dalvik.system'):
+            superClsDict = packageDict[superCls] #父类字典
+            if 'childClass' in superClsDict:
+                superClsDict['childClass'].append(clazz)
+            else:
+                superClsDict.update({'childClass':[clazz]})
+        if implementList:
+            for impl in implementList:
+                if not impl.startswith('java.') and not impl.startswith('android.')\
+                    and not impl.startswith('androidx.') and not impl.startswith('org.')\
+                        and not impl.startswith('javax.')and not impl.startswith('com.google.')\
+                            and not impl.startswith('com.facebook.'):#'jp.naver.line.android.b.e$d'
+                    superClsDict = packageDict[impl] #接口字典
+                    if 'childClass' in superClsDict:
+                        superClsDict['childClass'].append(clazz)
+                    else:
+                        superClsDict.update({'childClass':[clazz]})
+    FileUtils.writeDict(packageDict, newDictPath)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="find dex!!")
@@ -596,14 +623,14 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--dirname', nargs='+', help='dir name') #多个参数 默认放入list中 +表示至少一个 + 就放在list中
     parser.add_argument('-t', '--tmp', help='tmp dir', nargs='?',default="")
     parser.add_argument('-g', '--getdict', help='get all class dict', nargs='?',default="")
-    parser.add_argument('-c', '--getcaller', help='get all class dict', nargs='?',default="")
+    # parser.add_argument('-c', '--getcaller', help='get all class dict', nargs='?',default="")
 
     args = parser.parse_args() 
     myDirs=args.dirname 
     className=args.classname
     cacheDir=args.tmp
     genDict = args.getdict
-    callerDictPath = args.getcaller
+    # callerDictPath = args.getcaller
 
 
     print("className: "+className)
@@ -611,11 +638,12 @@ if __name__ == "__main__":
     print("cacheDir: "+cacheDir)
     res,cacheFile = findDex(className,myDirs,cacheDir)
     InteractUtils.showList(res)
-    if callerDictPath:
-        basePackageDict = FileUtils.readDict(genDict)
-        GenCallers(basePackageDict, callerDictPath)
-    elif genDict:
+        
+    if genDict:
         pathList = FileUtils.readList(cacheFile)
-        getInheritDict(pathList,genDict)
+        basePackageDict = getInheritDict(pathList,genDict)
+        # basePackageDict = FileUtils.readDict(genDict)
+        addcallerDict, _ = GenCallers(basePackageDict)
+        GenInherit(addcallerDict, genDict)
 
     
